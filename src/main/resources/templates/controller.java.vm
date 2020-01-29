@@ -1,0 +1,111 @@
+package ${package.Controller};
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.*;
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import com.xg.cctv.common.util.R;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+#if(${swagger2})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+#end
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${swagger2})
+@Api(tags = "$!{table.comment}控制器", value = "${entity}控制器")
+#end
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+    @Autowired
+    public ${table.serviceName} i${entity}Service;
+
+    /**
+     * 分页查询数据
+     *
+     * @param page  分页信息
+     * @param ${table.entityPath} 查询条件
+     * @return
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "分页查询数据")
+    #end
+    @GetMapping("/page")
+    public R get${entity}List(Page<${entity}> page,${entity} ${table.entityPath}){
+        return R.ok().put("data" , i${entity}Service.selectPage(page, ${table.entityPath}));
+    }
+
+    /**
+     * 保存和修改公用的
+     * @param ${table.entityPath} 传递的实体
+     * @return R
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "保存和修改")
+    #end
+    @PostMapping("/save")
+    public R ${table.entityPath}Save(@RequestBody ${entity} ${table.entityPath}){
+        boolean rs = i${entity}Service.saveOrUpdate(${table.entityPath});
+        if (rs){
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    /**
+     * 根据id删除对象
+     * @param id  实体ID
+     * @return R
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "根据id删除对象")
+    #end
+    @PostMapping("/delete/{id}")
+    public R ${table.entityPath}Delete(@PathVariable String id){
+        boolean rs = i${entity}Service.removeById(id);
+        if (rs) {
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    /**
+     * 批量删除对象
+     * @param requestMap 实体集合ID
+     * @return R
+     */
+    #if(${swagger2})
+    @ApiOperation(value = "批量删除对象")
+    #end
+    @PostMapping("/batchDelete")
+    public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
+        List<String> ids = requestMap.get("ids");
+        boolean rs = i${entity}Service.removeByIds(ids);
+        if (rs){
+            return R.ok().put("data" , ids.size());
+        }
+        return R.error();
+    }
+}

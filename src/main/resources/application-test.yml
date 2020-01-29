@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mysql://server:3306/test?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: it123456
+  redis:
+    host: server
