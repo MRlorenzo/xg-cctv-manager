@@ -1,7 +1,7 @@
 spring:
   profiles:
     # 默认使用开发环境
-    active: prod
+    active: dev
   main:
     allow-bean-definition-overriding: true
   redis:

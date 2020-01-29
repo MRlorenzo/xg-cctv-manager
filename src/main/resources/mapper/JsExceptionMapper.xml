@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xg.cctv.mybatis.mapper.JsExceptionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.JsException">
+                <id column="exception_id" property="exceptionId" />
+                <result column="user_name" property="userName" />
+                <result column="ip" property="ip" />
+                <result column="file_name" property="fileName" />
+                <result column="line_no" property="lineNo" />
+                <result column="col_no" property="colNo" />
+                <result column="create_date" property="createDate" />
+                <result column="exception_val" property="exceptionVal" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        exception_id, user_name, ip, file_name, line_no, col_no, create_date, exception_val
+    </sql>
+</mapper>

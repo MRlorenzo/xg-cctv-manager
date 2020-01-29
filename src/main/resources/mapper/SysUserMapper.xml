@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xg.cctv.mybatis.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.SysUser">
+                <id column="user_id" property="userId" />
+                <result column="username" property="username" />
+                <result column="password" property="password" />
+                <result column="status" property="status" />
+                <result column="create_user_id" property="createUserId" />
+                <result column="create_time" property="createTime" />
+                <result column="department_id" property="departmentId" />
+                <result column="description" property="description" />
+    </resultMap>
+
+    <resultMap id="allInfo" type="com.xg.cctv.mybatis.po.SysUser" extends="BaseResultMap">
+        <association property="department" column="department_id" select="com.xg.cctv.mybatis.mapper.SysDepartmentMapper.queryDepartmentById"/>
+        <collection property="roles" column="user_id" select="com.xg.cctv.mybatis.mapper.SysRoleMapper.queryRolesByUserId"/>
+        <collection property="routes" column="user_id" select="com.xg.cctv.mybatis.mapper.SysPermissionMapper.queryPermissionByUserId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, username, password, status, create_user_id, create_time, department_id, description
+    </sql>
+
+    <select id="queryByUserName" resultMap="allInfo">
+        select * from sys_user where username = #{username}
+    </select>
+
+</mapper>

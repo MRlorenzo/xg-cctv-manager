@@ -36,10 +36,10 @@
 		</dependency>
 
 		<!--定时任务框架-->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-quartz</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<!--spring-mvc -->
 		<dependency>
