@@ -31,7 +31,7 @@ CREATE TABLE `customer` (
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='玩家清单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='玩家清单表';
 
 -- ----------------------------
 -- Table structure for daily_log
@@ -51,7 +51,7 @@ CREATE TABLE `daily_log` (
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='西港监控部日志表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='西港监控部日志表';
 
 -- ----------------------------
 -- Table structure for fill_credit_log
@@ -70,7 +70,7 @@ CREATE TABLE `fill_credit_log` (
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人id',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='西港监控部日常加彩/缴码表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='西港监控部日常加彩/缴码表';
 
 -- ----------------------------
 -- Table structure for high_action
@@ -92,7 +92,7 @@ CREATE TABLE `high_action` (
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='西港监控部高额活动表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='西港监控部高额活动表';
 
 -- ----------------------------
 -- Table structure for incident_log
@@ -114,7 +114,7 @@ CREATE TABLE `incident_log` (
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='西港监控部事件报告表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='西港监控部事件报告表';
 
 -- ----------------------------
 -- Table structure for title_list_item
@@ -128,7 +128,7 @@ CREATE TABLE `title_list_item` (
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='事件名称及编号';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='事件名称及编号';
 
 -- ----------------------------
 -- Table structure for title_main
@@ -140,4 +140,4 @@ CREATE TABLE `title_main` (
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='事件记录主题名称表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='事件记录主题名称表';
