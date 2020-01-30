@@ -360,6 +360,57 @@ export const asyncRoutes = [
     ]
   },*/
 
+  {
+    path: '/cctv',
+    component: Layout,
+    name: 'CCTV',
+    meta: { title: 'cctv'},
+    children: [
+      {
+        path: 'daily-log',
+        component: ()=> import('@/views/cctv/DailyLog'),
+        name: 'DailyLog',
+        meta: { title: 'dailyLog'},
+      },
+      {
+        path: 'incident-log',
+        component: ()=> import('@/views/cctv/IncidentLog'),
+        name: 'IncidentLog',
+        meta: { title: 'incidentLog'},
+      },
+      {
+        path: 'high-action',
+        component: ()=> import('@/views/cctv/HighAction'),
+        name: 'HighAction',
+        meta: { title: 'highAction'},
+      },
+      {
+        path: 'title-list',
+        component: ()=> import('@/views/cctv/TitleList'),
+        name: 'TitleList',
+        meta: { title: 'titleList'},
+      },
+      {
+        path: 'fill',
+        component: ()=> import('@/views/cctv/Fill'),
+        name: 'Fill',
+        meta: { title: 'fill'},
+      },
+      {
+        path: 'credit',
+        component: ()=> import('@/views/cctv/Credit'),
+        name: 'Credit',
+        meta: { title: 'credit'},
+      },
+      {
+        path: 'customer',
+        component: ()=> import('@/views/cctv/Customer'),
+        name: 'Customer',
+        meta: { title: 'customer'},
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -292,5 +292,44 @@ export const asyncRoutes = [
     id: 94,
     pid: 81,
     path: 'drag-kanban'
+  },
+  {
+    id: 95,
+    path: '/cctv'
+  },
+  {
+    id: 96,
+    pid: 95,
+    path: 'credit'
+  },
+  {
+    id: 97,
+    pid: 95,
+    path: 'customer'
+  },
+  {
+    id: 98,
+    pid: 95,
+    path: 'daily-log'
+  },
+  {
+    id: 99,
+    pid: 95,
+    path: 'fill'
+  },
+  {
+    id: 100,
+    pid: 95,
+    path: 'high-action'
+  },
+  {
+    id: 101,
+    pid: 95,
+    path: 'incident-log'
+  },
+  {
+    id: 102,
+    pid: 95,
+    path: 'title-list'
   }
 ]

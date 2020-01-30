@@ -65,7 +65,15 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     externalLink: '外链',
-    profile: '个人中心'
+    profile: '个人中心',
+    cctv: 'CCTV',
+    dailyLog: '监控部日志',
+    incidentLog: '事件报告',
+    highAction: '高额活动',
+    titleList: '事件名称及编号',
+    fill: '加彩日志',
+    credit: '缴码日志',
+    customer: '玩家清单'
   },
   navbar: {
     dashboard: '首页',

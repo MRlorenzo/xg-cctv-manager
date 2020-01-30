@@ -65,7 +65,15 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: 'I18n',
     externalLink: 'External Link',
-    profile: 'Profile'
+    profile: 'Profile',
+    cctv: 'CCTV',
+    dailyLog: 'DailyLog',
+    incidentLog: 'IncidentLog',
+    highAction: 'HighAction',
+    titleList: 'TitleList',
+    fill: 'Fill',
+    credit: 'Credit',
+    customer: 'Customer'
   },
   navbar: {
     dashboard: 'Dashboard',
