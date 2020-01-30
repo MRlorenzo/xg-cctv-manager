@@ -65,7 +65,7 @@
     </el-form>
 
     <!-- 用户列表 -->
-    <user-list
+    <user-page
       :query="q"
       :do-search="doSearch"
       @toBeSearch="bl=>doSearch = bl"
@@ -147,7 +147,7 @@
   import { getRoles } from '@/api/role'
   import { getDepartments } from '@/api/department'
   import BackToTop from '@/components/BackToTop'
-  import UserList from './components/UserList'
+  import UserPage from './components/UserPage'
 
   const defaultUser = {
     username: '',
@@ -169,7 +169,7 @@
 
   export default {
     name: "users",
-    components: { BackToTop , UserList},
+    components: { BackToTop , UserPage},
     data(){
       return {
         user: Object.assign({} ,defaultUser),
