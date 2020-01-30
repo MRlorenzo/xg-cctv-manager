@@ -1,16 +1,32 @@
 import Mock from 'mockjs'
 import { param2Obj } from '../src/utils'
 
-import user from './user'
-import role from './role'
-import menus from './menus'
-import dep from './department'
+import user from './permission/user'
+import role from './permission/role'
+import menus from './permission/menus'
+import dep from './permission/department'
+
+import customer from './cctv/customer'
+import dailyLog from './cctv/daily-log'
+import fillAndCredit from './cctv/fill-and-credit'
+import highAction from './cctv/high-action'
+import incidentLog from './cctv/incident-log'
+import titleListItem from './cctv/title-liist-item'
+import titleMain from './cctv/title-main'
 
 const mocks = [
   ...user,
   ...role,
   ...menus,
-  ...dep
+  ...dep,
+
+  ...customer,
+  ...dailyLog,
+  ...fillAndCredit,
+  ...highAction,
+  ...incidentLog,
+  ...titleListItem,
+  ...titleMain
 ]
 
 // for front mock
