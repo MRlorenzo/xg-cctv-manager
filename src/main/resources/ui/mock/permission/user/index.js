@@ -1,5 +1,5 @@
-import serverUsers from '../static_data/server_users'
-import { deepClone } from '../../src/utils/index';
+import serverUsers from '../../static_data/server_users'
+import { deepClone } from '../../../src/utils/index';
 
 export default [
   // user login

@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
-import { deepClone } from '../../src/utils/index.js'
-import { asyncRoutes, constantRoutes } from '../static_data/routes.js'
-import db_roles from '../static_data/roles'
+import { deepClone } from '../../../src/utils/index.js'
+import { asyncRoutes, constantRoutes } from '../../static_data/routes.js'
+import db_roles from '../../static_data/roles'
 const routes = deepClone([...constantRoutes, ...asyncRoutes])
 
 export default [

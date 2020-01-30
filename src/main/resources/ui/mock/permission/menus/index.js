@@ -1,5 +1,5 @@
-import rootMenus from '../static_data/root_menus'
-import menus from '../static_data/menus'
+import rootMenus from '../../static_data/root_menus'
+import menus from '../../static_data/menus'
 export default [
 
   {

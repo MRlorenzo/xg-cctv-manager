@@ -44,7 +44,7 @@
 
       <el-form-item>
         <!-- 搜索按钮 -->
-        <el-button type="primary" @click="loadData">
+        <el-button type="primary" @click="doSearch = true">
           Search
         </el-button>
       </el-form-item>
@@ -65,73 +65,12 @@
     </el-form>
 
     <!-- 用户列表 -->
-    <el-table :data="userList" style="width: 100%;margin-top:30px;" border>
-      <!-- 名称 -->
-      <el-table-column align="center" label="Name" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.username }}
-        </template>
-      </el-table-column>
-
-      <!-- 部门 -->
-      <el-table-column align="header-center" label="Department">
-        <template slot-scope="scope">
-          {{ scope.row.department | departmentText }}
-        </template>
-      </el-table-column>
-
-      <!-- 角色列表 -->
-      <el-table-column align="header-center" label="Roles">
-        <template slot-scope="scope">
-          {{ scope.row.roles | rolesText}}
-        </template>
-      </el-table-column>
-
-      <!-- 描述 -->
-      <el-table-column align="header-center" label="Description">
-        <template slot-scope="scope">
-          {{ scope.row.description  }}
-        </template>
-      </el-table-column>
-
-      <!--状态: 0 禁用 1 正常-->
-      <el-table-column align="header-center" label="Status">
-        <template slot-scope="scope">
-          {{ scope.row.status | statusText}}
-        </template>
-      </el-table-column>
-
-      <!--创建时间-->
-      <el-table-column align="header-center" label="CreateTime">
-        <template slot-scope="scope">
-          {{ scope.row.createTime }}
-        </template>
-      </el-table-column>
-
-      <!--操作-->
-      <el-table-column align="center" label="Operations">
-        <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleEdit(scope)">
-            {{ $t('permission.editUser') }}
-          </el-button>
-          <el-button type="danger" size="small" @click="handleDelete(scope)">
-            {{ $t('permission.delete') }}
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <div class="block">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currPage"
-        :page-sizes="[5, 10, 15, 20]"
-        :page-size="pageLimit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="page.total">
-      </el-pagination>
-    </div>
+    <user-list
+      :query="q"
+      :do-search="doSearch"
+      @toBeSearch="bl=>doSearch = bl"
+      :handle-edit="handleEdit"
+      :handle-delete="handleDelete"/>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Department':'New Department'">
       <el-form :model="user" label-width="80px" label-position="left">
@@ -204,10 +143,11 @@
 
 <script>
   import { deepClone } from '@/utils'
-  import { getDataPage , delUser, updateUser , addUser} from "@/api/user";
+  import { delUser, updateUser , addUser} from "@/api/user";
   import { getRoles } from '@/api/role'
   import { getDepartments } from '@/api/department'
   import BackToTop from '@/components/BackToTop'
+  import UserList from './components/UserList'
 
   const defaultUser = {
     username: '',
@@ -229,13 +169,11 @@
 
   export default {
     name: "users",
-    components: { BackToTop },
+    components: { BackToTop , UserList},
     data(){
       return {
         user: Object.assign({} ,defaultUser),
-        pageLimit: 5,
-        currPage: 1,
-        page: { records: []},
+        doSearch: false,
         dialogVisible: false,
         dialogType: 'new',
         queryText: '',
@@ -257,26 +195,8 @@
         }
       }
     },
-    filters: {
-      statusText( status ){
-        return {
-          '0': '禁用',
-          '1': '正常'
-        }[status]
-      }
-    },
-    computed: {
-      userList(){
-        return this.page.records
-      }
-    },
+
     watch:{
-      currPage() {
-        this.loadData()
-      },
-      pageLimit(){
-        this.loadData()
-      },
       searchTime( times ){
         if (times == null){
           return
@@ -291,15 +211,10 @@
       }
     },
     created(){
-      this.loadData()
       this.getRoles()
       this.getDepartments()
     },
     methods: {
-      async loadData(){
-        const res = await getDataPage(Object.assign({current: this.currPage , size: this.pageLimit} , this.q))
-        this.page = res.data
-      },
       async getRoles() {
         const res = await getRoles()
         this.rolesList = res.data
@@ -333,7 +248,7 @@
         })
           .then(async() => {
             await delUser(row.userId)
-            this.loadData()
+            this.doSearch = true
             this.$message({
               type: 'success',
               message: 'Delete succed!'
@@ -356,7 +271,7 @@
         }
 
         if (this.currPage === 1 ){
-          this.loadData()
+          this.doSearch = true
         }
 
         const { description, username } = this.user
@@ -371,12 +286,6 @@
           type: 'success'
         })
         this.roleIds = []
-      },
-      handleSizeChange(val) {
-        this.pageLimit = val
-      },
-      handleCurrentChange(val) {
-        this.currPage = val
       },
       resetQueryData(){
         this.q = Object.assign({} , defaultQueryData)

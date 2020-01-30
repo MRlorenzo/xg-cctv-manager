@@ -1,5 +1,7 @@
 <template>
+  <div class="app-container">
 
+  </div>
 </template>
 
 <script>
@@ -9,5 +11,7 @@
 </script>
 
 <style scoped>
+  .app-container {
 
+  }
 </style>
