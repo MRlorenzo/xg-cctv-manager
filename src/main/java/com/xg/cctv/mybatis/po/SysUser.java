@@ -59,6 +59,41 @@ public class SysUser extends Model<SysUser> {
     private String description;
 
     /**
+     * 序号
+     */
+    private String no;
+
+    /**
+     * 姓名
+     */
+    private String nickName;
+
+    /**
+     * 工号
+     */
+    private String workNo;
+
+    /**
+     * 国籍
+     */
+    private String nationality;
+
+    /**
+     * 照片
+     */
+    private String avatar;
+
+    /**
+     * 职位
+     */
+    private String position;
+
+    /**
+     * 聘用日期
+     */
+    private Date hireDate;
+
+    /**
      * 角色列表（关联sysRole）
      */
     @TableField(exist=false)

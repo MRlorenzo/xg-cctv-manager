@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xg.cctv.mybatis.mapper.IncidentLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.IncidentLog">
+                <id column="id" property="id" />
+                <result column="date" property="date" />
+                <result column="time" property="time" />
+                <result column="table_code" property="tableCode" />
+                <result column="code" property="code" />
+                <result column="coin_code" property="coinCode" />
+                <result column="total" property="total" />
+                <result column="report" property="report" />
+                <result column="involve_uid" property="involveUid" />
+                <result column="department_id" property="departmentId" />
+                <result column="monitor" property="monitor" />
+                <result column="remarks" property="remarks" />
+                <result column="create_uid" property="createUid" />
+                <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, date, time, table_code, code, coin_code, total, report, involve_uid, department_id, monitor, remarks, create_uid, create_time
+    </sql>
+</mapper>

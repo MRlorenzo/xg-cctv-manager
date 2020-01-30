@@ -4,14 +4,21 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.SysUser">
-                <id column="user_id" property="userId" />
-                <result column="username" property="username" />
-                <result column="password" property="password" />
-                <result column="status" property="status" />
-                <result column="create_user_id" property="createUserId" />
-                <result column="create_time" property="createTime" />
-                <result column="department_id" property="departmentId" />
-                <result column="description" property="description" />
+        <id column="user_id" property="userId" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="status" property="status" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_time" property="createTime" />
+        <result column="department_id" property="departmentId" />
+        <result column="description" property="description" />
+        <result column="no" property="no"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="work_no" property="workNo"/>
+        <result column="nationality" property="nationality"/>
+        <result column="avatar" property="avatar"/>
+        <result column="position" property="position"/>
+        <result column="hire_date" property="hireDate"/>
     </resultMap>
 
     <resultMap id="allInfo" type="com.xg.cctv.mybatis.po.SysUser" extends="BaseResultMap">
@@ -22,7 +29,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, username, password, status, create_user_id, create_time, department_id, description
+        user_id, username, password, status, create_user_id, create_time, department_id, description, no ,nick_name,work_no,nationality,avatar,position,hire_date
     </sql>
 
     <select id="queryByUserName" resultMap="allInfo">

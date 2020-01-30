@@ -24,7 +24,7 @@ import java.util.*;
 public class MybatisPlusGenerator {
 
     // 项目根目录
-    private static final String PROJECT_PATH = "D:\\docs\\works\\idea\\cctv";
+    private static final String PROJECT_PATH = "D:\\docs\\works\\idea\\xg-cctv-manager";
     // 包名
     private static final String PROJECT_ROOT_PACKAGE = "com.xg.cctv";
     // ModuleName
@@ -43,7 +43,7 @@ public class MybatisPlusGenerator {
     // DriverName
     private static final String DB_DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     // url
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/test?useSSL=false&useUnicode=true&characterEncoding=UTF-8&useTimezone=true&serverTimezone=GMT%2B8";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/test2?useSSL=false&useUnicode=true&characterEncoding=UTF-8&useTimezone=true&serverTimezone=GMT%2B8";
     // username
     private static final String DB_USERNAME = "root";
     // password
