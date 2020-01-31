@@ -84,7 +84,7 @@
       },
       methods: {
         toBeChangeSearch( bl ){
-          this.$emit('toBeSearch' , bl)
+          this.$emit('update:toSearch' , bl)
         },
         async loadData(){
           this.toBeChangeSearch(false)
