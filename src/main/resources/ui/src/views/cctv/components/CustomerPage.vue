@@ -2,6 +2,58 @@
   <div>
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
 
+      <!--序号-->
+      <!--
+      <el-table-column align="center" label="" width="220">
+        <template slot-scope="scope">
+          {{ scope.row }}
+        </template>
+      </el-table-column>
+      -->
+      <!--姓名-->
+      <el-table-column align="center" label="name" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <!--卡号-->
+      <el-table-column align="center" label="cardNumber" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.cardNumber }}
+        </template>
+      </el-table-column>
+      <!--位置-->
+      <el-table-column align="center" label="location" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.location }}
+        </template>
+      </el-table-column>
+      <!--平均下注-->
+      <el-table-column align="center" label="avgBetting" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.avgBetting }}
+        </template>
+      </el-table-column>
+      <!--国籍-->
+      <el-table-column align="center" label="nationality" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.nationality }}
+        </template>
+      </el-table-column>
+      <!--照片-->
+      <el-table-column align="center" label="photo" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.photo }}
+        </template>
+      </el-table-column>
+      <!--状态-->
+      <el-table-column align="center" label="status" width="220">
+        <template slot-scope="scope">
+          {{ scope.row.status }}
+        </template>
+      </el-table-column>
+
+
       <!--操作-->
       <el-table-column align="center" label="Operations">
         <template slot-scope="scope">

@@ -2,6 +2,31 @@
   <div>
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
 
+      <!--事件标题-->
+      <!--
+      <el-table-column align="center" label="" width="220">
+        <template slot-scope="scope">
+          {{ scope.row }}
+        </template>
+      </el-table-column>
+      -->
+      <!--代码-->
+      <!--
+      <el-table-column align="center" label="" width="220">
+        <template slot-scope="scope">
+          {{ scope.row }}
+        </template>
+      </el-table-column>
+      -->
+      <!--详细-->
+      <!--
+      <el-table-column align="center" label="" width="220">
+        <template slot-scope="scope">
+          {{ scope.row }}
+        </template>
+      </el-table-column>
+      -->
+
       <!--操作-->
       <el-table-column align="center" label="Operations">
         <template slot-scope="scope">

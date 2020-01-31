@@ -1,5 +1,6 @@
 package com.xg.cctv.mybatis.po;
 
+import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lorenzo
- * @since 2020-01-31
+ * @since 2020-02-01
  */
 public class FillCreditLog extends Model<FillCreditLog> {
 
@@ -47,6 +48,11 @@ public class FillCreditLog extends Model<FillCreditLog> {
      * 台号
      */
     private String tableCode;
+
+    /**
+     * 金额
+     */
+    private BigDecimal total;
 
     /**
      * 币种
@@ -122,6 +128,14 @@ public class FillCreditLog extends Model<FillCreditLog> {
         this.tableCode = tableCode;
     }
 
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
     public String getCoinCode() {
         return coinCode;
     }
@@ -176,6 +190,7 @@ public class FillCreditLog extends Model<FillCreditLog> {
         ", date=" + date +
         ", time=" + time +
         ", tableCode=" + tableCode +
+        ", total=" + total +
         ", coinCode=" + coinCode +
         ", alerterName=" + alerterName +
         ", monitor=" + monitor +

@@ -47,7 +47,7 @@ public class Customer extends Model<Customer> {
     /**
      * 国籍
      */
-    private String nationality:;
+    private String nationality;
 
     /**
      * 照片
@@ -110,12 +110,12 @@ public class Customer extends Model<Customer> {
         this.avgBetting = avgBetting;
     }
 
-    public String getNationality:() {
-        return nationality:;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setNationality:(String nationality:) {
-        this.nationality: = nationality:;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public String getPhoto() {
@@ -163,7 +163,7 @@ public class Customer extends Model<Customer> {
         ", cardNumber=" + cardNumber +
         ", location=" + location +
         ", avgBetting=" + avgBetting +
-        ", nationality:=" + nationality: +
+        ", nationality:=" + nationality +
         ", photo=" + photo +
         ", status=" + status +
         ", createUid=" + createUid +
