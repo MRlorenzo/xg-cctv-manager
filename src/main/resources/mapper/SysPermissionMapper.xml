@@ -8,14 +8,13 @@
                 <result column="path" property="path" />
                 <result column="pid" property="pid" />
                 <result column="is_del" property="isDel" />
-                <result column="sort" property="sort" />
                 <result column="perms" property="perms" />
                 <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, path, pid, is_del, sort, perms, description
+        id, path, pid, is_del, perms, description
     </sql>
 
     <select id="queryPermissionByRoleId" resultMap="BaseResultMap">

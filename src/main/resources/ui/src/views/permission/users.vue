@@ -67,8 +67,7 @@
     <!-- 用户列表 -->
     <user-page
       :query="q"
-      :do-search="doSearch"
-      @toBeSearch="bl=>doSearch = bl"
+      :do-search.sync="doSearch"
       :handle-edit="handleEdit"
       :handle-delete="handleDelete"/>
 

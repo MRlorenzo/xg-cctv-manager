@@ -37,7 +37,6 @@ public class SysPermission extends Model<SysPermission> {
      */
     private Integer isDel;
 
-    private Integer sort;
 
     /**
      * 权限字符串
@@ -82,14 +81,6 @@ public class SysPermission extends Model<SysPermission> {
         this.isDel = isDel;
     }
 
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
     public String getPerms() {
         return perms;
     }
@@ -118,7 +109,6 @@ public class SysPermission extends Model<SysPermission> {
         ", path=" + path +
         ", pid=" + pid +
         ", isDel=" + isDel +
-        ", sort=" + sort +
         ", perms=" + perms +
         ", description=" + description +
         "}";
