@@ -71,7 +71,7 @@
       :handle-edit="handleEdit"
       :handle-delete="handleDelete"/>
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Department':'New Department'">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit User':'New User'">
       <el-form :model="user" label-width="80px" label-position="left">
 
         <!--名称-->

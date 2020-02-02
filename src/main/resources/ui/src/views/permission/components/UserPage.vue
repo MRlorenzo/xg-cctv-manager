@@ -152,6 +152,11 @@
         handleCurrentChange(val) {
           this.currPage = val
         }
+      },
+      created(){
+        if ( this.doSearch ){
+          this.loadData()
+        }
       }
     }
 </script>

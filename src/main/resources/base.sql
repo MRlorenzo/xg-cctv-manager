@@ -139,6 +139,13 @@ CREATE TABLE `sys_user` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `department_id` bigint(20) DEFAULT NULL COMMENT '部门id',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
+  `no` varchar(255) DEFAULT NULL COMMENT '序号',
+  `nick_name` varchar(64) DEFAULT NULL COMMENT '姓名',
+  `work_no` varchar(64) DEFAULT NULL COMMENT '工号',
+  `nationality` varchar(64) DEFAULT NULL COMMENT '国籍',
+  `avatar` varchar(255) DEFAULT NULL COMMENT '照片',
+  `position` varchar(64) DEFAULT NULL COMMENT '职位',
+  `hire_date` datetime DEFAULT NULL COMMENT '聘用日期',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=677 DEFAULT CHARSET=utf8 COMMENT='系统用户';
@@ -146,9 +153,9 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', null, '2016-11-11 11:11:11', '4', '管理员');
-INSERT INTO `sys_user` VALUES ('675', 'test', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', null, '2020-01-25 19:29:31', '10', 'test');
-INSERT INTO `sys_user` VALUES ('676', 'test2', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', null, '2020-01-25 19:31:15', '10', 'test');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', null, '2016-11-11 11:11:11', '4', '管理员', null, null, null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('675', 'test', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', null, '2020-01-25 19:29:31', '10', 'test', null, null, null, null, null, null, null);
+INSERT INTO `sys_user` VALUES ('676', 'test2', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', null, '2020-01-25 19:31:15', '10', 'test', null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user_role

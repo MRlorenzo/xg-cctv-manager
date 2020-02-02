@@ -109,7 +109,7 @@
       },
       methods: {
         toBeChangeSearch( bl ){
-          this.$emit('update:toSearch' , bl)
+          this.$emit('update:doSearch' , bl)
         },
         async loadData(){
           this.toBeChangeSearch(false)
@@ -127,6 +127,11 @@
         },
         handleCurrentChange(val) {
           this.currPage = val
+        }
+      },
+      created(){
+        if ( this.doSearch ){
+          this.loadData()
         }
       }
     }
