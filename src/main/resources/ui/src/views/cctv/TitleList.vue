@@ -11,12 +11,12 @@
 
       <el-form-item>
         <!-- 重置按钮 -->
-        <el-button @click="resetQueryData" >
+        <el-button @click="resetQueryData">
           Reset
         </el-button>
       </el-form-item>
 
-      <el-form-item >
+      <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
           Add
@@ -28,11 +28,15 @@
       :query="q"
       :do-search.sync="doSearch"
       :handle-edit="handleEdit"
-      :handle-delete="handleDelete"/>
+      :handle-delete="handleDelete"
+    />
 
-    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit User':'New User'">
+    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
       <el-form :model="d" label-width="80px" label-position="left">
-
+        <!--序号-->
+        <!--<el-form-item label="">
+          <el-input v-model="d.no" placeholder="No" />
+        </el-form-item>-->
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
@@ -47,31 +51,31 @@
 </template>
 
 <script>
-  import TitleListPage from './components/TitleListPage'
-  export default {
-    name: "title-list",
-    components: { TitleListPage },
-    data(){
-      return {
-        q: {},
-        d: {},
-        doSearch: true,
-        showMark: false,
-        dialogType: 'edit' , // 'edit' or 'new'
-      }
-    },
-    methods: {
-      resetQueryData(){},
-      handleAdd(){},
-      handleEdit( scope ){
-
-      },
-      handleDelete({ $index, row }){
-
-      },
-      confirm(){}
+import TitleListPage from './components/TitleListPage'
+export default {
+  name: 'TitleList',
+  components: { TitleListPage },
+  data() {
+    return {
+      q: {},
+      d: {},
+      doSearch: true,
+      showMark: false,
+      dialogType: 'edit' // 'edit' or 'new'
     }
+  },
+  methods: {
+    resetQueryData() {},
+    handleAdd() {},
+    handleEdit(scope) {
+
+    },
+    handleDelete({ $index, row }) {
+
+    },
+    confirm() {}
   }
+}
 </script>
 
 <style scoped>

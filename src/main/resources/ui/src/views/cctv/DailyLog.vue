@@ -11,12 +11,12 @@
 
       <el-form-item>
         <!-- 重置按钮 -->
-        <el-button @click="resetQueryData" >
+        <el-button @click="resetQueryData">
           Reset
         </el-button>
       </el-form-item>
 
-      <el-form-item >
+      <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
           Add
@@ -29,11 +29,67 @@
       :query="q"
       :do-search.sync="doSearch"
       :handle-edit="handleEdit"
-      :handle-delete="handleDelete"/>
+      :handle-delete="handleDelete"
+    />
 
-    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit User':'New User'">
+    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
       <el-form :model="d" label-width="80px" label-position="left">
+        <!--序号-->
+        <el-form-item label="序号">
+          <el-input v-model="d.no" placeholder="No" />
+        </el-form-item>
+        <!--日期-->
+        <el-form-item label="日期">
+          <el-date-picker
+            v-model="d.date"
+            type="datetime"
+            placeholder="选择日期"
+          />
+        </el-form-item>
 
+        <!--台号-->
+        <el-form-item label="台号">
+          <el-input v-model="d.tableCode" placeholder="" />
+        </el-form-item>
+        <!--主题-->
+        <el-form-item label="主题">
+          <el-input v-model="d.subject" placeholder="" />
+        </el-form-item>
+        <!--细节-->
+        <el-form-item label="细节">
+          <el-input v-model="d.details" placeholder="" />
+        </el-form-item>
+        <!--通知人-->
+        <el-form-item label="通知人">
+          <el-input v-model="d.alerterName" placeholder="" />
+        </el-form-item>
+        <!--部门-->
+        <el-form-item label="部门">
+          <el-input v-model="d.departmentId" placeholder="" />
+        </el-form-item>
+        <!--监控部-->
+        <el-form-item label="监控部">
+          <el-input v-model="d.monitor" placeholder="" />
+        </el-form-item>
+        <!--结论-->
+        <el-form-item label="结论">
+          <el-input v-model="d.conclusion" placeholder="" />
+        </el-form-item>
+
+        <!--图片-->
+        <el-form-item label="图片">
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            list-type="picture"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
@@ -49,33 +105,43 @@
 </template>
 
 <script>
-  import DailyLogPage from './components/DailyLogPage'
-  export default {
-    name: "daily-log",
-    components: { DailyLogPage },
-    data(){
-      return {
-        q: {},
-        d: {},
-        doSearch: true,
-        showMark: false,
-        dialogType: 'edit' , // 'edit' or 'new'
-      }
+import DailyLogPage from './components/DailyLogPage'
+export default {
+  name: 'DailyLog',
+  components: { DailyLogPage },
+  data() {
+    return {
+      q: {},
+      d: {},
+      doSearch: true,
+      showMark: false,
+      dialogType: 'edit', // 'edit' or 'new'
+      fileList: []
+    }
+  },
+  methods: {
+    resetQueryData() {
+
     },
-    methods: {
-      resetQueryData(){
+    handleAdd() {
+      this.showMark = true
+    },
+    handleEdit(scope) {
 
-      },
-      handleAdd(){},
-      handleEdit( scope ){
+    },
+    handleDelete({ $index, row }) {
 
-      },
-      handleDelete({ $index, row }){
-
-      },
-      confirm(){}
+    },
+    confirm() {},
+    // upload
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      console.log(file)
     }
   }
+}
 </script>
 
 <style scoped>
