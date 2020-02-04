@@ -1,4 +1,17 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
+const storage = window.sessionStorage
+// 修改存储介质
+const Cookies = {
+  get(key) {
+    return storage.getItem(key)
+  },
+  set(key, value) {
+    storage.setItem(key, value)
+  },
+  remove(key) {
+    storage.removeItem(key)
+  }
+}
 
 const TokenKey = 'sid'
 
