@@ -74,9 +74,24 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit User':'New User'">
       <el-form :model="user" label-width="80px" label-position="left">
 
+        <!--序号-->
+        <el-form-item label="No">
+          <el-input v-model="user.no" />
+        </el-form-item>
+
+        <!--用户名-->
+        <el-form-item label="account">
+          <el-input v-model="user.username" placeholder="User Name" />
+        </el-form-item>
+
+        <!--工号-->
+        <el-form-item label="工号">
+          <el-input v-model="user.workNo" placeholder="User Name" />
+        </el-form-item>
+
         <!--名称-->
         <el-form-item label="Name">
-          <el-input v-model="user.username" placeholder="User Name" />
+          <el-input v-model="user.nickName" />
         </el-form-item>
 
         <!--密码-->
@@ -109,6 +124,27 @@
               :value="role.id">
             </el-option>
           </el-select>
+        </el-form-item>
+
+        <!--聘用日期-->
+        <el-form-item label="聘用日期">
+          <el-input type="password" v-model="user.hireDate" />
+        </el-form-item>
+        <!--职位-->
+        <el-form-item label="职位">
+          <el-input type="password" v-model="user.position" />
+        </el-form-item>
+        <!--国籍-->
+        <el-form-item label="国籍">
+          <el-input type="password" v-model="user.nationality" />
+        </el-form-item>
+        <!--照片-->
+        <el-form-item label="照片">
+          <avatar-image :url.sync="user.avatar"/>
+        </el-form-item>
+        <!--状态  0：禁用   1：正常-->
+        <el-form-item label="状态">
+          <el-input type="password" v-model="user.status" />
         </el-form-item>
 
         <!-- 描述-->
@@ -147,6 +183,7 @@
   import { getDepartments } from '@/api/department'
   import BackToTop from '@/components/BackToTop'
   import UserPage from './components/UserPage'
+  import AvatarImage from '@/components/Upload/AvatarImage'
 
   const defaultUser = {
     username: '',
@@ -168,7 +205,7 @@
 
   export default {
     name: "users",
-    components: { BackToTop , UserPage},
+    components: { BackToTop , UserPage, AvatarImage},
     data(){
       return {
         user: Object.assign({} ,defaultUser),
