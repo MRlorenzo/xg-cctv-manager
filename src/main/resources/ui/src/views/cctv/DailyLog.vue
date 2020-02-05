@@ -78,17 +78,7 @@
 
         <!--图片-->
         <el-form-item label="图片">
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            list-type="picture"
-          >
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
+          <multiple-images :urls.sync="imageURLS"/>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -106,9 +96,10 @@
 
 <script>
 import DailyLogPage from './components/DailyLogPage'
+import MultipleImages from '@/components/Upload/MultipleImages'
 export default {
   name: 'DailyLog',
-  components: { DailyLogPage },
+  components: { DailyLogPage, MultipleImages },
   data() {
     return {
       q: {},
@@ -116,7 +107,7 @@ export default {
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
-      fileList: []
+      imageURLS: []
     }
   },
   methods: {
@@ -132,13 +123,8 @@ export default {
     handleDelete({ $index, row }) {
 
     },
-    confirm() {},
-    // upload
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview(file) {
-      console.log(file)
+    confirm() {
+      this.imageURLS = []
     }
   }
 }
