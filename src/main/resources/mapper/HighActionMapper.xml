@@ -18,10 +18,11 @@
                 <result column="remarks" property="remarks" />
                 <result column="create_uid" property="createUid" />
                 <result column="create_time" property="createTime" />
+                <result column="urls" property="urls" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, no, date, time, table_code, code, coin_code, total, report, involve_uid, monitor, remarks, create_uid, create_time
+        id, no, date, time, table_code, code, coin_code, total, report, involve_uid, monitor, remarks, create_uid, create_time, urls
     </sql>
 </mapper>

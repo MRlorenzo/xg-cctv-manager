@@ -15,7 +15,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lorenzo
- * @since 2020-01-30
+ * @since 2020-02-05
  */
 public class DailyLog extends Model<DailyLog> {
 
@@ -77,6 +77,11 @@ public class DailyLog extends Model<DailyLog> {
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 图片路径以','分割
+     */
+    private String urls;
 
 
     public Long getId() {
@@ -175,6 +180,14 @@ public class DailyLog extends Model<DailyLog> {
         this.createTime = createTime;
     }
 
+    public String getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -195,6 +208,7 @@ public class DailyLog extends Model<DailyLog> {
         ", conclusion=" + conclusion +
         ", createUid=" + createUid +
         ", createTime=" + createTime +
+        ", urls=" + urls +
         "}";
     }
 }

@@ -84,7 +84,7 @@
 
         <!--图片-->
         <el-form-item label="图片">
-          <multiple-images :urls.sync="imageURLS"/>
+          <multiple-images :urls.sync="d.urls"/>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -108,11 +108,10 @@ export default {
   data() {
     return {
       q: {},
-      d: {},
+      d: { urls: ''},
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
-      fileList: []
     }
   },
   methods: {

@@ -19,8 +19,8 @@
     name: "multiple-images",
     props: {
       urls: {
-        type: Array,
-        default: []
+        type: String,
+        default: ''
       }
     },
     data(){
@@ -32,12 +32,15 @@
     watch: {
       uploadedFileMap: {
         handler( map ){
-          this.toBeChangeURLS(Object.values(map).filter(e=>e))
+          this.toBeChangeURLS(Object.values(map).filter(e=>e).join(','))
         },
         deep: true
       },
-      urls( list ){
-        if (list.length === 0 && Object.keys(this.uploadedFileMap).length){
+      urls( str ){
+        if (typeof str !== 'string'){
+          this.uploadedFileMap = {}
+          this.fileList = []
+        }else if (typeof str === 'string' && str.length === 0 && Object.keys(this.uploadedFileMap).length){
           this.uploadedFileMap = {}
           this.fileList = []
         }

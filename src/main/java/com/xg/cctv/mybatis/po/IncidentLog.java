@@ -16,7 +16,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lorenzo
- * @since 2020-01-30
+ * @since 2020-02-05
  */
 public class IncidentLog extends Model<IncidentLog> {
 
@@ -88,6 +88,11 @@ public class IncidentLog extends Model<IncidentLog> {
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 图片路径以','分割
+     */
+    private String urls;
 
 
     public Long getId() {
@@ -202,6 +207,14 @@ public class IncidentLog extends Model<IncidentLog> {
         this.createTime = createTime;
     }
 
+    public String getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -224,6 +237,7 @@ public class IncidentLog extends Model<IncidentLog> {
         ", remarks=" + remarks +
         ", createUid=" + createUid +
         ", createTime=" + createTime +
+        ", urls=" + urls +
         "}";
     }
 }
