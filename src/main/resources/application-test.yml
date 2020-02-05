@@ -5,3 +5,6 @@ spring:
     password: it123456
   redis:
     host: server
+
+upload:
+  path: "D:\\TEMP"

@@ -5,3 +5,6 @@ spring:
     password: '!QAZ@WSX#EDC'
   redis:
     host: localhost
+
+upload:
+  path: "/home/upload"

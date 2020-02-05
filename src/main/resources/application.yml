@@ -135,3 +135,6 @@ shiro:
 server:
   servlet:
     context-path: /cctv
+
+upload:
+  path: "D:\\TEMP"

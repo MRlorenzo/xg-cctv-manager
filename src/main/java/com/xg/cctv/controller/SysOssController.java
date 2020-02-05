@@ -3,6 +3,7 @@ package com.xg.cctv.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.util.FileUpload;
 import com.xg.cctv.exception.RRException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,9 @@ public class SysOssController {
     @Autowired
     public SysOssService iSysOssService;
 
+    @Value("${upload.path}")
+    private String basePath;
+
     /**
      * 分页查询数据
      *
@@ -42,20 +46,6 @@ public class SysOssController {
     }
 
     /**
-     * 保存和修改公用的
-     * @param sysOss 传递的实体
-     * @return R
-     */
-    /*@PostMapping("/save")
-    public R sysOssSave(@RequestBody SysOss sysOss){
-        boolean rs = iSysOssService.saveOrUpdate(sysOss);
-        if (rs){
-            return R.ok();
-        }
-        return R.error();
-    }*/
-
-    /**
      * 本地上传文件
      */
     @RequestMapping("/upload")
@@ -66,7 +56,7 @@ public class SysOssController {
         }
 
         //上传文件
-        String url = FileUpload.upload(file.getBytes(), file.getOriginalFilename());
+        String url = FileUpload.upload(basePath , file.getBytes(), file.getOriginalFilename());
         if(StringUtils.isEmpty(url)){
             return R.error();
         }

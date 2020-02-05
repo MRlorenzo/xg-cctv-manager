@@ -19,18 +19,14 @@ public final class FileUpload {
 
 	private final static byte[] EMPTY_BYTE =  new byte[0];
 
-	/**
-	 * 本地路径
-	 */
-	public static String LOCAL_PATH = "D:\\TEMP";
 
 	/**
 	 * 上传
-	 *
+	 * @param basePath 根路径
 	 * @param data 上传的文件字节码
 	 * @param filename 文件名
 	 */
-	public static String upload(byte[] data, String filename) {
+	public static String upload(String basePath , byte[] data, String filename){
 		String path;
 		FileImageOutputStream out = null;
 		try {
@@ -43,12 +39,12 @@ public final class FileUpload {
 
 			// uuid文件名
 			String fname = UUID.randomUUID().toString().replaceAll("-", "");
-			File catalogFile = new File(LOCAL_PATH + File.separator + catalog);
+			File catalogFile = new File(basePath + File.separator + catalog);
 			if (!catalogFile.exists()) {
 				catalogFile.mkdir();
 			}
 			path = File.separator + catalog + File.separator + fname + "." + suffix;
-			File file = new File(LOCAL_PATH + path);
+			File file = new File(basePath + path);
 			file.createNewFile();
 			out = new FileImageOutputStream(file);
 			out.write(data);
@@ -83,8 +79,8 @@ public final class FileUpload {
 	 * @param shortUrl
 	 * @return
 	 */
-	public static String getBase64(Object shortUrl){
-		byte[] data = getFileByteArray(shortUrl);
+	public static String getBase64(String basePath ,Object shortUrl){
+		byte[] data = getFileByteArray(basePath , shortUrl);
 		if(data == null){
 			return null;
 		}
@@ -97,16 +93,17 @@ public final class FileUpload {
 
 	/**
 	 * 获取文件byte数组
+	 * @param basePath
 	 * @param shortUrl
 	 * @return
 	 */
-	public static byte[] getFileByteArray(Object shortUrl){
+	public static byte[] getFileByteArray(String basePath , Object shortUrl){
 		if(StringUtils.isEmpty(shortUrl)){
 			return EMPTY_BYTE;
 		}
 		InputStream in = null;
 		try {
-			in = new FileInputStream(LOCAL_PATH + shortUrl);
+			in = new FileInputStream(basePath + shortUrl);
 			byte[] data = new byte[in.available()];
 			in.read(data);
 			return data;

@@ -7,3 +7,6 @@ spring:
     host: localhost
 server:
   port: 8081
+
+upload:
+  path: "D:\\TEMP"
