@@ -30,7 +30,7 @@ public class SysOssController {
     @Autowired
     public SysOssService iSysOssService;
 
-    @Value("${upload.path}")
+    @Value("${local.fileserver.dir}")
     private String basePath;
 
     /**

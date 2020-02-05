@@ -8,5 +8,7 @@ spring:
 server:
   port: 8081
 
-upload:
-  path: "D:\\TEMP"
+local:
+  fileserver:
+    dir:  "D:\\TEMP"
+    path: file

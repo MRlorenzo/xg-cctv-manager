@@ -136,5 +136,7 @@ server:
   servlet:
     context-path: /cctv
 
-upload:
-  path: "D:\\TEMP"
+local:
+  fileserver:
+    dir:  "D:\\TEMP"
+    path: file

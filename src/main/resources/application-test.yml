@@ -6,5 +6,7 @@ spring:
   redis:
     host: server
 
-upload:
-  path: "D:\\TEMP"
+local:
+  fileserver:
+    dir:  "/home/upload"
+    path: file
