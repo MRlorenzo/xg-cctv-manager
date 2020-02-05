@@ -49,7 +49,25 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
      * @return
      */
     public QueryWrapper<Customer> getQueryWrapper(QueryWrapper<Customer> queryWrapper,Customer customer){
-        //条件拼接
+        // 条件拼接
+        if (customer == null){
+            return queryWrapper;
+        }
+
+        // 模糊匹配卡号
+        if (customer.getCardNumber() != null){
+            queryWrapper.like("card_number" , customer.getCardNumber());
+        }
+
+        // 匹配位置
+        if (customer.getLocation() != null){
+            queryWrapper.eq("location" , customer.getLocation());
+        }
+
+        // 匹配状态
+        if (customer.getStatus() != null){
+            queryWrapper.eq("status" , customer.getStatus());
+        }
     
         return queryWrapper;
     }

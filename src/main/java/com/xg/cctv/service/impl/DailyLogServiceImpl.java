@@ -50,6 +50,25 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
      */
     public QueryWrapper<DailyLog> getQueryWrapper(QueryWrapper<DailyLog> queryWrapper,DailyLog dailyLog){
         //条件拼接
+        if (dailyLog == null){
+            return queryWrapper;
+        }
+
+        if (dailyLog.getTableCode() != null){
+            queryWrapper.like("table_code" , dailyLog.getTableCode());
+        }
+
+        if (dailyLog.getSubject() != null){
+            queryWrapper.eq("subject" , dailyLog.getSubject());
+        }
+
+        if (dailyLog.getDepartmentId() != null){
+            queryWrapper.eq("department_id" , dailyLog.getDepartmentId());
+        }
+
+        if (dailyLog.getMonitor() != null){
+            queryWrapper.eq("monitor" , dailyLog.getMonitor());
+        }
     
         return queryWrapper;
     }

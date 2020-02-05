@@ -71,6 +71,7 @@ export default {
     incidentLog: 'IncidentLog',
     highAction: 'HighAction',
     titleList: 'TitleList',
+    titleSubject: 'TitleSubject',
     fill: 'Fill',
     credit: 'Credit',
     customer: 'Customer'

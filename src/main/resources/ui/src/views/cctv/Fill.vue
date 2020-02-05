@@ -2,6 +2,21 @@
   <div class="app-container">
     <el-form :inline="true">
 
+      <!--序号-->
+      <el-form-item label="序号">
+        <el-input v-model="q.no" placeholder="No" />
+      </el-form-item>
+
+      <!--台号-->
+      <el-form-item label="台号">
+        <el-input v-model="q.tableCode" placeholder="No" />
+      </el-form-item>
+
+      <!--币种-->
+      <el-form-item label="币种">
+        <el-input v-model="q.coinCode" placeholder="No" />
+      </el-form-item>
+
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">

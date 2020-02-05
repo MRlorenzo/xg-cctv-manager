@@ -50,7 +50,34 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
      */
     public QueryWrapper<IncidentLog> getQueryWrapper(QueryWrapper<IncidentLog> queryWrapper,IncidentLog incidentLog){
         //条件拼接
-    
+        if (incidentLog == null){
+            return queryWrapper;
+        }
+
+        if (incidentLog.getTableCode() != null){
+            queryWrapper.like("table_code" , incidentLog.getTableCode());
+        }
+
+        if (incidentLog.getCode() != null){
+            queryWrapper.like("code" , incidentLog.getCode());
+        }
+
+        if (incidentLog.getCoinCode() != null){
+            queryWrapper.eq("coin_code" , incidentLog.getCoinCode());
+        }
+
+        if (incidentLog.getInvolveUid() != null){
+            queryWrapper.eq("involve_uid", incidentLog.getInvolveUid());
+        }
+
+        if (incidentLog.getDepartmentId() != null){
+            queryWrapper.eq("department_id" , incidentLog.getDepartmentId());
+        }
+
+        if (incidentLog.getMonitor() != null){
+            queryWrapper.eq("monitor" , incidentLog.getMonitor());
+        }
+
         return queryWrapper;
     }
 }

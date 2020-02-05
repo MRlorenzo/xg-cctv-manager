@@ -71,6 +71,7 @@ export default {
     incidentLog: '事件报告',
     highAction: '高额活动',
     titleList: '事件名称及编号',
+    titleSubject: '事件主题',
     fill: '加彩日志',
     credit: '缴码日志',
     customer: '玩家清单'

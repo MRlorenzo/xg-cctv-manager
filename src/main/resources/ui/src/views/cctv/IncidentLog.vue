@@ -2,6 +2,40 @@
   <div class="app-container">
     <el-form :inline="true">
 
+      <!--台号-->
+      <el-form-item label="台号">
+        <el-input v-model="q.tableCode" placeholder="No" />
+      </el-form-item>
+      <!--事件编码-->
+      <el-form-item label="事件编码">
+        <el-input v-model="q.code" placeholder="No" />
+      </el-form-item>
+      <!--币种-->
+      <el-form-item label="币种">
+        <el-input v-model="q.coinCode" placeholder="No" />
+      </el-form-item>
+
+      <!--报告-->
+      <el-form-item label="报告">
+        <el-input v-model="q.report" placeholder="No" />
+      </el-form-item>
+      <!--涉及员工-->
+      <el-form-item label="涉及员工">
+        <el-input v-model="q.involveUid" placeholder="No" />
+      </el-form-item>
+      <!--部门id-->
+      <el-form-item label="部门">
+        <el-input v-model="q.departmentId" placeholder="No" />
+      </el-form-item>
+      <!--监控部-->
+      <el-form-item label="监控部">
+        <el-input v-model="q.monitor" placeholder="No" />
+      </el-form-item>
+      <!--备注-->
+      <el-form-item label="备注">
+        <el-input v-model="q.remarks" placeholder="No" />
+      </el-form-item>
+
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">

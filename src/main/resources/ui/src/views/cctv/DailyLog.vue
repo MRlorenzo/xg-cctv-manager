@@ -2,6 +2,24 @@
   <div class="app-container">
     <el-form :inline="true">
 
+      <!--台号-->
+      <el-form-item label="台号">
+        <el-input v-model="q.tableCode" placeholder="" />
+      </el-form-item>
+      <!--主题-->
+      <el-form-item label="主题">
+        <el-input v-model="q.subject" placeholder="" />
+      </el-form-item>
+
+      <!--部门-->
+      <el-form-item label="部门">
+        <el-input v-model="q.departmentId" placeholder="" />
+      </el-form-item>
+      <!--监控部-->
+      <el-form-item label="监控部">
+        <el-input v-model="q.monitor" placeholder="" />
+      </el-form-item>
+
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">

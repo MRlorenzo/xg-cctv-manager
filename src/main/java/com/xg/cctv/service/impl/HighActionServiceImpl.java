@@ -50,6 +50,25 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
      */
     public QueryWrapper<HighAction> getQueryWrapper(QueryWrapper<HighAction> queryWrapper,HighAction highAction){
         //条件拼接
+        if (highAction == null){
+            return queryWrapper;
+        }
+
+        if (highAction.getTableCode() != null){
+            queryWrapper.like("table_code" , highAction.getTableCode());
+        }
+
+        if (highAction.getCoinCode() != null){
+            queryWrapper.eq("coin_code" , highAction.getCoinCode());
+        }
+
+        if (highAction.getInvolveUid() != null){
+            queryWrapper.eq("involve_uid" , highAction.getInvolveUid());
+        }
+
+        if (highAction.getMonitor() != null){
+            queryWrapper.eq("monitor" , highAction.getMonitor());
+        }
     
         return queryWrapper;
     }

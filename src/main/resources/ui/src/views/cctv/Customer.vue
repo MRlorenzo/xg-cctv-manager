@@ -1,6 +1,20 @@
 <template>
   <div class="app-container">
     <el-form :inline="true">
+      <!--卡号-->
+      <el-form-item label="卡号">
+        <el-input v-model="q.cardNumber" placeholder="No" />
+      </el-form-item>
+      <!--位置-->
+      <el-form-item label="位置">
+        <el-input v-model="q.location" placeholder="No" />
+      </el-form-item>
+
+      <!--状态-->
+      <el-form-item label="状态">
+        <el-radio v-model="q.status" :label="0" border>禁用</el-radio>
+        <el-radio v-model="q.status" :label="1" border>正常</el-radio>
+      </el-form-item>
 
       <el-form-item>
         <!-- 搜索按钮 -->
@@ -59,7 +73,8 @@
         </el-form-item>
         <!--状态-->
         <el-form-item label="状态">
-          <el-input v-model="d.status" placeholder="No" />
+          <el-radio v-model="d.status" :label="0" border>禁用</el-radio>
+          <el-radio v-model="d.status" :label="1" border>正常</el-radio>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">

@@ -196,6 +196,12 @@ export const asyncRoutes = [
         meta: { title: 'titleList'},
       },
       {
+        path: 'title-subject',
+        component: ()=> import('@/views/cctv/TitleSubject'),
+        name: 'TitleSubject',
+        meta: { title: 'titleSubject'},
+      },
+      {
         path: 'fill',
         component: ()=> import('@/views/cctv/Fill'),
         name: 'Fill',

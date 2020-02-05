@@ -50,6 +50,17 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
      */
     public QueryWrapper<FillCreditLog> getQueryWrapper(QueryWrapper<FillCreditLog> queryWrapper,FillCreditLog fillCreditLog){
         //条件拼接
+        if (fillCreditLog == null){
+            return queryWrapper;
+        }
+
+        if (fillCreditLog.getTableCode() != null){
+            queryWrapper.like("table_code" , fillCreditLog.getTableCode());
+        }
+
+        if (fillCreditLog.getCoinCode() != null){
+            queryWrapper.eq("coin_code" , fillCreditLog.getCoinCode());
+        }
     
         return queryWrapper;
     }
