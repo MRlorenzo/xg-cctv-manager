@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : local
 Source Server Version : 80017
 Source Host           : localhost:3306
-Source Database       : test
+Source Database       : test2
 
 Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-01-26 03:17:36
+Date: 2020-02-05 11:32:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,6 +61,21 @@ INSERT INTO `sys_department` VALUES ('10', '人事', 'HR', 'HR', '5');
 INSERT INTO `sys_department` VALUES ('11', '测试', '测试', 'TEST', '0');
 
 -- ----------------------------
+-- Table structure for sys_oss
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_oss`;
+CREATE TABLE `sys_oss` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `url` varchar(200) DEFAULT NULL COMMENT 'URL地址',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4079 DEFAULT CHARSET=utf8 COMMENT='文件上传';
+
+-- ----------------------------
+-- Records of sys_oss
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_permission`;
@@ -73,7 +88,7 @@ CREATE TABLE `sys_permission` (
   `perms` varchar(255) DEFAULT NULL COMMENT '权限字符串',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_permission
@@ -83,6 +98,40 @@ INSERT INTO `sys_permission` VALUES ('54', 'role', '53', '0', '0', null, '编辑
 INSERT INTO `sys_permission` VALUES ('55', 'department', '53', '0', '0', null, '编辑部门');
 INSERT INTO `sys_permission` VALUES ('56', 'users', '53', '0', '0', null, '编辑账号');
 INSERT INTO `sys_permission` VALUES ('57', 'menus', '53', '0', '0', null, '编辑菜单，同时编辑权限');
+INSERT INTO `sys_permission` VALUES ('58', '/components', '0', '0', '0', null, '组件');
+INSERT INTO `sys_permission` VALUES ('59', 'tinymce', '58', '0', '0', null, '富文本编辑器');
+INSERT INTO `sys_permission` VALUES ('60', 'markdown', '58', '0', '0', null, 'Markdown');
+INSERT INTO `sys_permission` VALUES ('61', 'json-editor', '58', '0', '0', null, 'JSON 编辑器');
+INSERT INTO `sys_permission` VALUES ('62', 'split-pane', '58', '0', '0', null, 'Splitpane');
+INSERT INTO `sys_permission` VALUES ('63', 'avatar-upload', '58', '0', '0', null, '头像上传');
+INSERT INTO `sys_permission` VALUES ('64', 'dropzone', '58', '0', '0', null, 'Dropzone');
+INSERT INTO `sys_permission` VALUES ('65', 'sticky', '58', '0', '0', null, 'Sticky');
+INSERT INTO `sys_permission` VALUES ('66', 'count-to', '58', '0', '0', null, 'Count To');
+INSERT INTO `sys_permission` VALUES ('67', 'mixin', '58', '0', '0', null, '小组件');
+INSERT INTO `sys_permission` VALUES ('68', 'back-to-top', '58', '0', '0', null, '返回顶部');
+INSERT INTO `sys_permission` VALUES ('69', 'drag-dialog', '58', '0', '0', null, '拖拽 Dialog');
+INSERT INTO `sys_permission` VALUES ('70', 'drag-select', '58', '0', '0', null, '拖拽 Select');
+INSERT INTO `sys_permission` VALUES ('71', 'drag-kanban', '58', '0', '0', null, '可拖拽看板');
+INSERT INTO `sys_permission` VALUES ('72', '/error', '0', '0', '0', null, '错误页面');
+INSERT INTO `sys_permission` VALUES ('73', '401', '72', '0', '0', null, '401');
+INSERT INTO `sys_permission` VALUES ('74', '404', '72', '0', '0', null, '404');
+INSERT INTO `sys_permission` VALUES ('75', '/error-log', '0', '0', '0', null, '错误日志');
+INSERT INTO `sys_permission` VALUES ('76', 'error-log-index', '75', '0', '0', null, '错误日志');
+INSERT INTO `sys_permission` VALUES ('77', '/excel', '0', '0', '0', null, 'Excel');
+INSERT INTO `sys_permission` VALUES ('78', 'export-excel', '77', '0', '0', null, '导出 Excel');
+INSERT INTO `sys_permission` VALUES ('79', 'export-selected-excel', '77', '0', '0', null, '导出 已选择项');
+INSERT INTO `sys_permission` VALUES ('80', 'export-merge-header', '77', '0', '0', null, '导出 多级表头');
+INSERT INTO `sys_permission` VALUES ('81', 'upload-excel', '77', '0', '0', null, '上传 Excel');
+INSERT INTO `sys_permission` VALUES ('82', '/zip', '0', '0', '0', null, 'Zip');
+INSERT INTO `sys_permission` VALUES ('83', 'zip-download', '82', '0', '0', null, 'Export Zip');
+INSERT INTO `sys_permission` VALUES ('84', '/pdf', '0', '0', '0', null, 'PDF');
+INSERT INTO `sys_permission` VALUES ('85', 'pdf-index', '84', '0', '0', null, 'PDF');
+INSERT INTO `sys_permission` VALUES ('86', '/theme', '0', '0', '0', null, '换肤');
+INSERT INTO `sys_permission` VALUES ('87', 'theme-index', '86', '0', '0', null, '换肤');
+INSERT INTO `sys_permission` VALUES ('88', '/i18n', '0', '0', '0', null, '国际化');
+INSERT INTO `sys_permission` VALUES ('89', 'i18n-index', '88', '0', '0', null, '国际化');
+INSERT INTO `sys_permission` VALUES ('90', '/icon', '0', '0', '0', null, '图标');
+INSERT INTO `sys_permission` VALUES ('91', 'icon-index', '90', '0', '0', null, '图标');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -104,7 +153,6 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', 'admin', '管理员', '1', '2017-04-03 14:50:06', '0', '1');
 INSERT INTO `sys_role` VALUES ('41', 'hr', '测试角色', '1', '2019-08-30 21:02:11', '0', '0');
-INSERT INTO `sys_role` VALUES ('42', 'TEST', '测试角色', '1', '2019-09-04 18:19:50', '0', null);
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -115,16 +163,50 @@ CREATE TABLE `sys_role_permission` (
   `role_id` bigint(20) NOT NULL,
   `permission_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=543 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=619 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_permission
 -- ----------------------------
-INSERT INTO `sys_role_permission` VALUES ('538', '1', '53');
-INSERT INTO `sys_role_permission` VALUES ('539', '1', '54');
-INSERT INTO `sys_role_permission` VALUES ('540', '1', '55');
-INSERT INTO `sys_role_permission` VALUES ('541', '1', '56');
-INSERT INTO `sys_role_permission` VALUES ('542', '1', '57');
+INSERT INTO `sys_role_permission` VALUES ('580', '1', '54');
+INSERT INTO `sys_role_permission` VALUES ('581', '1', '55');
+INSERT INTO `sys_role_permission` VALUES ('582', '1', '56');
+INSERT INTO `sys_role_permission` VALUES ('583', '1', '57');
+INSERT INTO `sys_role_permission` VALUES ('584', '1', '53');
+INSERT INTO `sys_role_permission` VALUES ('585', '1', '91');
+INSERT INTO `sys_role_permission` VALUES ('586', '1', '90');
+INSERT INTO `sys_role_permission` VALUES ('587', '1', '59');
+INSERT INTO `sys_role_permission` VALUES ('588', '1', '60');
+INSERT INTO `sys_role_permission` VALUES ('589', '1', '61');
+INSERT INTO `sys_role_permission` VALUES ('590', '1', '62');
+INSERT INTO `sys_role_permission` VALUES ('591', '1', '63');
+INSERT INTO `sys_role_permission` VALUES ('592', '1', '64');
+INSERT INTO `sys_role_permission` VALUES ('593', '1', '65');
+INSERT INTO `sys_role_permission` VALUES ('594', '1', '66');
+INSERT INTO `sys_role_permission` VALUES ('595', '1', '67');
+INSERT INTO `sys_role_permission` VALUES ('596', '1', '68');
+INSERT INTO `sys_role_permission` VALUES ('597', '1', '69');
+INSERT INTO `sys_role_permission` VALUES ('598', '1', '70');
+INSERT INTO `sys_role_permission` VALUES ('599', '1', '71');
+INSERT INTO `sys_role_permission` VALUES ('600', '1', '58');
+INSERT INTO `sys_role_permission` VALUES ('601', '1', '73');
+INSERT INTO `sys_role_permission` VALUES ('602', '1', '74');
+INSERT INTO `sys_role_permission` VALUES ('603', '1', '72');
+INSERT INTO `sys_role_permission` VALUES ('604', '1', '76');
+INSERT INTO `sys_role_permission` VALUES ('605', '1', '75');
+INSERT INTO `sys_role_permission` VALUES ('606', '1', '78');
+INSERT INTO `sys_role_permission` VALUES ('607', '1', '79');
+INSERT INTO `sys_role_permission` VALUES ('608', '1', '80');
+INSERT INTO `sys_role_permission` VALUES ('609', '1', '81');
+INSERT INTO `sys_role_permission` VALUES ('610', '1', '77');
+INSERT INTO `sys_role_permission` VALUES ('611', '1', '83');
+INSERT INTO `sys_role_permission` VALUES ('612', '1', '82');
+INSERT INTO `sys_role_permission` VALUES ('613', '1', '85');
+INSERT INTO `sys_role_permission` VALUES ('614', '1', '84');
+INSERT INTO `sys_role_permission` VALUES ('615', '1', '87');
+INSERT INTO `sys_role_permission` VALUES ('616', '1', '86');
+INSERT INTO `sys_role_permission` VALUES ('617', '1', '89');
+INSERT INTO `sys_role_permission` VALUES ('618', '1', '88');
 
 -- ----------------------------
 -- Table structure for sys_user

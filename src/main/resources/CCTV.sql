@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-01-31 00:29:11
+Date: 2020-02-05 11:31:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,6 +50,7 @@ CREATE TABLE `daily_log` (
   `conclusion` varchar(255) DEFAULT NULL COMMENT '结论',
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `urls` varchar(1024) DEFAULT NULL COMMENT '图片路径以'',''分割',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='西港监控部日志表';
 
@@ -64,6 +65,7 @@ CREATE TABLE `fill_credit_log` (
   `date` datetime DEFAULT NULL COMMENT '日期',
   `time` datetime DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',
+  `total` decimal(20,2) DEFAULT NULL COMMENT '金额',
   `coin_code` varchar(32) DEFAULT NULL COMMENT '币种',
   `alerter_name` varchar(64) DEFAULT NULL COMMENT '通知人',
   `monitor` varchar(64) DEFAULT NULL COMMENT '监控部',
@@ -80,7 +82,6 @@ CREATE TABLE `high_action` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `no` varchar(64) DEFAULT NULL COMMENT '序号',
   `date` datetime DEFAULT NULL COMMENT '日期',
-  `time` datetime DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',
   `code` varchar(64) DEFAULT NULL COMMENT '编码',
   `coin_code` varchar(32) DEFAULT NULL COMMENT '币种',
@@ -91,6 +92,7 @@ CREATE TABLE `high_action` (
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `urls` varchar(1024) DEFAULT NULL COMMENT '图片路径以'',''分割',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='西港监控部高额活动表';
 
@@ -101,7 +103,6 @@ DROP TABLE IF EXISTS `incident_log`;
 CREATE TABLE `incident_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL COMMENT '日期',
-  `time` datetime DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',
   `code` varchar(255) DEFAULT NULL COMMENT '事件编码',
   `coin_code` varchar(32) DEFAULT NULL COMMENT '币种',
@@ -113,6 +114,7 @@ CREATE TABLE `incident_log` (
   `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `urls` varchar(1024) DEFAULT NULL COMMENT '图片路径以'',''分割',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='西港监控部事件报告表';
 
