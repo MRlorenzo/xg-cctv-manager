@@ -14,6 +14,8 @@ import incidentLog from './cctv/incident-log'
 import titleListItem from './cctv/title-liist-item'
 import titleMain from './cctv/title-main'
 
+import sysOss from './oss'
+
 const mocks = [
   ...user,
   ...role,
@@ -26,7 +28,9 @@ const mocks = [
   ...highAction,
   ...incidentLog,
   ...titleListItem,
-  ...titleMain
+  ...titleMain,
+
+  ...sysOss
 ]
 
 // for front mock
