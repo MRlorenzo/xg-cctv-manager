@@ -85,6 +85,7 @@
         <!--图片-->
         <el-form-item label="图片">
           <multiple-images :urls.sync="imageURLS"/>
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
