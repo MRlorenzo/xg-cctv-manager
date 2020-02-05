@@ -35,11 +35,6 @@ public class HighAction extends Model<HighAction> {
     private Date date;
 
     /**
-     * 时间
-     */
-    private Date time;
-
-    /**
      * 台号
      */
     private String tableCode;
@@ -117,14 +112,6 @@ public class HighAction extends Model<HighAction> {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 
     public String getTableCode() {
@@ -226,7 +213,6 @@ public class HighAction extends Model<HighAction> {
         "id=" + id +
         ", no=" + no +
         ", date=" + date +
-        ", time=" + time +
         ", tableCode=" + tableCode +
         ", code=" + code +
         ", coinCode=" + coinCode +

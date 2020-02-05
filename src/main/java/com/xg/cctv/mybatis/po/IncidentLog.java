@@ -30,11 +30,6 @@ public class IncidentLog extends Model<IncidentLog> {
     private Date date;
 
     /**
-     * 时间
-     */
-    private Date time;
-
-    /**
      * 台号
      */
     private String tableCode;
@@ -109,14 +104,6 @@ public class IncidentLog extends Model<IncidentLog> {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 
     public String getTableCode() {
@@ -225,7 +212,6 @@ public class IncidentLog extends Model<IncidentLog> {
         return "IncidentLog{" +
         "id=" + id +
         ", date=" + date +
-        ", time=" + time +
         ", tableCode=" + tableCode +
         ", code=" + code +
         ", coinCode=" + coinCode +

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-02-05 11:17:40
+Date: 2020-02-05 11:28:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,6 @@ DROP TABLE IF EXISTS `incident_log`;
 CREATE TABLE `incident_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL COMMENT '日期',
-  `time` datetime DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',
   `code` varchar(255) DEFAULT NULL COMMENT '事件编码',
   `coin_code` varchar(32) DEFAULT NULL COMMENT '币种',

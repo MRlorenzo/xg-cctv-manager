@@ -14,12 +14,7 @@
           {{ scope.row.date }}
         </template>
       </el-table-column>
-      <!--时间-->
-      <el-table-column align="center" label="time" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.time }}
-        </template>
-      </el-table-column>
+
       <!--台号-->
       <el-table-column align="center" label="tableCode" width="220">
         <template slot-scope="scope">

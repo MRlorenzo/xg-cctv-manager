@@ -45,10 +45,6 @@
             placeholder="选择日期"
           />
         </el-form-item>
-        <!--时间-->
-        <el-form-item label="时间">
-          <el-input v-model="d.time" placeholder="No" />
-        </el-form-item>
         <!--台号-->
         <el-form-item label="台号">
           <el-input v-model="d.tableCode" placeholder="No" />

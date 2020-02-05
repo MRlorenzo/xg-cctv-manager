@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-02-05 11:18:13
+Date: 2020-02-05 11:28:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,7 +23,6 @@ CREATE TABLE `high_action` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `no` varchar(64) DEFAULT NULL COMMENT '序号',
   `date` datetime DEFAULT NULL COMMENT '日期',
-  `time` datetime DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',
   `code` varchar(64) DEFAULT NULL COMMENT '编码',
   `coin_code` varchar(32) DEFAULT NULL COMMENT '币种',
