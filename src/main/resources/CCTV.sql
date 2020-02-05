@@ -25,7 +25,7 @@ CREATE TABLE `customer` (
   `card_number` varchar(64) DEFAULT NULL COMMENT '卡号',
   `location` varchar(255) DEFAULT NULL COMMENT '位置',
   `avg_betting` decimal(20,2) DEFAULT NULL COMMENT '平均下注',
-  `nationality:` varchar(64) DEFAULT NULL COMMENT '国籍',
+  `nationality` varchar(64) DEFAULT NULL COMMENT '国籍',
   `photo` varchar(255) DEFAULT NULL COMMENT '照片',
   `status` int(11) DEFAULT NULL COMMENT '状态',
   `create_uid` bigint(20) DEFAULT NULL COMMENT '创建人',

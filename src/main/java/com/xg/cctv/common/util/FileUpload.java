@@ -22,7 +22,7 @@ public final class FileUpload {
 	/**
 	 * 本地路径
 	 */
-	public static String LOCAL_PATH = "D:\\upload";
+	public static String LOCAL_PATH = "D:\\TEMP";
 
 	/**
 	 * 上传
