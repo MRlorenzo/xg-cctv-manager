@@ -1,5 +1,6 @@
 package com.xg.cctv.config;
 
+import com.xg.cctv.common.util.SpringContextUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -17,5 +18,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ExecutorService executorService() {
         return Executors.newCachedThreadPool();
+    }
+
+    @Bean
+    public SpringContextUtils sprintUtils(){
+        return new SpringContextUtils();
     }
 }

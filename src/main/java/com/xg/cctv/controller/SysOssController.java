@@ -2,6 +2,10 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.util.FileUpload;
+import com.xg.cctv.common.util.jxls.JxlsEntity;
+import com.xg.cctv.common.util.jxls.JxlsMap;
+import com.xg.cctv.common.util.jxls.JxlsUtils;
+import com.xg.cctv.excel.impl.DailyLogSimpleExcelService;
 import com.xg.cctv.exception.RRException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
@@ -15,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,31 +77,39 @@ public class SysOssController {
     }
 
     /**
-     * 根据id删除对象
-     * @param id  实体ID
-     * @return R
+     * 导出excel
+     * @param uuid
+     * @param response
+     * @return
      */
-    @PostMapping("/delete/{id}")
-    public R sysOssDelete(@PathVariable String id){
-        boolean rs = iSysOssService.removeById(id);
-        if (rs) {
-            return R.ok();
+    @RequestMapping("/download/excel/{uuid}")
+    public R downloadExcel(@PathVariable("uuid") String uuid,HttpServletResponse response){
+        JxlsEntity jxls = JxlsMap.get(uuid);
+        if (jxls == null) {
+            return R.error("文件不存在");
         }
-        return R.error();
+        // filename = 文件名
+        String filename = jxls.getFilename();
+        // 模板相对路径
+        String templePath = jxls.getTemplatePath();
+        // 数据
+        Map<String , Object> model = jxls.getModel();
+        try {
+            OutputStream os = response.getOutputStream();
+            response.reset();
+            response.setHeader("Content-disposition", "attachment; filename=" + filename);
+            response.setContentType("application/msexcel");
+            JxlsUtils.exportExcel(templePath , os , model);
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    /**
-     * 批量删除对象
-     * @param requestMap 实体集合ID
-     * @return R
-     */
-    @PostMapping("/batchDelete")
-    public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
-        List<String> ids = requestMap.get("ids");
-        boolean rs = iSysOssService.removeByIds(ids);
-        if (rs){
-            return R.ok().put("data" , ids.size());
-        }
-        return R.error();
+    @RequestMapping("/test")
+    public R test(){
+
+        return R.ok().put("key" , new DailyLogSimpleExcelService().exportExcel(new ArrayList<>()));
     }
 }
