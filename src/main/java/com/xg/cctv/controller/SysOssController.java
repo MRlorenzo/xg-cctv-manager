@@ -82,7 +82,7 @@ public class SysOssController {
      * @param response
      * @return
      */
-    @RequestMapping("/download/excel/{uuid}")
+    @GetMapping("/download/excel/{uuid}")
     public R downloadExcel(@PathVariable("uuid") String uuid,HttpServletResponse response){
         JxlsEntity jxls = JxlsMap.get(uuid);
         if (jxls == null) {

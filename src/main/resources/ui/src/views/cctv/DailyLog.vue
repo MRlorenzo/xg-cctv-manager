@@ -40,6 +40,13 @@
           Add
         </el-button>
       </el-form-item>
+
+      <el-form-item>
+        <!-- test -->
+        <el-button type="info" @click="handleTest">
+          test
+        </el-button>
+      </el-form-item>
     </el-form>
 
     <!--列表-->
@@ -115,6 +122,8 @@
 <script>
 import DailyLogPage from './components/DailyLogPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
+import {test , downloadExcelByKey } from "@/api/oss";
+
 export default {
   name: 'DailyLog',
   components: { DailyLogPage, MultipleImages },
@@ -141,6 +150,12 @@ export default {
 
     },
     confirm() {
+    },
+    async handleTest(){
+      const res = await test()
+      if (res.code === 0){
+        downloadExcelByKey(res.key)
+      }
     }
   }
 }

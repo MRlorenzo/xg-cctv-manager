@@ -447,3 +447,15 @@ export function eachTree2List( trees ) {
   return routes
 }
 
+export function h5elementDownload( url , filename ) {
+  // 生成一个a标签
+  let link = document.createElement("a")
+  link.style.display = "none"
+  link.href = url
+  if (filename){
+    link.download = filename
+  }
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
