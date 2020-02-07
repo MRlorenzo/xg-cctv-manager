@@ -3,6 +3,7 @@ package com.xg.cctv.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.SysUserVo;
 import com.xg.cctv.mybatis.mapper.SysPermissionMapper;
 import com.xg.cctv.mybatis.po.SysPermission;
 import com.xg.cctv.mybatis.po.SysRole;
@@ -85,6 +86,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
         getQueryWrapper(queryWrapper,sysUser);
         return sysUserMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public IPage<SysUserVo> selectVoPage(Page<SysUserVo> page , Map<String , Object> params) {
+        QueryWrapper<SysUserVo> queryWrapper = new QueryWrapper<>();
+        if (params != null){
+            if (params.get("userId") != null){
+                queryWrapper.eq("user_id" , params.get("userId"));
+            }
+        }
+        return sysUserMapper.selectVoPage(page , queryWrapper);
     }
 
     @Override

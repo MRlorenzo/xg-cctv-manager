@@ -2,6 +2,7 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.StatusCode;
+import com.xg.cctv.common.dto.SysUserVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.exception.RRException;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,7 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,12 +85,18 @@ public class SysUserController {
      * 分页查询数据
      *
      * @param page  分页信息
-     * @param sysUser 查询条件
      * @return
      */
-    @GetMapping("/page")
-    public R getSysUserList(Page<SysUser> page,SysUser sysUser){
+    /*@GetMapping("/page")
+    public R getSysUserList(Page<SysUserVo> page, SysUser sysUser){
         return R.ok().put("data" , iSysUserService.selectPage(page, sysUser));
+    }*/
+
+    @GetMapping("/page")
+    public R getSysUserList(Page<SysUserVo> page){
+        Map<String , Object> params = new HashMap<>();
+        params.put("userId" , 1L);
+        return R.ok().put("data" , iSysUserService.selectVoPage(page , params ));
     }
 
     /**

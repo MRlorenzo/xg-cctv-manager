@@ -1,9 +1,15 @@
 package com.xg.cctv.mybatis.mapper;
 
-import com.xg.cctv.mybatis.po.SysRole;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.SysUserVo;
 import com.xg.cctv.mybatis.po.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -21,5 +27,12 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return
      */
     SysUser queryByUserName(@Param("username") String username);
+
+    /**
+     *
+     * @param page 翻页对象，可以作为 xml 参数直接使用，传递参数 Page 即自动分页
+     * @return
+     */
+    IPage<SysUserVo> selectVoPage(Page<SysUserVo> page, @Param(Constants.WRAPPER) Wrapper<SysUserVo> queryWrapper);
 
 }

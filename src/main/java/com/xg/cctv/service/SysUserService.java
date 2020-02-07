@@ -2,10 +2,12 @@ package com.xg.cctv.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.SysUserVo;
 import com.xg.cctv.mybatis.po.SysPermission;
 import com.xg.cctv.mybatis.po.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,6 +27,8 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     IPage<SysUser> selectPage(Page<SysUser> page,SysUser sysUser);
+
+    IPage<SysUserVo> selectVoPage(Page<SysUserVo> page , Map<String , Object> params);
 
     /**
      * 查询所有
