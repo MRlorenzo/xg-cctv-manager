@@ -11,3 +11,8 @@ local:
   fileserver:
     dir:  "/home/upload"
     path: file
+
+#应用配置
+resources:
+ # log文件写入地址
+ logdir: "/home/cctv/logs"

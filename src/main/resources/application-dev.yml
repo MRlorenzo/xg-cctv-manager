@@ -12,3 +12,9 @@ local:
   fileserver:
     dir:  "D:\\TEMP"
     path: file
+
+
+#应用配置
+resources:
+ # log文件写入地址
+ logdir: "D:/TEMP/logs/"
