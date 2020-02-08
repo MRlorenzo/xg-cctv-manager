@@ -1,6 +1,8 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.util.ShiroUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.HighAction;
@@ -10,6 +12,8 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ import java.util.Map;
  * @since 2020-02-05
  */
 @RestController
+@Validated
 @RequestMapping("/highAction")
 public class HighActionController {
     @Autowired
@@ -42,7 +47,11 @@ public class HighActionController {
      * @return R
      */
     @PostMapping("/save")
-    public R highActionSave(@RequestBody HighAction highAction){
+    public R highActionSave(@RequestBody @Valid HighAction highAction){
+        if (highAction.getId() == null){
+            highAction.setCreateUid(ShiroUtils.getUserId());
+            highAction.setCreateTime(new Date());
+        }
         boolean rs = iHighActionService.saveOrUpdate(highAction);
         if (rs){
             return R.ok();

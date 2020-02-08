@@ -6,6 +6,9 @@ import java.util.Date;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,11 +29,15 @@ public class SysUser extends Model<SysUser> {
     /**
      * 用户名
      */
+    @NotBlank
+    @Size(max = 100 , min = 2)
     private String username;
 
     /**
      * 密码
      */
+    @NotBlank
+    @Size(max = 100 , min = 6)
     private String password;
 
     /**

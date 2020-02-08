@@ -90,6 +90,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public IPage<SysUser> selectPage(Page<SysUser> page, Map<String, Object> params) {
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+        getMapQueryWrapper(queryWrapper , params);
+        return sysUserMapper.selectPage(page , queryWrapper);
+    }
+
+    @Override
     public IPage<SysUserVo> selectVoPage(Page<SysUserVo> page , Map<String , Object> params) {
         QueryWrapper<SysUserVo> queryWrapper = new QueryWrapper<>();
         getQueryWrapper(queryWrapper , params);
@@ -122,6 +129,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @return
      */
     public QueryWrapper<SysUser> getQueryWrapper(QueryWrapper<SysUser> queryWrapper,SysUser sysUser){
+        //条件拼接
+        return queryWrapper;
+    }
+
+    public QueryWrapper<SysUser> getMapQueryWrapper(QueryWrapper<SysUser> queryWrapper,Map<String , Object> params){
         //条件拼接
         return queryWrapper;
     }

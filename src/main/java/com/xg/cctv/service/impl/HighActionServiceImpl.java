@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 西港监控部高额活动表 服务实现类
@@ -33,6 +35,13 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
     public IPage<HighAction> selectPage(Page<HighAction> page, HighAction highAction) {
         QueryWrapper<HighAction> queryWrapper = new QueryWrapper<HighAction>();
         getQueryWrapper(queryWrapper,highAction);
+        return highActionMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public IPage<HighAction> selectPage(Page<HighAction> page, Map<String, Object> params) {
+        QueryWrapper<HighAction> queryWrapper = new QueryWrapper<HighAction>();
+        getMapQueryWrapper(queryWrapper , params);
         return highActionMapper.selectPage(page,queryWrapper);
     }
 
@@ -70,6 +79,11 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
             queryWrapper.eq("monitor" , highAction.getMonitor());
         }
     
+        return queryWrapper;
+    }
+
+    public QueryWrapper<HighAction> getMapQueryWrapper(QueryWrapper<HighAction> queryWrapper,Map<String , Object> params){
+        //条件拼接
         return queryWrapper;
     }
 }

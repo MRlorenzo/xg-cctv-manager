@@ -52,6 +52,13 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
     }
 
     @Override
+    public IPage<DailyLog> selectPage(Page<DailyLog> page, Map<String, Object> params) {
+        QueryWrapper<DailyLog> queryWrapper = new QueryWrapper<DailyLog>();
+        getMapQueryWrapper(queryWrapper , params);
+        return dailyLogMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
     public List<DailyLog> selectList(DailyLog dailyLog) {
         QueryWrapper<DailyLog> queryWrapper = new QueryWrapper<DailyLog>();
         getQueryWrapper(queryWrapper,dailyLog);
@@ -85,6 +92,11 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
             queryWrapper.eq("monitor" , dailyLog.getMonitor());
         }
     
+        return queryWrapper;
+    }
+
+    public QueryWrapper<DailyLog> getMapQueryWrapper(QueryWrapper<DailyLog> queryWrapper,Map<String , Object> params){
+        //条件拼接
         return queryWrapper;
     }
 }

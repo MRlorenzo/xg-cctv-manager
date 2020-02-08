@@ -24,6 +24,8 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      */
     IPage<${entity}> selectPage(Page<${entity}> page,${entity} ${table.entityPath});
 
+    IPage<${entity}> selectPage(Page<${entity}> page,Map<String , Object> params);
+
     /**
      * 查询所有
      * @param ${table.entityPath}

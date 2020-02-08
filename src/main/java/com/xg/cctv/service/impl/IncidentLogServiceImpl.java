@@ -80,6 +80,13 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
     }
 
     @Override
+    public IPage<IncidentLog> selectPage(Page<IncidentLog> page, Map<String, Object> params) {
+        QueryWrapper<IncidentLog> queryWrapper = new QueryWrapper<IncidentLog>();
+        getMapQueryWrapper(queryWrapper , params);
+        return incidentLogMapper.selectPage( page, queryWrapper);
+    }
+
+    @Override
     public List<IncidentLog> selectList(IncidentLog incidentLog) {
         QueryWrapper<IncidentLog> queryWrapper = new QueryWrapper<IncidentLog>();
         getQueryWrapper(queryWrapper,incidentLog);
@@ -121,6 +128,11 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
             queryWrapper.eq("monitor" , incidentLog.getMonitor());
         }
 
+        return queryWrapper;
+    }
+
+    public QueryWrapper<IncidentLog> getMapQueryWrapper(QueryWrapper<IncidentLog> queryWrapper,Map<String , Object> params){
+        //条件拼接
         return queryWrapper;
     }
 }

@@ -1,6 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :inline="true">
+      <!--开始时间，结束时间-->
+      <el-form-item>
+        <el-date-picker
+          v-model="searchTime"
+          size="mini"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+        >
+        </el-date-picker>
+      </el-form-item>
 
       <!--序号-->
       <el-form-item label="序号">
@@ -104,9 +117,24 @@ export default {
     return {
       q: {},
       d: {},
+      searchTime: [],
       doSearch: true,
       showMark: false,
       dialogType: 'edit' // 'edit' or 'new'
+    }
+  },
+  watch:{
+    searchTime( times ){
+      if (times == null){
+        return
+      }
+      let [startDate , endDate] = times
+      if ( startDate && endDate){
+        Object.assign(this.q , {
+          startTime: startDate,
+          endTime: endDate
+        })
+      }
     }
   },
   methods: {

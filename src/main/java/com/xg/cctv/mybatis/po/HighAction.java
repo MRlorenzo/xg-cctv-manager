@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -27,21 +30,25 @@ public class HighAction extends Model<HighAction> {
     /**
      * 序号
      */
+    @NotBlank
     private String no;
 
     /**
      * 日期
      */
+    @NotNull
     private Date date;
 
     /**
      * 台号
      */
+    @NotBlank
     private String tableCode;
 
     /**
      * 编码
      */
+    @NotBlank
     private String code;
 
     /**
@@ -62,6 +69,7 @@ public class HighAction extends Model<HighAction> {
     /**
      * 涉及员工
      */
+    @NotNull
     private Long involveUid;
 
     /**

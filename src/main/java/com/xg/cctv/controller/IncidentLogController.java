@@ -2,6 +2,8 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.IncidentLogVo;
+import com.xg.cctv.common.util.ShiroUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.IncidentLog;
@@ -11,6 +13,8 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +24,7 @@ import java.util.Map;
  * @since 2020-02-05
  */
 @RestController
+@Validated
 @RequestMapping("/incidentLog")
 public class IncidentLogController {
     @Autowired
@@ -47,7 +52,11 @@ public class IncidentLogController {
      * @return R
      */
     @PostMapping("/save")
-    public R incidentLogSave(@RequestBody IncidentLog incidentLog){
+    public R incidentLogSave(@RequestBody @Valid IncidentLog incidentLog){
+        if (incidentLog.getId() == null){
+            incidentLog.setCreateUid(ShiroUtils.getUserId());
+            incidentLog.setCreateTime(new Date());
+        }
         boolean rs = iIncidentLogService.saveOrUpdate(incidentLog);
         if (rs){
             return R.ok();

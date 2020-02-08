@@ -7,6 +7,7 @@ import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.po.IncidentLog;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,6 +26,8 @@ public interface IncidentLogService extends IService<IncidentLog> ,VoService<Inc
      * @return
      */
     IPage<IncidentLog> selectPage(Page<IncidentLog> page,IncidentLog incidentLog);
+
+    IPage<IncidentLog> selectPage(Page<IncidentLog> page,Map<String , Object> params);
 
     /**
      * 查询所有

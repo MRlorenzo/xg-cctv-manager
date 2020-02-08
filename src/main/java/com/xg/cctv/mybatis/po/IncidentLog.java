@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -27,16 +30,19 @@ public class IncidentLog extends Model<IncidentLog> {
     /**
      * 日期
      */
+    @NotNull
     private Date date;
 
     /**
      * 台号
      */
+    @NotBlank
     private String tableCode;
 
     /**
      * 事件编码
      */
+    @NotBlank
     private String code;
 
     /**
@@ -57,11 +63,13 @@ public class IncidentLog extends Model<IncidentLog> {
     /**
      * 涉及员工
      */
+    @NotNull
     private Long involveUid;
 
     /**
      * 部门id
      */
+    @NotNull
     private Long departmentId;
 
     /**

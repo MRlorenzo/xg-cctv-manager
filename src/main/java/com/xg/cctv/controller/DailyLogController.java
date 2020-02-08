@@ -2,6 +2,9 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.DailyLogVo;
+import com.xg.cctv.common.util.ShiroUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.DailyLog;
@@ -10,7 +13,8 @@ import com.xg.cctv.common.util.R;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +24,7 @@ import java.util.Map;
  * @since 2020-02-05
  */
 @RestController
+@Validated
 @RequestMapping("/dailyLog")
 public class DailyLogController {
     @Autowired
@@ -43,12 +48,16 @@ public class DailyLogController {
     }
 
     /**
-     * 保存和修改公用的
+     * 保存公用的
      * @param dailyLog 传递的实体
      * @return R
      */
     @PostMapping("/save")
-    public R dailyLogSave(@RequestBody DailyLog dailyLog){
+    public R dailyLogSave(@RequestBody @Valid DailyLog dailyLog){
+        if (dailyLog.getId() == null){
+            dailyLog.setCreateUid(ShiroUtils.getUserId());
+            dailyLog.setCreateTime(new Date());
+        }
         boolean rs = iDailyLogService.saveOrUpdate(dailyLog);
         if (rs){
             return R.ok();

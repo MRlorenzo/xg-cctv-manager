@@ -7,6 +7,7 @@ import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.po.DailyLog;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,6 +26,8 @@ public interface DailyLogService extends IService<DailyLog>, VoService<DailyLogV
      * @return
      */
     IPage<DailyLog> selectPage(Page<DailyLog> page,DailyLog dailyLog);
+
+    IPage<DailyLog> selectPage(Page<DailyLog> page,Map<String , Object> params);
 
     /**
      * 查询所有

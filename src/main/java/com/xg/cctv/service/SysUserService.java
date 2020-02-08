@@ -29,6 +29,8 @@ public interface SysUserService extends IService<SysUser>, VoService<SysUserVo> 
      */
     IPage<SysUser> selectPage(Page<SysUser> page,SysUser sysUser);
 
+    IPage<SysUser> selectPage(Page<SysUser> page,Map<String , Object> params);
+
     /**
      * 查询所有
      * @param sysUser

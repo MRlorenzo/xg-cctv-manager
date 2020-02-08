@@ -1,6 +1,8 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.util.ShiroUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.Customer;
@@ -10,6 +12,8 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ import java.util.Map;
  * @since 2020-01-31
  */
 @RestController
+@Validated
 @RequestMapping("/customer")
 public class CustomerController {
     @Autowired
@@ -42,7 +47,11 @@ public class CustomerController {
      * @return R
      */
     @PostMapping("/save")
-    public R customerSave(@RequestBody Customer customer){
+    public R customerSave(@RequestBody @Valid Customer customer){
+        if (customer.getId() == null){
+            customer.setCreateUid(ShiroUtils.getUserId());
+            customer.setCreateTime(new Date());
+        }
         boolean rs = iCustomerService.saveOrUpdate(customer);
         if (rs){
             return R.ok();

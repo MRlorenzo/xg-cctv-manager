@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 玩家清单表 服务实现类
@@ -33,6 +35,13 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     public IPage<Customer> selectPage(Page<Customer> page, Customer customer) {
         QueryWrapper<Customer> queryWrapper = new QueryWrapper<Customer>();
         getQueryWrapper(queryWrapper,customer);
+        return customerMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public IPage<Customer> selectPage(Page<Customer> page, Map<String, Object> params) {
+        QueryWrapper<Customer> queryWrapper = new QueryWrapper<>();
+        getMapQueryWrapper(queryWrapper , params);
         return customerMapper.selectPage(page,queryWrapper);
     }
 
@@ -69,6 +78,11 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             queryWrapper.eq("status" , customer.getStatus());
         }
     
+        return queryWrapper;
+    }
+
+    public QueryWrapper<Customer> getMapQueryWrapper(QueryWrapper<Customer> queryWrapper,Map<String , Object> params){
+        //条件拼接
         return queryWrapper;
     }
 }

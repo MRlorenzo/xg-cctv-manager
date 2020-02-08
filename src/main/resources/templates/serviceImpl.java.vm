@@ -37,6 +37,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     }
 
     @Override
+    public IPage<${entity}> selectPage(Page<${entity}> page, Map<String, Object> params) {
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>();
+        getMapQueryWrapper(queryWrapper , params);
+        return ${table.entityPath}Mapper.selectPage(page , queryWrapper);
+    }
+
+    @Override
     public List<${entity}> selectList(${entity} ${table.entityPath}) {
         QueryWrapper<${entity}> queryWrapper = new QueryWrapper<${entity}>();
         getQueryWrapper(queryWrapper,${table.entityPath});
@@ -58,5 +65,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
         #end
     #end*#
         return queryWrapper;
+    }
+
+    public QueryWrapper<${entity}> getMapQueryWrapper(QueryWrapper<${entity}> queryWrapper,Map<String , Object> params){
+    //条件拼接
+    return queryWrapper;
     }
 }

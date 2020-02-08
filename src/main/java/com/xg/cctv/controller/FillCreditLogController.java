@@ -1,6 +1,8 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.util.ShiroUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.FillCreditLog;
@@ -10,6 +12,8 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ import java.util.Map;
  * @since 2020-02-01
  */
 @RestController
+@Validated
 @RequestMapping("/fillCreditLog")
 public class FillCreditLogController {
     @Autowired
@@ -42,7 +47,11 @@ public class FillCreditLogController {
      * @return R
      */
     @PostMapping("/save")
-    public R fillCreditLogSave(@RequestBody FillCreditLog fillCreditLog){
+    public R fillCreditLogSave(@RequestBody @Valid FillCreditLog fillCreditLog){
+        if (fillCreditLog.getId() == null){
+            fillCreditLog.setCreateUid(ShiroUtils.getUserId());
+            fillCreditLog.setCreateTime(new Date());
+        }
         boolean rs = iFillCreditLogService.saveOrUpdate(fillCreditLog);
         if (rs){
             return R.ok();

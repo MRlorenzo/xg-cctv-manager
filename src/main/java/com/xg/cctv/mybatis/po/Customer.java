@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.DecimalMin;
 import java.io.Serializable;
 
 /**
@@ -27,11 +30,13 @@ public class Customer extends Model<Customer> {
     /**
      * 客户名称
      */
+    @NotBlank
     private String name;
 
     /**
      * 卡号
      */
+    @NotBlank
     private String cardNumber;
 
     /**
@@ -42,6 +47,7 @@ public class Customer extends Model<Customer> {
     /**
      * 平均下注
      */
+    @DecimalMin(value = "0")
     private BigDecimal avgBetting;
 
     /**

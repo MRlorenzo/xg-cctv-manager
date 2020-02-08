@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.mybatis.po.Customer;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,6 +24,8 @@ public interface CustomerService extends IService<Customer> {
      * @return
      */
     IPage<Customer> selectPage(Page<Customer> page,Customer customer);
+
+    IPage<Customer> selectPage(Page<Customer> page,Map<String , Object> params);
 
     /**
      * 查询所有

@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 西港监控部日常加彩/缴码表 服务实现类
@@ -33,6 +35,13 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
     public IPage<FillCreditLog> selectPage(Page<FillCreditLog> page, FillCreditLog fillCreditLog) {
         QueryWrapper<FillCreditLog> queryWrapper = new QueryWrapper<FillCreditLog>();
         getQueryWrapper(queryWrapper,fillCreditLog);
+        return fillCreditLogMapper.selectPage(page,queryWrapper);
+    }
+
+    @Override
+    public IPage<FillCreditLog> selectPage(Page<FillCreditLog> page, Map<String, Object> params) {
+        QueryWrapper<FillCreditLog> queryWrapper = new QueryWrapper<FillCreditLog>();
+        getMapQueryWrapper(queryWrapper , params);
         return fillCreditLogMapper.selectPage(page,queryWrapper);
     }
 
@@ -62,6 +71,11 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
             queryWrapper.eq("coin_code" , fillCreditLog.getCoinCode());
         }
     
+        return queryWrapper;
+    }
+
+    public QueryWrapper<FillCreditLog> getMapQueryWrapper(QueryWrapper<FillCreditLog> queryWrapper,Map<String , Object> params){
+        //条件拼接
         return queryWrapper;
     }
 }

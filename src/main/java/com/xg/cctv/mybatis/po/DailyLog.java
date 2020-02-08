@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -26,16 +29,19 @@ public class DailyLog extends Model<DailyLog> {
     /**
      * 序号
      */
+    @NotBlank
     private String no;
 
     /**
      * 日期
      */
+    @NotNull
     private Date date;
 
     /**
      * 台号
      */
+    @NotBlank
     private String tableCode;
 
     /**
@@ -56,7 +62,8 @@ public class DailyLog extends Model<DailyLog> {
     /**
      * 部门ID
      */
-    private Integer departmentId;
+    @NotNull
+    private Long departmentId;
 
     /**
      * 监控部
@@ -140,11 +147,11 @@ public class DailyLog extends Model<DailyLog> {
         this.alerterName = alerterName;
     }
 
-    public Integer getDepartmentId() {
+    public Long getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(Integer departmentId) {
+    public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
     }
 

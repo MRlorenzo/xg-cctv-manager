@@ -4,12 +4,15 @@ import com.xg.cctv.common.util.R;
 import com.xg.cctv.exception.RRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @ControllerAdvice //该注解定义全局异常处理类
 @ResponseBody
+@Order(value = 99) // 一般来讲这个处理器最后处理。
 public class GlobalExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
@@ -25,6 +28,8 @@ public class GlobalExceptionHandler {
                 .put("code" , e.getCode())
                 .put("msg" , e.getMsg());
     }
+
+
 
     /**
      * 未知异常

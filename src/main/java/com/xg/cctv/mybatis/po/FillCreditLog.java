@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -27,26 +30,26 @@ public class FillCreditLog extends Model<FillCreditLog> {
     /**
      * 1 加彩 2 缴码
      */
+    @NotNull
     private Integer type;
 
     /**
      * 序列号
      */
+    @NotBlank
     private String no;
 
     /**
      * 日期
      */
+    @NotNull
     private Date date;
 
-    /**
-     * 时间
-     */
-    private Date time;
 
     /**
      * 台号
      */
+    @NotBlank
     private String tableCode;
 
     /**
@@ -110,14 +113,6 @@ public class FillCreditLog extends Model<FillCreditLog> {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 
     public String getTableCode() {
@@ -188,7 +183,6 @@ public class FillCreditLog extends Model<FillCreditLog> {
         ", type=" + type +
         ", no=" + no +
         ", date=" + date +
-        ", time=" + time +
         ", tableCode=" + tableCode +
         ", total=" + total +
         ", coinCode=" + coinCode +

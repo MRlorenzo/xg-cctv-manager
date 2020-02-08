@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.mybatis.po.HighAction;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,6 +24,8 @@ public interface HighActionService extends IService<HighAction> {
      * @return
      */
     IPage<HighAction> selectPage(Page<HighAction> page,HighAction highAction);
+
+    IPage<HighAction> selectPage(Page<HighAction> page,Map<String , Object> params);
 
     /**
      * 查询所有

@@ -1,6 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :inline="true">
+      <!--开始时间，结束时间-->
+      <el-form-item>
+        <el-date-picker
+          v-model="searchTime"
+          size="mini"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+        >
+        </el-date-picker>
+      </el-form-item>
 
       <!--台号-->
       <el-form-item label="台号">
@@ -41,12 +54,6 @@
         </el-button>
       </el-form-item>
 
-      <el-form-item>
-        <!-- test -->
-        <el-button type="info" @click="handleTest">
-          test
-        </el-button>
-      </el-form-item>
     </el-form>
 
     <!--列表-->
@@ -122,7 +129,7 @@
 <script>
 import DailyLogPage from './components/DailyLogPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
-import {test , downloadExcelByKey } from "@/api/oss";
+import { saveDailyLog } from '@/api/daily-log'
 
 export default {
   name: 'DailyLog',
@@ -131,9 +138,24 @@ export default {
     return {
       q: {},
       d: { urls: ''},
+      searchTime: [],
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
+    }
+  },
+  watch:{
+    searchTime( times ){
+      if (times == null){
+        return
+      }
+      let [startDate , endDate] = times
+      if ( startDate && endDate){
+        Object.assign(this.q , {
+          startTime: startDate,
+          endTime: endDate
+        })
+      }
     }
   },
   methods: {
@@ -149,12 +171,11 @@ export default {
     handleDelete({ $index, row }) {
 
     },
-    confirm() {
-    },
-    async handleTest(){
-      const res = await test()
+    async confirm() {
+      const res = await saveDailyLog(this.d)
       if (res.code === 0){
-        downloadExcelByKey(res.key)
+        this.showMark = false
+        this.$message.success('提交成功')
       }
     }
   }

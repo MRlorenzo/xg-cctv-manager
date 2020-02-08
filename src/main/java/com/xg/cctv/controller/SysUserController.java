@@ -14,6 +14,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.SysUser;
@@ -23,6 +24,7 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,7 @@ import java.util.Map;
  * @since 2020-01-24
  */
 @RestController
+@Validated
 @RequestMapping("/sysUser")
 public class SysUserController {
     @Autowired
@@ -99,11 +102,11 @@ public class SysUserController {
 
     /**
      * 保存和修改公用的
-     * @param sysUser 传递的实体
+     * @param user 传递的实体
      * @return R
      */
     @PostMapping("/save")
-    public R sysUserSave(@RequestBody SysUser user){
+    public R sysUserSave(@RequestBody @Valid SysUser user){
         if (user == null || !StringUtils.isNotEmpty(user.getPassword())){
             return R.error();
         }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.mybatis.po.FillCreditLog;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,6 +24,8 @@ public interface FillCreditLogService extends IService<FillCreditLog> {
      * @return
      */
     IPage<FillCreditLog> selectPage(Page<FillCreditLog> page,FillCreditLog fillCreditLog);
+
+    IPage<FillCreditLog> selectPage(Page<FillCreditLog> page,Map<String , Object> params);
 
     /**
      * 查询所有
