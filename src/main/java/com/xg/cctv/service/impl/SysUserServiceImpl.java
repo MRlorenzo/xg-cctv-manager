@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.SysUserVo;
+import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.mapper.SysPermissionMapper;
 import com.xg.cctv.mybatis.po.SysPermission;
 import com.xg.cctv.mybatis.po.SysRole;
@@ -91,12 +92,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public IPage<SysUserVo> selectVoPage(Page<SysUserVo> page , Map<String , Object> params) {
         QueryWrapper<SysUserVo> queryWrapper = new QueryWrapper<>();
-        if (params != null){
-            if (params.get("userId") != null){
-                queryWrapper.eq("user_id" , params.get("userId"));
-            }
-        }
+        getQueryWrapper(queryWrapper , params);
         return sysUserMapper.selectVoPage(page , queryWrapper);
+    }
+
+    @Override
+    public QueryWrapper<SysUserVo> getQueryWrapper(QueryWrapper<SysUserVo> queryWrapper,Map<String , Object> params){
+        //条件拼接
+        if (params != null){
+            return queryWrapper;
+        }
+
+        if (params.get("userId") != null){
+            queryWrapper.eq("user_id" , params.get("userId"));
+        }
+        return queryWrapper;
     }
 
     @Override

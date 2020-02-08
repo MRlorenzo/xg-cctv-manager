@@ -1,10 +1,8 @@
 package com.xg.cctv.common.dto;
 
-import com.xg.cctv.mybatis.po.SysUser;
+import com.xg.cctv.mybatis.po.DailyLog;
 
-import java.io.Serializable;
-
-public class SysUserVo extends SysUser {
+public class DailyLogVo extends DailyLog{
 
     /********************************部门相关字段*********************************/
     /**
@@ -17,13 +15,7 @@ public class SysUserVo extends SysUser {
      * 部门编号
      */
     private String departmentCode;
-
-    /**
-     * 排序字段
-     */
-    private Integer sort;
     /********************************部门相关字段*********************************/
-
 
     public String getName() {
         return name;
@@ -40,13 +32,4 @@ public class SysUserVo extends SysUser {
     public void setDepartmentCode(String departmentCode) {
         this.departmentCode = departmentCode;
     }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
 }

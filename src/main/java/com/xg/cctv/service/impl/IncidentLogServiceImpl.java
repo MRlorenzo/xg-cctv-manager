@@ -3,6 +3,9 @@ package com.xg.cctv.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.IncidentLogVo;
+import com.xg.cctv.common.dto.SysUserVo;
+import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.po.IncidentLog;
 import com.xg.cctv.mybatis.mapper.IncidentLogMapper;
 import com.xg.cctv.service.IncidentLogService;
@@ -14,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 西港监控部事件报告表 服务实现类
@@ -28,6 +33,44 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
 
     @Autowired
     private IncidentLogMapper incidentLogMapper;
+
+    @Override
+    public IPage<IncidentLogVo> selectVoPage(Page<IncidentLogVo> page, Map<String, Object> params) {
+        QueryWrapper<IncidentLogVo> queryWrapper = new QueryWrapper<>();
+        getQueryWrapper(queryWrapper , params);
+        return incidentLogMapper.selectVoPage(page , queryWrapper);
+    }
+
+    @Override
+    public QueryWrapper<IncidentLogVo> getQueryWrapper(QueryWrapper<IncidentLogVo> queryWrapper, Map<String, Object> params) {
+        if (params == null){
+            return queryWrapper;
+        }
+        if (params.get("tableCode") != null){
+            queryWrapper.like("table_code" , params.get("tableCode"));
+        }
+
+        if (params.get("code") != null){
+            queryWrapper.like("code" , params.get("code"));
+        }
+
+        if (params.get("coinCode") != null){
+            queryWrapper.eq("coin_code" , params.get("coinCode"));
+        }
+
+        if (params.get("involveUid") != null){
+            queryWrapper.eq("involve_uid", params.get("involveUid"));
+        }
+
+        if (params.get("departmentId") != null){
+            queryWrapper.eq("department_id" , params.get("departmentId"));
+        }
+
+        if (params.get("monitor") != null){
+            queryWrapper.eq("monitor" , params.get("monitor"));
+        }
+        return queryWrapper;
+    }
 
     @Override
     public IPage<IncidentLog> selectPage(Page<IncidentLog> page, IncidentLog incidentLog) {

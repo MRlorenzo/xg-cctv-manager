@@ -161,7 +161,7 @@
         </logger>
 
         <!--总是打印SQL-->
-        <logger name="${basepackage}.${mapperpackage}" level="DEBUG">
+        <logger name="${basepackage}.${mapperpackage}" level="DEBUG" additivity="false">
             <appender-ref ref="consoleLog"/>
         </logger>
     </springProfile>
@@ -179,7 +179,7 @@
         </logger>
 
         <!--总是打印SQL-->
-        <logger name="${basepackage}.${mapperpackage}" level="DEBUG">
+        <logger name="${basepackage}.${mapperpackage}" level="DEBUG" additivity="false">
             <appender-ref ref="consoleLog"/>
             <appender-ref ref="fileSQLLog"/>
         </logger>
@@ -201,7 +201,7 @@
             <appender-ref ref="fileErrorLog"/>
         </logger>
         <!--总是打印SQL-->
-        <logger name="${basepackage}.${mapperpackage}" level="DEBUG">
+        <logger name="${basepackage}.${mapperpackage}" level="DEBUG" additivity="false">
             <appender-ref ref="fileSQLLog"/>
         </logger>
     </springProfile>

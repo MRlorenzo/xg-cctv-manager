@@ -3,6 +3,8 @@ package com.xg.cctv.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.DailyLogVo;
+import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.po.DailyLog;
 import com.xg.cctv.mybatis.mapper.DailyLogMapper;
 import com.xg.cctv.service.DailyLogService;
@@ -11,9 +13,10 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 西港监控部日志表 服务实现类
@@ -28,6 +31,18 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
 
     @Autowired
     private DailyLogMapper dailyLogMapper;
+
+    @Override
+    public IPage<DailyLogVo> selectVoPage(Page<DailyLogVo> page, Map<String, Object> params) {
+        QueryWrapper<DailyLogVo> queryWrapper = new QueryWrapper<>();
+        getQueryWrapper(queryWrapper , params);
+        return dailyLogMapper.selectVoPage(page , queryWrapper);
+    }
+
+    @Override
+    public QueryWrapper<DailyLogVo> getQueryWrapper(QueryWrapper<DailyLogVo> queryWrapper, Map<String, Object> params) {
+        return queryWrapper;
+    }
 
     @Override
     public IPage<DailyLog> selectPage(Page<DailyLog> page, DailyLog dailyLog) {

@@ -1,6 +1,7 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.IncidentLogVo;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.IncidentLog;
@@ -31,9 +32,13 @@ public class IncidentLogController {
      * @param incidentLog 查询条件
      * @return
      */
-    @GetMapping("/page")
+    /*@GetMapping("/page")
     public R getIncidentLogList(Page<IncidentLog> page,IncidentLog incidentLog){
         return R.ok().put("data" , iIncidentLogService.selectPage(page, incidentLog));
+    }*/
+    @GetMapping("/page")
+    public R getIncidentLogList(Page<IncidentLogVo> page, Map<String , Object> incidentLog){
+        return R.ok().put("data" , iIncidentLogService.selectVoPage(page, incidentLog));
     }
 
     /**

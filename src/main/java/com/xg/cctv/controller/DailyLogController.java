@@ -1,6 +1,7 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.DailyLogVo;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.DailyLog;
@@ -31,9 +32,14 @@ public class DailyLogController {
      * @param dailyLog 查询条件
      * @return
      */
-    @GetMapping("/page")
+    /*@GetMapping("/page")
     public R getDailyLogList(Page<DailyLog> page,DailyLog dailyLog){
         return R.ok().put("data" , iDailyLogService.selectPage(page, dailyLog));
+    }*/
+
+    @GetMapping("/page")
+    public R getDailyLogList(Page<DailyLogVo> page, Map<String , Object> dailyLog){
+        return R.ok().put("data" , iDailyLogService.selectVoPage(page, dailyLog));
     }
 
     /**

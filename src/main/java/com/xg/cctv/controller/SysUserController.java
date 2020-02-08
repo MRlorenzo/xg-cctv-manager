@@ -93,9 +93,7 @@ public class SysUserController {
     }*/
 
     @GetMapping("/page")
-    public R getSysUserList(Page<SysUserVo> page){
-        Map<String , Object> params = new HashMap<>();
-        params.put("userId" , 1L);
+    public R getSysUserList(Page<SysUserVo> page , Map<String , Object> params){
         return R.ok().put("data" , iSysUserService.selectVoPage(page , params ));
     }
 
