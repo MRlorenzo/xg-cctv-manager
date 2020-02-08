@@ -124,6 +124,8 @@ resources:
   appname: cctv
   # 日志打印的基础扫描包
   basepackage: com.xg.cctv
+  # mapper所在的包
+  mapperpackage: mybatis.mapper
 
 #shiro
 shiro:

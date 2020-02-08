@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = RRException.class)
     public R handleRRException(RRException e){
-        logger.info("RRException:" , e);
+        logger.error(e.getMsg());
         return R.error()
                 .put("code" , e.getCode())
                 .put("msg" , e.getMsg());
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public R handleUnkonwException(Exception e){
-        logger.info("未知异常:" , e);
+        logger.error("未知异常:" , e);
         return R.error().put("msg" , e.getMessage());
     }
 

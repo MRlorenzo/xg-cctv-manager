@@ -23,7 +23,7 @@ public class PermissionExceptionHandler {
      */
     @ExceptionHandler(value = UnauthorizedException.class)
     public R handleUnauthorizedException( UnauthorizedException e){
-        logger.info("权限认证异常：" , e);
+        logger.error("权限认证异常");
         return R.error()
                 .put("code" , StatusCode.DENIAL_OF_SERVICE)
                 .put("msg" , e.getMessage());
@@ -37,7 +37,7 @@ public class PermissionExceptionHandler {
      */
     @ExceptionHandler(value = IncorrectCredentialsException.class)
     public R handIncorrectCredentialsException( IncorrectCredentialsException e){
-        logger.info("IncorrectCredentialsException" , e);
+        logger.error("账号或者密码错误");
         return R.error()
                 .put("code" , StatusCode.USER_LOGIN_ERROR)
                 .put("msg" , "账号或者密码错误");
@@ -50,7 +50,7 @@ public class PermissionExceptionHandler {
      */
     @ExceptionHandler(value = UnknownAccountException.class)
     public R handUnknownAccountException( UnknownAccountException e){
-        logger.info("UnknownAccountException" , e);
+        logger.error("UnknownAccountException" , e);
         return R.error()
                 .put("code" , StatusCode.USER_LOGIN_ERROR)
                 .put("msg" , e.getMessage());
