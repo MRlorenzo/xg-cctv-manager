@@ -30,3 +30,11 @@ export function updateHighAction( data ) {
     data
   })
 }
+
+export function exportHighActionExcel( data ) {
+  return request({
+    url: '/highAction/excel',
+    method: 'get',
+    params: data
+  })
+}

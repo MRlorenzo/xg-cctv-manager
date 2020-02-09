@@ -20,12 +20,6 @@ export function test() {
   })
 }
 
-export function downloadExcelByKey( key ) {
-  let url = process.env.VUE_APP_BASE_API + '/sysOss/download/excel/' + key
-
-  h5elementDownload(url)
-}
-
 export async function downloadFileByKey( key , filename) {
   const out = await bitRequest({
     url: '/sysOss/download/file/' + key,

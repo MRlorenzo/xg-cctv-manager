@@ -33,10 +33,20 @@
         <el-input v-model="q.monitor" placeholder="" />
       </el-form-item>
 
+    </el-form>
+
+    <el-form :inline="true">
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
           Search
+        </el-button>
+      </el-form-item>
+
+      <!-- 导出按钮 -->
+      <el-form-item>
+        <el-button type="info" @click="handleExcel">
+          Excel
         </el-button>
       </el-form-item>
 
@@ -53,9 +63,7 @@
           Add
         </el-button>
       </el-form-item>
-
     </el-form>
-
     <!--列表-->
     <daily-log-page
       :query="q"
@@ -65,9 +73,9 @@
     />
 
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" label-width="80px" label-position="left">
+      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--序号-->
-        <el-form-item label="序号">
+        <el-form-item label="序号" prop="no">
           <el-input v-model="d.no" placeholder="No" />
         </el-form-item>
         <!--日期-->
@@ -80,31 +88,31 @@
         </el-form-item>
 
         <!--台号-->
-        <el-form-item label="台号">
+        <el-form-item label="台号" prop="tableCode">
           <el-input v-model="d.tableCode" placeholder="" />
         </el-form-item>
         <!--主题-->
-        <el-form-item label="主题">
+        <el-form-item label="主题" prop="subject">
           <el-input v-model="d.subject" placeholder="" />
         </el-form-item>
         <!--细节-->
-        <el-form-item label="细节">
+        <el-form-item label="细节" prop="details">
           <el-input v-model="d.details" placeholder="" />
         </el-form-item>
         <!--通知人-->
-        <el-form-item label="通知人">
+        <el-form-item label="通知人" prop="alerterName">
           <el-input v-model="d.alerterName" placeholder="" />
         </el-form-item>
         <!--部门-->
-        <el-form-item label="部门">
+        <el-form-item label="部门" prop="departmentId">
           <el-input v-model="d.departmentId" placeholder="" />
         </el-form-item>
         <!--监控部-->
-        <el-form-item label="监控部">
+        <el-form-item label="监控部" prop="monitor">
           <el-input v-model="d.monitor" placeholder="" />
         </el-form-item>
         <!--结论-->
-        <el-form-item label="结论">
+        <el-form-item label="结论" prop="conclusion">
           <el-input v-model="d.conclusion" placeholder="" />
         </el-form-item>
 
@@ -129,19 +137,43 @@
 <script>
 import DailyLogPage from './components/DailyLogPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
-import { saveDailyLog } from '@/api/daily-log'
+import { saveDailyLog, exportDailyLogExcel, updateDailyLog ,deleteFormDailyLogById} from '@/api/daily-log'
+import { downloadExcelByKey, deepClone } from "@/utils"
 
+const data = {
+  no: null,
+  date: '',
+  tableCode: '',
+  subject: '',
+  details: '',
+  alerterName: '',
+  departmentId: null,
+  monitor: null,
+  conclusion: null,
+  urls: ''
+}
 export default {
   name: 'DailyLog',
   components: { DailyLogPage, MultipleImages },
   data() {
     return {
       q: {},
-      d: { urls: ''},
+      d: deepClone(data),
       searchTime: [],
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
+      formName: 'form',
+      rules: {
+        no: [{ required: true, trigger: 'blur' , message:'not null'}],
+        tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
+        subject: [{ required: true, trigger: 'blur' , message:'not null'}],
+        details: [{ required: true, trigger: 'blur' , message:'not null'}],
+        alerterName: [{ required: true, trigger: 'blur' , message:'not null'}],
+        departmentId: [{ required: true, trigger: 'blur' , message:'not null'}],
+        monitor: [{ required: true, trigger: 'blur' , message:'not null'}],
+        conclusion: [{ required: true, trigger: 'blur' , message:'not null'}]
+      }
     }
   },
   watch:{
@@ -160,23 +192,66 @@ export default {
   },
   methods: {
     resetQueryData() {
-
+      this.q = {}
     },
     handleAdd() {
+      if (this.$refs[this.formName] != null){
+        this.$refs[this.formName].resetFields()
+      }
+
       this.showMark = true
+      this.dialogType = 'new'
+    },
+    async handleExcel(){
+      const res = await exportDailyLogExcel(this.q)
+      if (res.code === 0){
+        downloadExcelByKey(res.key)
+      }
     },
     handleEdit(scope) {
-
+      let clone = deepClone(scope.row)
+      this.d = clone
+      this.showMark = true
+      this.dialogType = 'edit'
     },
     handleDelete({ $index, row }) {
-
+      this.$confirm('Confirm ?', 'Warning', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      })
+        .then(async() => {
+          const res = await deleteFormDailyLogById(row.id)
+          if (res.code === 0){
+            this.doSearch = true
+            this.$message({
+              type: 'success',
+              message: 'Delete succed!'
+            })
+          }
+        })
+        .catch(err => { console.error(err) })
     },
-    async confirm() {
-      const res = await saveDailyLog(this.d)
+    async submit(){
+      let res
+      if (this.d.id){
+        res = await updateDailyLog(this.d)
+      }else {
+        res = await saveDailyLog(this.d)
+      }
       if (res.code === 0){
         this.showMark = false
         this.$message.success('提交成功')
       }
+    },
+    confirm() {
+      this.$refs[this.formName].validate((valid) => {
+        if (valid) {
+          this.submit();
+        }else {
+          return false;
+        }
+      });
     }
   }
 }

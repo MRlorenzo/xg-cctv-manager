@@ -30,3 +30,11 @@ export function updateDailyLog( data ) {
     data
   })
 }
+
+export function exportDailyLogExcel( data ) {
+  return request({
+    url: '/dailyLog/excel',
+    method: 'get',
+    params: data
+  })
+}

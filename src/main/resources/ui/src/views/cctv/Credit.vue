@@ -30,10 +30,20 @@
         <el-input v-model="q.coinCode" placeholder="No" />
       </el-form-item>
 
+    </el-form>
+
+    <el-form :inline="true">
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
           Search
+        </el-button>
+      </el-form-item>
+
+      <!-- 导出按钮 -->
+      <el-form-item>
+        <el-button type="info" @click="handleExcel">
+          Excel
         </el-button>
       </el-form-item>
 
@@ -60,9 +70,9 @@
     />
 
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" label-width="80px" label-position="left">
+      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--序号-->
-        <el-form-item label="序号">
+        <el-form-item label="序号" prop="no">
           <el-input v-model="d.no" placeholder="No" />
         </el-form-item>
         <!--日期-->
@@ -74,24 +84,24 @@
           />
         </el-form-item>
         <!--台号-->
-        <el-form-item label="台号">
-          <el-input v-model="d.tableCode" placeholder="No" />
+        <el-form-item label="台号" prop="tableCode">
+          <el-input v-model="d.tableCode" placeholder="" />
         </el-form-item>
         <!--金额-->
-        <el-form-item label="金额">
-          <el-input v-model="d.total" placeholder="No" />
+        <el-form-item label="金额" prop="total">
+          <el-input v-model="d.total" placeholder="" />
         </el-form-item>
         <!--币种-->
-        <el-form-item label="币种">
-          <el-input v-model="d.coinCode" placeholder="No" />
+        <el-form-item label="币种" prop="coinCode">
+          <el-input v-model="d.coinCode" placeholder="" />
         </el-form-item>
         <!--通知人-->
-        <el-form-item label="通知人">
-          <el-input v-model="d.alerterName" placeholder="No" />
+        <el-form-item label="通知人" prop="alerterName">
+          <el-input v-model="d.alerterName" placeholder="" />
         </el-form-item>
         <!--监控部-->
-        <el-form-item label="监控部">
-          <el-input v-model="d.monitor" placeholder="No" />
+        <el-form-item label="监控部" prop="monitor">
+          <el-input v-model="d.monitor" placeholder="" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -109,17 +119,39 @@
 
 <script>
 import CreditPage from './components/CredItPage'
+import {saveFillAndCredit , deleteFillAndCreditById , updateFillAndCredit , exportFillAndCreditExcel} from '@/api/fill-and-credit'
+import { downloadExcelByKey, deepClone } from "@/utils"
+
+const data = {
+  no: null,
+  date: '',
+  tableCode: null,
+  total: null,
+  coinCode: null,
+  alerterName: null,
+  monitor: null
+}
 export default {
   name: 'Credit',
   components: { CreditPage },
   data() {
     return {
       q: {},
-      d: {},
+      d: deepClone(data),
       searchTime: [],
       doSearch: true,
       showMark: false,
-      dialogType: 'edit' // 'edit' or 'new'
+      dialogType: 'edit', // 'edit' or 'new'
+      formName: 'form',
+      rules: {
+        no: [{ required: true, trigger: 'blur' , message:'not null'}],
+        date: [{ required: true, trigger: 'blur' , message:'not null'}],
+        tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
+        total: [{ required: true, trigger: 'blur' , message:'not null'}],
+        coinCode: [{ required: true, trigger: 'blur' , message:'not null'}],
+        alerterName: [{ required: true, trigger: 'blur' , message:'not null'}],
+        monitor: [{ required: true, trigger: 'blur' , message:'not null'}]
+      }
     }
   },
   watch:{
@@ -137,17 +169,65 @@ export default {
     }
   },
   methods: {
-    resetQueryData() {},
+    resetQueryData() {
+      this.q = {}
+    },
     handleAdd() {
+      this.d = {}
       this.showMark = true
+      this.dialogType = 'new'
+    },
+    async handleExcel(){
+      const res = await exportFillAndCreditExcel(this.q)
+      if (res.code === 0){
+        downloadExcelByKey(res.key)
+      }
     },
     handleEdit(scope) {
-
+      let clone = deepClone(scope.row)
+      this.d = clone
+      this.showMark = true
+      this.dialogType = 'edit'
     },
     handleDelete({ $index, row }) {
-
+      this.$confirm('Confirm ?', 'Warning', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      })
+        .then(async() => {
+          const res = await deleteFillAndCreditById(row.id)
+          if (res.code === 0){
+            this.doSearch = true
+            this.$message({
+              type: 'success',
+              message: 'Delete succed!'
+            })
+          }
+        })
+        .catch(err => { console.error(err) })
     },
-    confirm() {}
+    async submit(){
+      let res
+      if (this.d.id){
+        res = await updateFillAndCredit(this.d)
+      }else {
+        res = await saveFillAndCredit(this.d)
+      }
+      if (res.code === 0){
+        this.showMark = false
+        this.$message.success('提交成功')
+      }
+    },
+    confirm() {
+      this.$refs[this.formName].validate((valid) => {
+        if (valid) {
+          this.submit();
+        }else {
+          return false;
+        }
+      });
+    }
   }
 }
 </script>

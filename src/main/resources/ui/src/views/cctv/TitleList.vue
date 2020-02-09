@@ -61,19 +61,55 @@ export default {
       d: {},
       doSearch: true,
       showMark: false,
-      dialogType: 'edit' // 'edit' or 'new'
+      dialogType: 'edit', // 'edit' or 'new'
+      rules: {
+        no: [{ required: true, trigger: 'blur' , message:''}]
+      }
     }
   },
   methods: {
     resetQueryData() {},
-    handleAdd() {},
+    handleAdd() {
+      this.d = {}
+      this.showMark = true
+      this.dialogType = 'new'
+    },
     handleEdit(scope) {
-
+      let clone = deepClone(scope.row)
+      this.d = clone
+      this.showMark = true
+      this.dialogType = 'edit'
     },
     handleDelete({ $index, row }) {
-
+      /*this.$confirm('Confirm ?', 'Warning', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      })
+        .then(async() => {
+          const res = await deleteFormDailyLogById(row.id)
+          if (res.code === 0){
+            this.doSearch = true
+            this.$message({
+              type: 'success',
+              message: 'Delete succed!'
+            })
+          }
+        })
+        .catch(err => { console.error(err) })*/
     },
-    confirm() {}
+    async confirm() {
+      /*let res
+      if (this.d.id){
+        res = await updateDailyLog(this.d)
+      }else {
+        res = await saveDailyLog(this.d)
+      }
+      if (res.code === 0){
+        this.showMark = false
+        this.$message.success('提交成功')
+      }*/
+    }
   }
 }
 </script>

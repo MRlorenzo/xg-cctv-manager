@@ -30,3 +30,11 @@ export function updateCustomer( data ) {
     data
   })
 }
+
+export function exportCustomerExcel( data ) {
+  return request({
+    url: '/customer/excel',
+    method: 'get',
+    params: data
+  })
+}

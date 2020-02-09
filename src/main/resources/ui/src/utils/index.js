@@ -459,3 +459,9 @@ export function h5elementDownload( url , filename ) {
   link.click()
   document.body.removeChild(link)
 }
+
+export function downloadExcelByKey( key ) {
+  let url = process.env.VUE_APP_BASE_API + '/sysOss/download/excel/' + key
+
+  h5elementDownload(url)
+}

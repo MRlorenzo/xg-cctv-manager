@@ -31,3 +31,11 @@ export function updateIncidentLog( data ) {
     data
   })
 }
+
+export function exportIncidentLogExcel( data ) {
+  return request({
+    url: '/incidentLog/excel',
+    method: 'get',
+    params: data
+  })
+}

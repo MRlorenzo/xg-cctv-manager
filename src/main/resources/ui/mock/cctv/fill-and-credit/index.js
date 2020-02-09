@@ -26,5 +26,15 @@ export default [
         data: []
       }
     }
+  },
+  {
+    url: '/fillCreditLog/excel',
+    type: 'get',
+    response: config => {
+      return {
+        code: 0,
+        key: 'xxxx'
+      }
+    }
   }
 ]

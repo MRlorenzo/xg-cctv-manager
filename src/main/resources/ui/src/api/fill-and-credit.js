@@ -30,3 +30,11 @@ export function updateFillAndCredit( data ) {
     data
   })
 }
+
+export function exportFillAndCreditExcel( data ) {
+  return request({
+    url: '/fillCreditLog/excel',
+    method: 'get',
+    params: data
+  })
+}
