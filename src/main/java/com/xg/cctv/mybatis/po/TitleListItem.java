@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -26,16 +29,19 @@ public class TitleListItem extends Model<TitleListItem> {
     /**
      * 事件主题名称Id
      */
+    @NotNull
     private Long subjectId;
 
     /**
      * 错误内容
      */
+    @NotBlank
     private String text;
 
     /**
      * 代码
      */
+    @NotBlank
     private String code;
 
     /**

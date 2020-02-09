@@ -1,6 +1,8 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.util.ShiroUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.TitleMain;
@@ -10,6 +12,8 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ import java.util.Map;
  * @since 2020-01-30
  */
 @RestController
+@Validated
 @RequestMapping("/titleMain")
 public class TitleMainController {
     @Autowired
@@ -36,13 +41,22 @@ public class TitleMainController {
         return R.ok().put("data" , iTitleMainService.selectPage(page, titleMain));
     }
 
+    @GetMapping("/list")
+    public R getTitleMains(){
+        return R.ok().put("data" , iTitleMainService.selectList(null));
+    }
+
     /**
      * 保存和修改公用的
      * @param titleMain 传递的实体
      * @return R
      */
     @PostMapping("/save")
-    public R titleMainSave(@RequestBody TitleMain titleMain){
+    public R titleMainSave(@RequestBody @Valid TitleMain titleMain){
+        if (titleMain.getId() == null){
+            titleMain.setCreateUid(ShiroUtils.getUserId());
+            titleMain.setCreateTime(new Date());
+        }
         boolean rs = iTitleMainService.saveOrUpdate(titleMain);
         if (rs){
             return R.ok();

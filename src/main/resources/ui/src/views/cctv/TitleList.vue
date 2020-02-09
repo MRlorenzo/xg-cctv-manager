@@ -32,11 +32,29 @@
     />
 
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" label-width="80px" label-position="left">
-        <!--序号-->
-        <!--<el-form-item label="">
-          <el-input v-model="d.no" placeholder="No" />
-        </el-form-item>-->
+      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
+
+        <!--主题id-->
+        <el-form-item label="主题" prop="subjectId">
+          <el-select v-model="d.subjectId" placeholder="请选择">
+            <el-option
+              v-for="item in mainList"
+              :key="item.id"
+              :label="item.subject"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <!--内容-->
+        <el-form-item label="内容" prop="text">
+          <el-input v-model="d.text" placeholder="" />
+        </el-form-item>
+
+        <!--代码-->
+        <el-form-item label="代码" prop="code">
+          <el-input v-model="d.code" placeholder="" />
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
@@ -52,6 +70,10 @@
 
 <script>
 import TitleListPage from './components/TitleListPage'
+import { getTtitleMainList } from '@/api/title-main'
+import {saveTitleListItem , deleteTtitleListItemById , updateTtitleListItem} from '@/api/title-liist-item'
+import {deepClone} from "@/utils";
+
 export default {
   name: 'TitleList',
   components: { TitleListPage },
@@ -59,11 +81,18 @@ export default {
     return {
       q: {},
       d: {},
+      mainList: [],
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
+      formName: 'form',
       rules: {
-        no: [{ required: true, trigger: 'blur' , message:''}]
+        subjectId: [
+          { required: true, trigger: 'blur' , message: 'not null'},
+          { type: 'number', trigger: 'blur' , message: '必须是数字'}
+        ],
+        text: [{ required: true, trigger: 'blur' , message:'not null'}],
+        code: [{ required: true, trigger: 'blur' , message:'not null'}]
       }
     }
   },
@@ -81,13 +110,13 @@ export default {
       this.dialogType = 'edit'
     },
     handleDelete({ $index, row }) {
-      /*this.$confirm('Confirm ?', 'Warning', {
+      this.$confirm('Confirm ?', 'Warning', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         type: 'warning'
       })
         .then(async() => {
-          const res = await deleteFormDailyLogById(row.id)
+          const res = await deleteTtitleListItemById(row.id)
           if (res.code === 0){
             this.doSearch = true
             this.$message({
@@ -96,20 +125,38 @@ export default {
             })
           }
         })
-        .catch(err => { console.error(err) })*/
+        .catch(err => { console.error(err) })
     },
-    async confirm() {
-      /*let res
+    async submit(){
+      let res
       if (this.d.id){
-        res = await updateDailyLog(this.d)
+        res = await updateTtitleListItem(this.d)
       }else {
-        res = await saveDailyLog(this.d)
+        res = await saveTitleListItem(this.d)
       }
       if (res.code === 0){
         this.showMark = false
         this.$message.success('提交成功')
-      }*/
+      }
+    },
+    confirm() {
+      this.$refs[this.formName].validate((valid) => {
+        if (valid) {
+          this.submit()
+        }else {
+          return false
+        }
+      });
+    },
+    async initMainList(){
+      const res = await getTtitleMainList()
+      if (res.code === 0){
+        this.mainList = res.data
+      }
     }
+  },
+  created(){
+    this.initMainList()
   }
 }
 </script>

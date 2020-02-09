@@ -45,6 +45,12 @@ public class FillCreditLog extends Model<FillCreditLog> {
     @NotNull
     private Date date;
 
+    /**
+     * 时间
+     */
+    @NotBlank
+    private String time;
+
 
     /**
      * 台号
@@ -113,6 +119,14 @@ public class FillCreditLog extends Model<FillCreditLog> {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getTableCode() {

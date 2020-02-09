@@ -3,21 +3,17 @@
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
 
       <!--事件名称-->
-      <!--
       <el-table-column align="center" label="事件名称" width="220">
         <template slot-scope="scope">
           {{ scope.row.subject }}
         </template>
       </el-table-column>
-      -->
       <!--创建时间-->
-      <!--
       <el-table-column align="center" label="创建时间" width="220">
         <template slot-scope="scope">
           {{ scope.row.createTime }}
         </template>
       </el-table-column>
-      -->
 
       <!--操作-->
       <el-table-column align="center" label="Operations">

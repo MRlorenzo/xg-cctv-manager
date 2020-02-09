@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -26,6 +28,7 @@ public class TitleMain extends Model<TitleMain> {
     /**
      * 事件名称
      */
+    @NotBlank
     private String subject;
 
     /**

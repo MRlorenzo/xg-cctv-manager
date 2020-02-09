@@ -77,11 +77,28 @@
         </el-form-item>
         <!--日期-->
         <el-form-item label="日期">
-          <el-date-picker
-            v-model="d.date"
-            type="datetime"
-            placeholder="选择日期"
-          />
+
+          <el-col :span="11">
+            <el-form-item prop="date1">
+              <el-date-picker
+                v-model="d.date"
+                type="date"
+                placeholder="选择日期"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col class="line" :span="2">-</el-col>
+
+          <el-col :span="11">
+            <el-form-item prop="date2">
+              <el-time-picker
+                placeholder="选择时间"
+                v-model="d.time"
+                style="width: 100%;"/>
+            </el-form-item>
+          </el-col>
+
         </el-form-item>
 
         <!--台号-->
@@ -125,6 +142,7 @@ import { downloadExcelByKey, deepClone } from "@/utils"
 const data = {
   no: null,
   date: '',
+  time: '',
   tableCode: null,
   total: null,
   coinCode: null,
@@ -173,7 +191,11 @@ export default {
       this.q = {}
     },
     handleAdd() {
-      this.d = {}
+      if (this.$refs[this.formName] != null){
+        this.$refs[this.formName].resetFields()
+      } else {
+        this.d = deepClone(data)
+      }
       this.showMark = true
       this.dialogType = 'new'
     },

@@ -17,7 +17,7 @@
       <!--详细-->
       <el-table-column align="center" label="详细" width="220">
         <template slot-scope="scope">
-          {{ scope.row.txt }}
+          {{ scope.row.text }}
         </template>
       </el-table-column>
 

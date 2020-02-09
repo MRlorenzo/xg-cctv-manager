@@ -8,6 +8,7 @@
                 <result column="type" property="type" />
                 <result column="no" property="no" />
                 <result column="date" property="date" />
+                <result column="time" property="time"/>
                 <result column="table_code" property="tableCode" />
                 <result column="total" property="total" />
                 <result column="coin_code" property="coinCode" />
@@ -19,6 +20,6 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, type, no, date, table_code, total, coin_code, alerter_name, monitor, create_uid, create_time
+        id, type, no, date,time, table_code, total, coin_code, alerter_name, monitor, create_uid, create_time
     </sql>
 </mapper>

@@ -80,11 +80,28 @@
         </el-form-item>
         <!--日期-->
         <el-form-item label="日期">
-          <el-date-picker
-            v-model="d.date"
-            type="datetime"
-            placeholder="选择日期"
-          />
+
+          <el-col :span="11">
+            <el-form-item prop="date1">
+              <el-date-picker
+                v-model="d.date"
+                type="date"
+                placeholder="选择日期"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col class="line" :span="2">-</el-col>
+
+          <el-col :span="11">
+            <el-form-item prop="date2">
+              <el-time-picker
+                placeholder="选择时间"
+                v-model="d.time"
+                style="width: 100%;"/>
+            </el-form-item>
+          </el-col>
+
         </el-form-item>
 
         <!--台号-->
@@ -105,7 +122,14 @@
         </el-form-item>
         <!--部门-->
         <el-form-item label="部门" prop="departmentId">
-          <el-input v-model="d.departmentId" placeholder="" />
+          <el-select v-model="d.departmentId" placeholder="请选择">
+            <el-option
+              v-for="item in departmentList"
+              :key="item.departmentId"
+              :label="item.departmentCode"
+              :value="item.departmentId">
+            </el-option>
+          </el-select>
         </el-form-item>
         <!--监控部-->
         <el-form-item label="监控部" prop="monitor">
@@ -139,10 +163,11 @@ import DailyLogPage from './components/DailyLogPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
 import { saveDailyLog, exportDailyLogExcel, updateDailyLog ,deleteFormDailyLogById} from '@/api/daily-log'
 import { downloadExcelByKey, deepClone } from "@/utils"
-
+import { getDepartments } from '@/api/department'
 const data = {
   no: null,
   date: '',
+  time: '',
   tableCode: '',
   subject: '',
   details: '',
@@ -159,6 +184,7 @@ export default {
     return {
       q: {},
       d: deepClone(data),
+      departmentList: [],
       searchTime: [],
       doSearch: true,
       showMark: false,
@@ -170,7 +196,10 @@ export default {
         subject: [{ required: true, trigger: 'blur' , message:'not null'}],
         details: [{ required: true, trigger: 'blur' , message:'not null'}],
         alerterName: [{ required: true, trigger: 'blur' , message:'not null'}],
-        departmentId: [{ required: true, trigger: 'blur' , message:'not null'}],
+        departmentId: [
+          { required: true, trigger: 'blur' , message:'not null'},
+          { type: 'number', trigger: 'blur' , message:'必须是数字'}
+        ],
         monitor: [{ required: true, trigger: 'blur' , message:'not null'}],
         conclusion: [{ required: true, trigger: 'blur' , message:'not null'}]
       }
@@ -197,6 +226,8 @@ export default {
     handleAdd() {
       if (this.$refs[this.formName] != null){
         this.$refs[this.formName].resetFields()
+      } else {
+        this.d = deepClone(data)
       }
 
       this.showMark = true
@@ -252,7 +283,16 @@ export default {
           return false;
         }
       });
+    },
+    async initDepartmentList(){
+      const res = await getDepartments()
+      if (res.code === 0){
+        this.departmentList = res.data
+      }
     }
+  },
+  created(){
+    this.initDepartmentList()
   }
 }
 </script>

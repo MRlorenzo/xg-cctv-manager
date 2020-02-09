@@ -39,6 +39,12 @@ public class DailyLog extends Model<DailyLog> {
     private Date date;
 
     /**
+     * 时间
+     */
+    @NotBlank
+    private String time;
+
+    /**
      * 台号
      */
     @NotBlank
@@ -113,6 +119,14 @@ public class DailyLog extends Model<DailyLog> {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getTableCode() {
@@ -206,6 +220,7 @@ public class DailyLog extends Model<DailyLog> {
         "id=" + id +
         ", no=" + no +
         ", date=" + date +
+        ", time=" + time +
         ", tableCode=" + tableCode +
         ", subject=" + subject +
         ", details=" + details +

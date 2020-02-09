@@ -93,11 +93,28 @@
       <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--日期-->
         <el-form-item label="日期">
-          <el-date-picker
-            v-model="d.date"
-            type="datetime"
-            placeholder="选择日期"
-          />
+
+          <el-col :span="11">
+            <el-form-item prop="date1">
+              <el-date-picker
+                v-model="d.date"
+                type="date"
+                placeholder="选择日期"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col class="line" :span="2">-</el-col>
+
+          <el-col :span="11">
+            <el-form-item prop="date2">
+              <el-time-picker
+                placeholder="选择时间"
+                v-model="d.time"
+                style="width: 100%;"/>
+            </el-form-item>
+          </el-col>
+
         </el-form-item>
         <!--台号-->
         <el-form-item label="台号" prop="tableCode">
@@ -121,11 +138,18 @@
         </el-form-item>
         <!--涉及员工-->
         <el-form-item label="涉及员工" prop="involveUid">
-          <el-input v-model="d.involveUid" placeholder="" />
+          <el-input type="number" v-model.number="d.involveUid" placeholder="" />
         </el-form-item>
         <!--部门id-->
         <el-form-item label="部门" prop="departmentId">
-          <el-input v-model="d.departmentId" placeholder="" />
+          <el-select v-model="d.departmentId" placeholder="请选择">
+            <el-option
+              v-for="item in departmentList"
+              :key="item.departmentId"
+              :label="item.departmentCode"
+              :value="item.departmentId">
+            </el-option>
+          </el-select>
         </el-form-item>
         <!--监控部-->
         <el-form-item label="监控部" prop="monitor">
@@ -158,8 +182,10 @@ import IncidentLogPage from './components/IncidentLogPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
 import {saveIncidentLog , deleteIncidentLogById , updateIncidentLog , exportIncidentLogExcel} from '@/api/incident-log'
 import { downloadExcelByKey , deepClone } from "@/utils"
+import { getDepartments } from '@/api/department'
 const data = {
   date: null,
+  time: '',
   tableCode: null,
   code: null,
   coinCode: null,
@@ -178,6 +204,7 @@ export default {
     return {
       q: {},
       searchTime: [],
+      departmentList: [],
       d: { urls: ''},
       doSearch: true,
       showMark: false,
@@ -190,7 +217,10 @@ export default {
         coinCode: [{ required: true, trigger: 'blur' , message:'not null'}],
         total: [{ required: true, trigger: 'blur' , message:'not null'}],
         report: [{ required: true, trigger: 'blur' , message:'not null'}],
-        involveUid: [{ required: true, trigger: 'blur' , message:'not null'}],
+        involveUid: [
+          { required: true, trigger: 'blur' , message:'not null'},
+          { type: 'number', trigger: 'blur' , message:'必须是数字'}
+        ],
         departmentId: [{ required: true, trigger: 'blur' , message:'not null'}],
         monitor: [{ required: true, trigger: 'blur' , message:'not null'}],
         remarks: [{ required: true, trigger: 'blur' , message:'not null'}],
@@ -216,7 +246,11 @@ export default {
       this.q = {}
     },
     handleAdd() {
-      this.d = {}
+      if (this.$refs[this.formName] != null){
+        this.$refs[this.formName].resetFields()
+      } else {
+        this.d = deepClone(data)
+      }
       this.showMark = true
       this.dialogType = 'new'
     },
@@ -265,12 +299,21 @@ export default {
     confirm() {
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          this.submit();
+          this.submit()
         }else {
-          return false;
+          return false
         }
       });
+    },
+    async initDepartmentList(){
+      const res = await getDepartments()
+      if (res.code === 0){
+        this.departmentList = res.data
+      }
     }
+  },
+  created(){
+    this.initDepartmentList()
   }
 }
 </script>

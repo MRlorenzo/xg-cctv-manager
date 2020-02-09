@@ -34,6 +34,11 @@ public class IncidentLog extends Model<IncidentLog> {
     private Date date;
 
     /**
+     * 时间
+     */
+    @NotBlank
+    private String time;
+    /**
      * 台号
      */
     @NotBlank
@@ -112,6 +117,14 @@ public class IncidentLog extends Model<IncidentLog> {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getTableCode() {

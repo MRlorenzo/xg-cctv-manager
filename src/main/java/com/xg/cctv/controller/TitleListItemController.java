@@ -1,6 +1,8 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.util.ShiroUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.TitleListItem;
@@ -10,6 +12,8 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,7 @@ import java.util.Map;
  * @since 2020-01-30
  */
 @RestController
+@Validated
 @RequestMapping("/titleListItem")
 public class TitleListItemController {
     @Autowired
@@ -36,13 +41,22 @@ public class TitleListItemController {
         return R.ok().put("data" , iTitleListItemService.selectPage(page, titleListItem));
     }
 
+    @GetMapping("/list")
+    public R getTitleListItems(){
+        return R.ok().put("data" , iTitleListItemService.selectList(null));
+    }
+
     /**
      * 保存和修改公用的
      * @param titleListItem 传递的实体
      * @return R
      */
     @PostMapping("/save")
-    public R titleListItemSave(@RequestBody TitleListItem titleListItem){
+    public R titleListItemSave(@RequestBody @Valid TitleListItem titleListItem){
+        if (titleListItem.getId() == null){
+            titleListItem.setCreateUid(ShiroUtils.getUserId());
+            titleListItem.setCreateTime(new Date());
+        }
         boolean rs = iTitleListItemService.saveOrUpdate(titleListItem);
         if (rs){
             return R.ok();

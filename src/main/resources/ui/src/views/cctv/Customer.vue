@@ -140,7 +140,11 @@ export default {
       this.q = {}
     },
     handleAdd() {
-      this.d = {}
+      if (this.$refs[this.formName] != null){
+        this.$refs[this.formName].resetFields()
+      } else {
+        this.d = deepClone(data)
+      }
       this.showMark = true
       this.dialogType = 'new'
     },

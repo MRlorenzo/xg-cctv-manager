@@ -22,6 +22,13 @@ export function getTtitleListItemForPage( data ) {
     params: data
   })
 }
+export function getTtitleListItemList() {
+  return request({
+    url: '/titleListItem/list',
+    method: 'get'
+  })
+}
+
 
 export function updateTtitleListItem( data ) {
   return request({

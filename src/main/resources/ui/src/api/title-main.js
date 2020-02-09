@@ -23,6 +23,13 @@ export function getTtitleMainForPage( data ) {
   })
 }
 
+export function getTtitleMainList( ) {
+  return request({
+    url: '/titleMain/list',
+    method: 'get'
+  })
+}
+
 export function updateTtitleMain( data ) {
   return request({
     url: '/titleMain/save',

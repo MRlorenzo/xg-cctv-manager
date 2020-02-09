@@ -88,11 +88,28 @@
         </el-form-item>
         <!--日期-->
         <el-form-item label="日期">
-          <el-date-picker
-            v-model="d.date"
-            type="datetime"
-            placeholder="选择日期"
-          />
+
+          <el-col :span="11">
+            <el-form-item prop="date1">
+              <el-date-picker
+                v-model="d.date"
+                type="date"
+                placeholder="选择日期"
+              />
+            </el-form-item>
+          </el-col>
+
+          <el-col class="line" :span="2">-</el-col>
+
+          <el-col :span="11">
+            <el-form-item prop="date2">
+              <el-time-picker
+                placeholder="选择时间"
+                v-model="d.time"
+                style="width: 100%;"/>
+            </el-form-item>
+          </el-col>
+
         </el-form-item>
         <!--台号-->
         <el-form-item label="台号" prop="tableCode">
@@ -116,7 +133,7 @@
         </el-form-item>
         <!--涉及员工-->
         <el-form-item label="涉及员工" prop="involveUid">
-          <el-input v-model="d.involveUid" placeholder="" />
+          <el-input type="number" v-model.number="d.involveUid" placeholder="" />
         </el-form-item>
         <!--监控部-->
         <el-form-item label="监控部" prop="monitor">
@@ -152,6 +169,7 @@ import { downloadExcelByKey, deepClone } from "@/utils"
 const data = {
   no: null,
   date: null,
+  time: '',
   tableCode: null,
   code: null,
   coinCode: null,
@@ -182,7 +200,10 @@ export default {
         coinCode: [{ required: true, trigger: 'blur' , message:'not null'}],
         total: [{ required: true, trigger: 'blur' , message:'not null'}],
         report: [{ required: true, trigger: 'blur' , message:'not null'}],
-        involveUid: [{ required: true, trigger: 'blur' , message:'not null'}],
+        involveUid: [
+          { required: true, trigger: 'blur' , message:'not null'},
+          { type: 'number', trigger: 'blur' , message:'必须是数字'}
+        ],
         monitor: [{ required: true, trigger: 'blur' , message:'not null'}],
         remarks: [{ required: true, trigger: 'blur' , message:'not null'}],
       }
@@ -207,7 +228,11 @@ export default {
       this.q = {}
     },
     handleAdd() {
-      this.d = {}
+      if (this.$refs[this.formName] != null){
+        this.$refs[this.formName].resetFields()
+      } else {
+        this.d = deepClone(data)
+      }
       this.showMark = true
       this.dialogType = 'new'
     },

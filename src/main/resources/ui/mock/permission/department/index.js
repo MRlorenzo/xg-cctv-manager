@@ -23,7 +23,7 @@ export default [
     response: _ => {
       return {
         code: 0,
-        list: departments
+        data: departments
       }
     }
   },
