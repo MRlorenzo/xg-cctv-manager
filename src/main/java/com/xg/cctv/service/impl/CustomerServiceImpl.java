@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     @Override
     public IPage<Customer> selectPage(Page<Customer> page, Map<String, Object> params) {
         QueryWrapper<Customer> queryWrapper = new QueryWrapper<>();
-        getMapQueryWrapper(queryWrapper , params);
+        getQueryWrapper(queryWrapper , params);
         return customerMapper.selectPage(page,queryWrapper);
     }
 
@@ -49,6 +48,13 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     public List<Customer> selectList(Customer customer) {
         QueryWrapper<Customer> queryWrapper = new QueryWrapper<Customer>();
         getQueryWrapper(queryWrapper,customer);
+        return customerMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<Customer> selectList(Map<String, Object> params) {
+        QueryWrapper<Customer> queryWrapper = new QueryWrapper<Customer>();
+        getQueryWrapper(queryWrapper , params);
         return customerMapper.selectList(queryWrapper);
     }
 
@@ -81,7 +87,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         return queryWrapper;
     }
 
-    public QueryWrapper<Customer> getMapQueryWrapper(QueryWrapper<Customer> queryWrapper,Map<String , Object> params){
+    public QueryWrapper<Customer> getQueryWrapper(QueryWrapper<Customer> queryWrapper, Map<String , Object> params){
         //条件拼接
         return queryWrapper;
     }

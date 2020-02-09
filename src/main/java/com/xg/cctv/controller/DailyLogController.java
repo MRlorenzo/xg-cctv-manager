@@ -3,6 +3,7 @@ package com.xg.cctv.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.DailyLogVo;
 import com.xg.cctv.common.util.ShiroUtils;
+import com.xg.cctv.excel.impl.DailyLogExcelService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +46,13 @@ public class DailyLogController {
     @GetMapping("/page")
     public R getDailyLogList(Page<DailyLogVo> page, Map<String , Object> dailyLog){
         return R.ok().put("data" , iDailyLogService.selectVoPage(page, dailyLog));
+    }
+
+    @GetMapping("/excel")
+    public R getDailyLogExcel(Map<String , Object> dailyLog){
+        List<DailyLog> dailyLogs = iDailyLogService.selectList(dailyLog);
+        return R.ok()
+                .put("key", new DailyLogExcelService().exportExcel(dailyLogs));
     }
 
     /**

@@ -2,6 +2,7 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.util.ShiroUtils;
+import com.xg.cctv.excel.impl.CustomerExcelService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,15 @@ public class CustomerController {
      * @return
      */
     @GetMapping("/page")
-    public R getCustomerList(Page<Customer> page,Customer customer){
+    public R getCustomerList(Page<Customer> page,Map<String , Object> customer){
         return R.ok().put("data" , iCustomerService.selectPage(page, customer));
+    }
+
+    @GetMapping("/excel")
+    public R getCustomerExcel(Map<String , Object> customer){
+        List<Customer> customers = iCustomerService.selectList(customer);
+        return R.ok()
+                .put("key" , new CustomerExcelService().exportExcel(customers));
     }
 
     /**

@@ -3,6 +3,7 @@ package com.xg.cctv.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.IncidentLogVo;
 import com.xg.cctv.common.util.ShiroUtils;
+import com.xg.cctv.excel.impl.IncidentLogExcelService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,13 @@ public class IncidentLogController {
     @GetMapping("/page")
     public R getIncidentLogList(Page<IncidentLogVo> page, Map<String , Object> incidentLog){
         return R.ok().put("data" , iIncidentLogService.selectVoPage(page, incidentLog));
+    }
+
+    @GetMapping("/excel")
+    public R getIncidentLogExcel(Map<String , Object> incidentLog){
+        List<IncidentLog> incidentLogs = iIncidentLogService.selectList(incidentLog);
+        return R.ok()
+                .put("key" , new IncidentLogExcelService().exportExcel(incidentLogs));
     }
 
     /**

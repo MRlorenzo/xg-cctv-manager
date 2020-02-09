@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.SysUserVo;
-import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.mapper.SysPermissionMapper;
 import com.xg.cctv.mybatis.po.SysPermission;
 import com.xg.cctv.mybatis.po.SysRole;
@@ -92,19 +91,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public IPage<SysUser> selectPage(Page<SysUser> page, Map<String, Object> params) {
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
-        getMapQueryWrapper(queryWrapper , params);
+        getQueryWrapper(queryWrapper , params);
         return sysUserMapper.selectPage(page , queryWrapper);
     }
 
     @Override
     public IPage<SysUserVo> selectVoPage(Page<SysUserVo> page , Map<String , Object> params) {
         QueryWrapper<SysUserVo> queryWrapper = new QueryWrapper<>();
-        getQueryWrapper(queryWrapper , params);
+        getVoQueryWrapper(queryWrapper , params);
         return sysUserMapper.selectVoPage(page , queryWrapper);
     }
 
     @Override
-    public QueryWrapper<SysUserVo> getQueryWrapper(QueryWrapper<SysUserVo> queryWrapper,Map<String , Object> params){
+    public List<SysUserVo> selectVoList(Map<String, Object> params) {
+        QueryWrapper<SysUserVo> queryWrapper = new QueryWrapper<>();
+        getVoQueryWrapper(queryWrapper , params);
+        return sysUserMapper.selectVoList(queryWrapper);
+    }
+
+    @Override
+    public QueryWrapper<SysUserVo> getVoQueryWrapper(QueryWrapper<SysUserVo> queryWrapper, Map<String , Object> params){
         //条件拼接
         if (params != null){
             return queryWrapper;
@@ -133,7 +139,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return queryWrapper;
     }
 
-    public QueryWrapper<SysUser> getMapQueryWrapper(QueryWrapper<SysUser> queryWrapper,Map<String , Object> params){
+    public QueryWrapper<SysUser> getQueryWrapper(QueryWrapper<SysUser> queryWrapper, Map<String , Object> params){
         //条件拼接
         return queryWrapper;
     }

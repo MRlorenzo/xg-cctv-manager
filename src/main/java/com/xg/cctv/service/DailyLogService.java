@@ -34,4 +34,6 @@ public interface DailyLogService extends IService<DailyLog>, VoService<DailyLogV
      * @param dailyLog
      */
     List<DailyLog> selectList(DailyLog dailyLog);
+
+    List<DailyLog> selectList(Map<String , Object> params);
 }

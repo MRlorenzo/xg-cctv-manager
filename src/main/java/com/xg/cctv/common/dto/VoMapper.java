@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface VoMapper<T> {
 
     /**
@@ -14,5 +16,7 @@ public interface VoMapper<T> {
      * @return
      */
     IPage<T> selectVoPage(Page<T> page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
+
+    List<T> selectVoList(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
 }

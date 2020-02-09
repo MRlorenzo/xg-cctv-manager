@@ -34,4 +34,6 @@ public interface IncidentLogService extends IService<IncidentLog> ,VoService<Inc
      * @param incidentLog
      */
     List<IncidentLog> selectList(IncidentLog incidentLog);
+
+    List<IncidentLog> selectList(Map<String , Object> params);
 }

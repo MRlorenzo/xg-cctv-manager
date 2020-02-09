@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
     @Override
     public IPage<HighAction> selectPage(Page<HighAction> page, Map<String, Object> params) {
         QueryWrapper<HighAction> queryWrapper = new QueryWrapper<HighAction>();
-        getMapQueryWrapper(queryWrapper , params);
+        getQueryWrapper(queryWrapper , params);
         return highActionMapper.selectPage(page,queryWrapper);
     }
 
@@ -49,6 +48,13 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
     public List<HighAction> selectList(HighAction highAction) {
         QueryWrapper<HighAction> queryWrapper = new QueryWrapper<HighAction>();
         getQueryWrapper(queryWrapper,highAction);
+        return highActionMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<HighAction> selectList(Map<String, Object> params) {
+        QueryWrapper<HighAction> queryWrapper = new QueryWrapper<HighAction>();
+        getQueryWrapper(queryWrapper , params);
         return highActionMapper.selectList(queryWrapper);
     }
 
@@ -82,7 +88,7 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
         return queryWrapper;
     }
 
-    public QueryWrapper<HighAction> getMapQueryWrapper(QueryWrapper<HighAction> queryWrapper,Map<String , Object> params){
+    public QueryWrapper<HighAction> getQueryWrapper(QueryWrapper<HighAction> queryWrapper, Map<String , Object> params){
         //条件拼接
         return queryWrapper;
     }

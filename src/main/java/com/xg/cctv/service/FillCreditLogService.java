@@ -32,4 +32,6 @@ public interface FillCreditLogService extends IService<FillCreditLog> {
      * @param fillCreditLog
      */
     List<FillCreditLog> selectList(FillCreditLog fillCreditLog);
+
+    List<FillCreditLog> selectList(Map<String , Object> params);
 }

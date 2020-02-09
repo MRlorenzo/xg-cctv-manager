@@ -5,7 +5,7 @@ import com.xg.cctv.common.util.FileUpload;
 import com.xg.cctv.common.util.jxls.JxlsEntity;
 import com.xg.cctv.common.util.jxls.JxlsMap;
 import com.xg.cctv.common.util.jxls.JxlsUtils;
-import com.xg.cctv.excel.impl.DailyLogSimpleExcelService;
+import com.xg.cctv.excel.impl.DailyLogExcelService;
 import com.xg.cctv.exception.RRException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
@@ -110,6 +110,6 @@ public class SysOssController {
     @RequestMapping("/test")
     public R test(){
 
-        return R.ok().put("key" , new DailyLogSimpleExcelService().exportExcel(new ArrayList<>()));
+        return R.ok().put("key" , new DailyLogExcelService().exportExcel(new ArrayList<>()));
     }
 }

@@ -2,6 +2,7 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.util.ShiroUtils;
+import com.xg.cctv.excel.impl.HighActionExcelService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,15 @@ public class HighActionController {
      * @return
      */
     @GetMapping("/page")
-    public R getHighActionList(Page<HighAction> page,HighAction highAction){
+    public R getHighActionList(Page<HighAction> page,Map<String , Object> highAction){
         return R.ok().put("data" , iHighActionService.selectPage(page, highAction));
+    }
+
+    @GetMapping("/excel")
+    public R getHighActionExcel(Map<String , Object> highAction){
+        List<HighAction> highActions = iHighActionService.selectList(highAction);
+        return R.ok()
+                .put("key" , new HighActionExcelService().exportExcel(highActions));
     }
 
     /**

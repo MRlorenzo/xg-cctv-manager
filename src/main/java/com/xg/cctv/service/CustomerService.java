@@ -32,4 +32,6 @@ public interface CustomerService extends IService<Customer> {
      * @param customer
      */
     List<Customer> selectList(Customer customer);
+
+    List<Customer> selectList(Map<String , Object> params);
 }

@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.IncidentLogVo;
-import com.xg.cctv.common.dto.SysUserVo;
-import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.po.IncidentLog;
 import com.xg.cctv.mybatis.mapper.IncidentLogMapper;
 import com.xg.cctv.service.IncidentLogService;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -37,12 +34,19 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
     @Override
     public IPage<IncidentLogVo> selectVoPage(Page<IncidentLogVo> page, Map<String, Object> params) {
         QueryWrapper<IncidentLogVo> queryWrapper = new QueryWrapper<>();
-        getQueryWrapper(queryWrapper , params);
+        getVoQueryWrapper(queryWrapper , params);
         return incidentLogMapper.selectVoPage(page , queryWrapper);
     }
 
     @Override
-    public QueryWrapper<IncidentLogVo> getQueryWrapper(QueryWrapper<IncidentLogVo> queryWrapper, Map<String, Object> params) {
+    public List<IncidentLogVo> selectVoList(Map<String, Object> params) {
+        QueryWrapper<IncidentLogVo> queryWrapper = new QueryWrapper<>();
+        getVoQueryWrapper(queryWrapper , params);
+        return incidentLogMapper.selectVoList(queryWrapper);
+    }
+
+    @Override
+    public QueryWrapper<IncidentLogVo> getVoQueryWrapper(QueryWrapper<IncidentLogVo> queryWrapper, Map<String, Object> params) {
         if (params == null){
             return queryWrapper;
         }
@@ -82,7 +86,7 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
     @Override
     public IPage<IncidentLog> selectPage(Page<IncidentLog> page, Map<String, Object> params) {
         QueryWrapper<IncidentLog> queryWrapper = new QueryWrapper<IncidentLog>();
-        getMapQueryWrapper(queryWrapper , params);
+        getQueryWrapper(queryWrapper , params);
         return incidentLogMapper.selectPage( page, queryWrapper);
     }
 
@@ -90,6 +94,13 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
     public List<IncidentLog> selectList(IncidentLog incidentLog) {
         QueryWrapper<IncidentLog> queryWrapper = new QueryWrapper<IncidentLog>();
         getQueryWrapper(queryWrapper,incidentLog);
+        return incidentLogMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<IncidentLog> selectList(Map<String, Object> params) {
+        QueryWrapper<IncidentLog> queryWrapper = new QueryWrapper<IncidentLog>();
+        getQueryWrapper(queryWrapper, params);
         return incidentLogMapper.selectList(queryWrapper);
     }
 
@@ -131,7 +142,7 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
         return queryWrapper;
     }
 
-    public QueryWrapper<IncidentLog> getMapQueryWrapper(QueryWrapper<IncidentLog> queryWrapper,Map<String , Object> params){
+    public QueryWrapper<IncidentLog> getQueryWrapper(QueryWrapper<IncidentLog> queryWrapper, Map<String , Object> params){
         //条件拼接
         return queryWrapper;
     }

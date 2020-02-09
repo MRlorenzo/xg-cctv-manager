@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
     @Override
     public IPage<FillCreditLog> selectPage(Page<FillCreditLog> page, Map<String, Object> params) {
         QueryWrapper<FillCreditLog> queryWrapper = new QueryWrapper<FillCreditLog>();
-        getMapQueryWrapper(queryWrapper , params);
+        getQueryWrapper(queryWrapper , params);
         return fillCreditLogMapper.selectPage(page,queryWrapper);
     }
 
@@ -49,6 +48,13 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
     public List<FillCreditLog> selectList(FillCreditLog fillCreditLog) {
         QueryWrapper<FillCreditLog> queryWrapper = new QueryWrapper<FillCreditLog>();
         getQueryWrapper(queryWrapper,fillCreditLog);
+        return fillCreditLogMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<FillCreditLog> selectList(Map<String, Object> params) {
+        QueryWrapper<FillCreditLog> queryWrapper = new QueryWrapper<FillCreditLog>();
+        getQueryWrapper(queryWrapper , params);
         return fillCreditLogMapper.selectList(queryWrapper);
     }
 
@@ -74,7 +80,7 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
         return queryWrapper;
     }
 
-    public QueryWrapper<FillCreditLog> getMapQueryWrapper(QueryWrapper<FillCreditLog> queryWrapper,Map<String , Object> params){
+    public QueryWrapper<FillCreditLog> getQueryWrapper(QueryWrapper<FillCreditLog> queryWrapper, Map<String , Object> params){
         //条件拼接
         return queryWrapper;
     }

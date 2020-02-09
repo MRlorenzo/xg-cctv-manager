@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.DailyLogVo;
-import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.po.DailyLog;
 import com.xg.cctv.mybatis.mapper.DailyLogMapper;
 import com.xg.cctv.service.DailyLogService;
@@ -35,12 +34,19 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
     @Override
     public IPage<DailyLogVo> selectVoPage(Page<DailyLogVo> page, Map<String, Object> params) {
         QueryWrapper<DailyLogVo> queryWrapper = new QueryWrapper<>();
-        getQueryWrapper(queryWrapper , params);
+        getVoQueryWrapper(queryWrapper , params);
         return dailyLogMapper.selectVoPage(page , queryWrapper);
     }
 
     @Override
-    public QueryWrapper<DailyLogVo> getQueryWrapper(QueryWrapper<DailyLogVo> queryWrapper, Map<String, Object> params) {
+    public List<DailyLogVo> selectVoList(Map<String, Object> params) {
+        QueryWrapper<DailyLogVo> queryWrapper = new QueryWrapper<>();
+        getVoQueryWrapper(queryWrapper , params);
+        return dailyLogMapper.selectVoList(queryWrapper);
+    }
+
+    @Override
+    public QueryWrapper<DailyLogVo> getVoQueryWrapper(QueryWrapper<DailyLogVo> queryWrapper, Map<String, Object> params) {
         return queryWrapper;
     }
 
@@ -54,7 +60,7 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
     @Override
     public IPage<DailyLog> selectPage(Page<DailyLog> page, Map<String, Object> params) {
         QueryWrapper<DailyLog> queryWrapper = new QueryWrapper<DailyLog>();
-        getMapQueryWrapper(queryWrapper , params);
+        getQueryWrapper(queryWrapper , params);
         return dailyLogMapper.selectPage(page,queryWrapper);
     }
 
@@ -62,6 +68,13 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
     public List<DailyLog> selectList(DailyLog dailyLog) {
         QueryWrapper<DailyLog> queryWrapper = new QueryWrapper<DailyLog>();
         getQueryWrapper(queryWrapper,dailyLog);
+        return dailyLogMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<DailyLog> selectList(Map<String, Object> params) {
+        QueryWrapper<DailyLog> queryWrapper = new QueryWrapper<DailyLog>();
+        getQueryWrapper(queryWrapper , params);
         return dailyLogMapper.selectList(queryWrapper);
     }
 
@@ -95,7 +108,7 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
         return queryWrapper;
     }
 
-    public QueryWrapper<DailyLog> getMapQueryWrapper(QueryWrapper<DailyLog> queryWrapper,Map<String , Object> params){
+    public QueryWrapper<DailyLog> getQueryWrapper(QueryWrapper<DailyLog> queryWrapper, Map<String , Object> params){
         //条件拼接
         return queryWrapper;
     }

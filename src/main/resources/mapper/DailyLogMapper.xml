@@ -24,9 +24,17 @@
         id, no, date, table_code, subject, details, alerter_name, department_id, monitor, conclusion, create_uid, create_time, urls
     </sql>
 
+    <sql id="VoTable">
+        SELECT * FROM daily_log d LEFT JOIN sys_department dp ON d.department_id = dp.department_id
+    </sql>
+
     <!--如果自定义的方法还希望能够使用MP提供的Wrapper条件构造器，则需要如下写法-->
     <select id="selectVoPage" resultType="com.xg.cctv.common.dto.DailyLogVo">
-        SELECT * FROM daily_log d LEFT JOIN sys_department dp ON d.department_id = dp.department_id
+        <include refid="VoTable"/>
         ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectVoList" resultType="com.xg.cctv.common.dto.DailyLogVo">
+        <include refid="VoTable"/>
     </select>
 </mapper>

@@ -32,4 +32,6 @@ public interface HighActionService extends IService<HighAction> {
      * @param highAction
      */
     List<HighAction> selectList(HighAction highAction);
+
+    List<HighAction> selectList(Map<String , Object> params);
 }

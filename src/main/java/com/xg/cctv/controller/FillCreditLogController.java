@@ -2,6 +2,7 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.util.ShiroUtils;
+import com.xg.cctv.excel.impl.FillCreditLogExcelService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +38,15 @@ public class FillCreditLogController {
      * @return
      */
     @GetMapping("/page")
-    public R getFillCreditLogList(Page<FillCreditLog> page,FillCreditLog fillCreditLog){
+    public R getFillCreditLogList(Page<FillCreditLog> page,Map<String , Object> fillCreditLog){
         return R.ok().put("data" , iFillCreditLogService.selectPage(page, fillCreditLog));
+    }
+
+    @GetMapping("/excel")
+    public R getFillCreditLogExcel(Map<String , Object> fillCreditLog){
+        List<FillCreditLog> fillCreditLogs = iFillCreditLogService.selectList(fillCreditLog);
+        return R.ok()
+                .put("key" , new FillCreditLogExcelService().exportExcel(fillCreditLogs));
     }
 
     /**

@@ -53,7 +53,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "分页查询数据")
     #end
     @GetMapping("/page")
-    public R get${entity}List(Page<${entity}> page,${entity} ${table.entityPath}){
+    public R get${entity}List(Page<${entity}> page,Map<String , Object> ${table.entityPath}){
         return R.ok().put("data" , i${entity}Service.selectPage(page, ${table.entityPath}));
     }
 
