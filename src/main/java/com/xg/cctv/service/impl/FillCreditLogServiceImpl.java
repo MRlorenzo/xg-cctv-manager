@@ -82,6 +82,25 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
 
     public QueryWrapper<FillCreditLog> getQueryWrapper(QueryWrapper<FillCreditLog> queryWrapper, Map<String , Object> params){
         //条件拼接
+        if (params == null){
+            return queryWrapper;
+        }
+
+        if (params.get("startDate") != null){
+            queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
+        }
+
+        if (params.get("endDate") != null){
+            queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
+        }
+
+        if (params.get("tableCode") != null){
+            queryWrapper.like("table_code" , params.get("tableCode"));
+        }
+
+        if (params.get("coinCode") != null){
+            queryWrapper.eq("coin_code" , params.get("coinCode"));
+        }
         return queryWrapper;
     }
 }
