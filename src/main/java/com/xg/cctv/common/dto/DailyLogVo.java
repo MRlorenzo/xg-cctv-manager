@@ -2,6 +2,7 @@ package com.xg.cctv.common.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.xg.cctv.mybatis.po.DailyLog;
+import org.apache.commons.lang3.StringUtils;
 import org.jxls.util.Util;
 
 import java.io.FileInputStream;
@@ -22,7 +23,9 @@ public class DailyLogVo extends DailyLog{
      * 部门编号
      */
     private String departmentCode;
-    /********************************部门相关字段*********************************/
+    /********************************部门相关字段end*********************************/
+
+    /********************************支持使用Jxls的excel模板导出图片相关字段*********************************/
 
     @TableField(exist=false)
     private List<byte[]> imgs;
@@ -37,6 +40,9 @@ public class DailyLogVo extends DailyLog{
 
     public void initImages(String basePath) throws IOException {
         String urls = getUrls();
+        if (!StringUtils.isNotEmpty(urls)){
+            return;
+        }
         String[] urlArr = urls.split(",");
         List<byte[]> imgs = new ArrayList<>();
         for (int i = 0; i < urlArr.length; i++) {
@@ -47,6 +53,8 @@ public class DailyLogVo extends DailyLog{
         }
         setImgs(imgs);
     }
+    /********************************支持使用Jxls的excel模板导出图片相关字段end*********************************/
+
 
     public String getName() {
         return name;
