@@ -17,7 +17,7 @@
       <!--日期-->
       <el-table-column align="center" label="date" >
         <template slot-scope="scope">
-          {{ scope.row.date }}
+          {{ scope.row.date | dateTimeFilter}}
         </template>
       </el-table-column>
       <!--时间-->
