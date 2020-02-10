@@ -2,6 +2,8 @@ package com.xg.cctv.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.HighActionVo;
+import com.xg.cctv.common.dto.VoService;
 import com.xg.cctv.mybatis.po.HighAction;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.Map;
  * @author lorenzo
  * @since 2020-02-05
  */
-public interface HighActionService extends IService<HighAction> {
+public interface HighActionService extends IService<HighAction>, VoService<HighActionVo> {
 
     /**
      * 分页查询

@@ -27,7 +27,7 @@
     </sql>
 
     <sql id="VoTable">
-        SELECT * FROM incident_log i LEFT JOIN sys_department dp ON i.department_id = dp.department_id
+        SELECT i.*,dp.department_code,dp.`name`,u.username FROM incident_log i LEFT JOIN sys_department dp ON i.department_id = dp.department_id JOIN sys_user u ON u.user_id = i.involve_uid
     </sql>
 
     <!--如果自定义的方法还希望能够使用MP提供的Wrapper条件构造器，则需要如下写法-->

@@ -17,6 +17,10 @@ public class IncidentLogVo extends IncidentLog{
     private String departmentCode;
     /********************************部门相关字段*********************************/
 
+    /********************************员工相关字段*********************************/
+    private String username;
+    /********************************员工相关字段*********************************/
+
     public String getName() {
         return name;
     }
@@ -33,4 +37,11 @@ public class IncidentLogVo extends IncidentLog{
         this.departmentCode = departmentCode;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

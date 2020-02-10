@@ -25,4 +25,19 @@
     <sql id="Base_Column_List">
         id, no, date,time, table_code, code, coin_code, total, report, involve_uid, monitor, remarks, create_uid, create_time, urls
     </sql>
+
+    <sql id="VoTable">
+        SELECT h.*,u.username FROM high_action h LEFT JOIN sys_user u ON h.involve_uid = u.user_id
+    </sql>
+
+    <!--如果自定义的方法还希望能够使用MP提供的Wrapper条件构造器，则需要如下写法-->
+    <select id="selectVoPage" resultType="com.xg.cctv.common.dto.HighActionVo">
+        <include refid="VoTable"/>
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectVoList" resultType="com.xg.cctv.common.dto.HighActionVo">
+        <include refid="VoTable"/>
+    </select>
+
 </mapper>

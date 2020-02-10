@@ -49,7 +49,7 @@ public class IncidentLogController {
 
     @GetMapping("/excel")
     public R getIncidentLogExcel(Map<String , Object> incidentLog){
-        List<IncidentLog> incidentLogs = iIncidentLogService.selectList(incidentLog);
+        List<IncidentLogVo> incidentLogs = iIncidentLogService.selectVoList(incidentLog);
         return R.ok()
                 .put("key" , new IncidentLogExcelService().exportExcel(incidentLogs));
     }

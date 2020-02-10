@@ -1,5 +1,7 @@
 package com.xg.cctv.mybatis.mapper;
 
+import com.xg.cctv.common.dto.HighActionVo;
+import com.xg.cctv.common.dto.VoMapper;
 import com.xg.cctv.mybatis.po.HighAction;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author lorenzo
  * @since 2020-02-05
  */
-public interface HighActionMapper extends BaseMapper<HighAction> {
+public interface HighActionMapper extends BaseMapper<HighAction>, VoMapper<HighActionVo> {
 
 }

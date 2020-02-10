@@ -50,7 +50,7 @@ public class DailyLogController {
 
     @GetMapping("/excel")
     public R getDailyLogExcel(Map<String , Object> dailyLog){
-        List<DailyLog> dailyLogs = iDailyLogService.selectList(dailyLog);
+        List<DailyLogVo> dailyLogs = iDailyLogService.selectVoList(dailyLog);
         return R.ok()
                 .put("key", new DailyLogExcelService().exportExcel(dailyLogs));
     }

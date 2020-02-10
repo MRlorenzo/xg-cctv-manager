@@ -3,6 +3,7 @@ package com.xg.cctv.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xg.cctv.common.dto.HighActionVo;
 import com.xg.cctv.mybatis.po.HighAction;
 import com.xg.cctv.mybatis.mapper.HighActionMapper;
 import com.xg.cctv.service.HighActionService;
@@ -89,6 +90,10 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
     }
 
     public QueryWrapper<HighAction> getQueryWrapper(QueryWrapper<HighAction> queryWrapper, Map<String , Object> params){
+        return getWrapper(queryWrapper , params);
+    }
+
+    private QueryWrapper getWrapper(QueryWrapper queryWrapper , Map<String , Object> params){
         //条件拼接
         if (params == null){
             return queryWrapper;
@@ -118,5 +123,24 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
             queryWrapper.eq("monitor" , params.get("monitor"));
         }
         return queryWrapper;
+    }
+
+    @Override
+    public IPage<HighActionVo> selectVoPage(Page<HighActionVo> page, Map<String, Object> params) {
+        QueryWrapper<HighActionVo> queryWrapper = new QueryWrapper<HighActionVo>();
+        getVoQueryWrapper(queryWrapper , params);
+        return highActionMapper.selectVoPage(page,queryWrapper);
+    }
+
+    @Override
+    public List<HighActionVo> selectVoList(Map<String, Object> params) {
+        QueryWrapper<HighActionVo> queryWrapper = new QueryWrapper<HighActionVo>();
+        getVoQueryWrapper(queryWrapper , params);
+        return highActionMapper.selectVoList(queryWrapper);
+    }
+
+    @Override
+    public QueryWrapper<HighActionVo> getVoQueryWrapper(QueryWrapper<HighActionVo> queryWrapper, Map<String, Object> params) {
+        return getWrapper(queryWrapper , params);
     }
 }

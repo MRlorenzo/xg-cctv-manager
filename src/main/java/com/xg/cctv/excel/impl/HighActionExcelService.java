@@ -1,5 +1,6 @@
 package com.xg.cctv.excel.impl;
 
+import com.xg.cctv.common.dto.HighActionVo;
 import com.xg.cctv.common.util.jxls.JxlsMap;
 import com.xg.cctv.excel.ExportExcelService;
 import com.xg.cctv.mybatis.po.HighAction;
@@ -9,12 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HighActionExcelService implements ExportExcelService<HighAction>{
+public class HighActionExcelService implements ExportExcelService<HighActionVo>{
     protected static final String REPORT_TEMPLATE_PATH = "/templates/excel/highAction.xlsx";
     protected static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
-    public String exportExcel(List<HighAction> list) {
+    public String exportExcel(List<HighActionVo> list) {
         Map<String, Object> model = new HashMap<>();
         model.put("list", list);
         model.put("dFormat" , DATE_FORMAT);
