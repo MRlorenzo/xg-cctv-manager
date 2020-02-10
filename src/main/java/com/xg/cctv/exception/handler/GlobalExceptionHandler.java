@@ -1,5 +1,6 @@
 package com.xg.cctv.exception.handler;
 
+import com.xg.cctv.common.StatusCode;
 import com.xg.cctv.common.util.R;
 import com.xg.cctv.exception.RRException;
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.IOException;
 
 
 @ControllerAdvice //该注解定义全局异常处理类
@@ -29,7 +32,13 @@ public class GlobalExceptionHandler {
                 .put("msg" , e.getMsg());
     }
 
-
+    @ExceptionHandler(value = IOException.class)
+    public R handleIOException(IOException e){
+        logger.error("输入输出流异常",e);
+        return R.error()
+                .put("code" , StatusCode.SERVER_EXCEPTION)
+                .put("msg" , e.getMessage());
+    }
 
     /**
      * 未知异常
