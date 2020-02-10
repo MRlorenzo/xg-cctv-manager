@@ -17,28 +17,58 @@
 
       <!--台号-->
       <el-form-item label="台号">
-        <el-input v-model="q.tableCode" placeholder="No" />
+        <el-input v-model="q.tableCode" placeholder="" />
       </el-form-item>
       <!--币种-->
       <el-form-item label="币种">
-        <el-input v-model="q.coinCode" placeholder="No" />
+        <el-select v-model="q.coinCode" filterable>
+          <el-option
+            v-for="c in coinList"
+            :key="c.id"
+            :label="c.label"
+            :value="c.code"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <!--编码-->
       <el-form-item label="主题">
-        <el-input v-model="q.code" placeholder="No" />
+        <el-select v-model="q.code" filterable>
+          <el-option
+            v-for="t in titleSubjectList"
+            :key="t.id"
+            :label="t.code"
+            :value="t.code"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
 
       <!--涉及员工-->
       <el-form-item label="涉及员工">
-        <el-input v-model="q.involveUid" placeholder="No" />
+        <el-select
+          v-model="q.involveUid"
+          filterable
+          remote
+          reserve-keyword
+          placeholder="请输入关键词"
+          :remote-method="remoteMethod"
+          :loading="loading">
+          <el-option
+            v-for="emp in empList"
+            :key="emp.userId"
+            :label="emp.username"
+            :value="emp.userId">
+          </el-option>
+        </el-select>
       </el-form-item>
       <!--监控部-->
       <el-form-item label="监控部">
-        <el-input v-model="q.monitor" placeholder="No" />
+        <el-input v-model="q.monitor" placeholder="" />
       </el-form-item>
       <!--备注-->
       <el-form-item label="备注">
-        <el-input v-model="q.remarks" placeholder="No" />
+        <el-input v-model="q.remarks" placeholder="" />
       </el-form-item>
 
     </el-form>
@@ -90,7 +120,7 @@
         <el-form-item label="日期">
 
           <el-col :span="11">
-            <el-form-item prop="date1">
+            <el-form-item prop="date">
               <el-date-picker
                 v-model="d.date"
                 type="date"
@@ -102,9 +132,10 @@
           <el-col class="line" :span="2">-</el-col>
 
           <el-col :span="11">
-            <el-form-item prop="date2">
+            <el-form-item prop="time">
               <el-time-picker
                 placeholder="选择时间"
+                value-format="HH:mm:ss"
                 v-model="d.time"
                 style="width: 100%;"/>
             </el-form-item>
@@ -117,15 +148,31 @@
         </el-form-item>
         <!--编码-->
         <el-form-item label="编码" prop="code">
-          <el-input v-model="d.code" placeholder="" />
+          <el-select v-model="d.code" filterable>
+            <el-option
+              v-for="t in titleSubjectList"
+              :key="t.id"
+              :label="t.code"
+              :value="t.code"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <!--币种-->
         <el-form-item label="币种" prop="coinCode">
-          <el-input v-model="d.coinCode" placeholder="" />
+          <el-select v-model="d.coinCode" filterable>
+            <el-option
+              v-for="c in coinList"
+              :key="c.id"
+              :label="c.label"
+              :value="c.code"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <!--金额-->
         <el-form-item label="金额" prop="total">
-          <el-input v-model="d.total" placeholder="" />
+          <el-input type="number" v-model="d.total" placeholder="" />
         </el-form-item>
         <!--上下水报告-->
         <el-form-item label="上下水报告" prop="total">
@@ -133,7 +180,21 @@
         </el-form-item>
         <!--涉及员工-->
         <el-form-item label="涉及员工" prop="involveUid">
-          <el-input type="number" v-model.number="d.involveUid" placeholder="" />
+          <el-select
+            v-model="d.involveUid"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请输入关键词"
+            :remote-method="remoteMethod"
+            :loading="loading">
+            <el-option
+              v-for="emp in empList"
+              :key="emp.userId"
+              :label="emp.username"
+              :value="emp.userId">
+            </el-option>
+          </el-select>
         </el-form-item>
         <!--监控部-->
         <el-form-item label="监控部" prop="monitor">
@@ -165,7 +226,9 @@ import HighActionPage from './components/HighActionPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
 import {saveHighAction , deleteHighAction , updateHighAction , exportHighActionExcel} from '@/api/high-action'
 import { downloadExcelByKey, deepClone } from "@/utils"
-
+import { getTtitleListItemList } from '@/api/title-liist-item'
+import coinList from './common/coin-list'
+import { findUserLikeName } from '@/api/user'
 const data = {
   no: null,
   date: null,
@@ -187,14 +250,19 @@ export default {
     return {
       q: {},
       searchTime: [],
-      d: { urls: ''},
+      d: deepClone(data),
+      titleSubjectList: [], // 事件列表
+      coinList: deepClone(coinList), // 币种列表
+      empList: [], // 员工列表
+      loading: false,
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
       formName: 'form',
       rules: {
         no: [{ required: true, trigger: 'blur' , message:'not null'}],
-        date: [{ required: true, trigger: 'blur' , message:'not null'}],
+        date: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+        time: [{ required: true, trigger: 'blur' , message:'not null'}],
         tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
         code: [{ required: true, trigger: 'blur' , message:'not null'}],
         coinCode: [{ required: true, trigger: 'blur' , message:'not null'}],
@@ -275,6 +343,7 @@ export default {
       }
       if (res.code === 0){
         this.showMark = false
+        this.doSearch = true
         this.$message.success('提交成功')
       }
     },
@@ -286,7 +355,24 @@ export default {
           return false;
         }
       });
+    },
+    async initTitleSubjectList(){
+      const res = await getTtitleListItemList()
+      if (res.code === 0){
+        this.titleSubjectList = res.data
+      }
+    },
+    async remoteMethod( name ){
+      this.loading = true
+      const res = await findUserLikeName(name)
+      if (res.code === 0){
+        this.loading = false
+        this.empList = res.data
+      }
     }
+  },
+  created(){
+    this.initTitleSubjectList()
   }
 }
 </script>

@@ -111,6 +111,7 @@ export default {
       }
       if (res.code === 0){
         this.showMark = false
+        this.doSearch = true
         this.$message.success('提交成功')
       }
     },

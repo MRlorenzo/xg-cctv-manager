@@ -59,23 +59,23 @@
       <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--名称-->
         <el-form-item label="名称" prop="name">
-          <el-input v-model="d.name" placeholder="No" />
+          <el-input v-model="d.name" placeholder="" />
         </el-form-item>
         <!--卡号-->
         <el-form-item label="卡号" prop="cardNumber">
-          <el-input v-model="d.cardNumber" placeholder="No" />
+          <el-input v-model="d.cardNumber" placeholder="" />
         </el-form-item>
         <!--位置-->
         <el-form-item label="位置" prop="location">
-          <el-input v-model="d.location" placeholder="No" />
+          <el-input v-model="d.location" placeholder="" />
         </el-form-item>
         <!--平均下注-->
         <el-form-item label="平均下注" prop="avgBetting">
-          <el-input v-model="d.avgBetting" placeholder="No" />
+          <el-input v-model="d.avgBetting" placeholder="" />
         </el-form-item>
         <!--国籍-->
         <el-form-item label="国籍" prop="nationality">
-          <el-input v-model="d.nationality" placeholder="No" />
+          <el-input v-model="d.nationality" placeholder="" />
         </el-form-item>
         <!--照片-->
         <el-form-item label="照片">
@@ -187,6 +187,7 @@ export default {
       }
       if (res.code === 0){
         this.showMark = false
+        this.doSearch = true
         this.$message.success('提交成功')
       }
     },

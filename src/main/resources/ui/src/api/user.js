@@ -53,3 +53,17 @@ export function logout() {
     method: 'get'
   })
 }
+
+export function findUserByName( name ){
+  return request({
+    url: '/sysUser/find/' + name,
+    method: 'get'
+  })
+}
+
+export function findUserLikeName( name ) {
+  return request({
+    url: '/sysUser/like/' + name,
+    method: 'get'
+  })
+}

@@ -44,6 +44,8 @@ public interface SysUserService extends IService<SysUser>, VoService<SysUserVo> 
      */
     SysUser selectByUsername(String username);
 
+    List<SysUser> selectListByLikeName(String name);
+
     /**
      * 根据用户id查询权限列表
      * @param userId

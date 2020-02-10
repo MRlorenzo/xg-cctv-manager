@@ -2,57 +2,55 @@
   <div>
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
       <!--序号-->
-      <!--
-      <el-table-column align="center" label="" width="220">
+      <el-table-column align="center" label="no" >
         <template slot-scope="scope">
-          {{ scope.row }}
+          {{ scope.row.no }}
         </template>
       </el-table-column>
-      -->
       <!--日期-->
-      <el-table-column align="center" label="date" width="220">
+      <el-table-column align="center" label="date" >
         <template slot-scope="scope">
           {{ scope.row.date }}
         </template>
       </el-table-column>
       <!--时间-->
-      <el-table-column align="center" label="time" width="220">
+      <el-table-column align="center" label="time" >
         <template slot-scope="scope">
           {{ scope.row.time }}
         </template>
       </el-table-column>
       <!--台号-->
-      <el-table-column align="center" label="tableCode" width="220">
+      <el-table-column align="center" label="tableCode" >
         <template slot-scope="scope">
           {{ scope.row.tableCode }}
         </template>
       </el-table-column>
       <!--币种-->
-      <el-table-column align="center" label="coinCode" width="220">
+      <el-table-column align="center" label="coinCode" >
         <template slot-scope="scope">
           {{ scope.row.coinCode }}
         </template>
       </el-table-column>
       <!--金额-->
-      <el-table-column align="center" label="total" width="220">
+      <el-table-column align="center" label="total" >
         <template slot-scope="scope">
           {{ scope.row.total }}
         </template>
       </el-table-column>
       <!--序列号-->
-      <el-table-column align="center" label="no" width="220">
+      <el-table-column align="center" label="no" >
         <template slot-scope="scope">
           {{ scope.row.no }}
         </template>
       </el-table-column>
       <!--通知人-->
-      <el-table-column align="center" label="alerterName" width="220">
+      <el-table-column align="center" label="alerterName" >
         <template slot-scope="scope">
           {{ scope.row.alerterName }}
         </template>
       </el-table-column>
       <!--监控部-->
-      <el-table-column align="center" label="monitor" width="220">
+      <el-table-column align="center" label="monitor">
         <template slot-scope="scope">
           {{ scope.row.monitor }}
         </template>

@@ -46,6 +46,11 @@ public class SysUserController {
         return R.ok().put("data" , iSysUserService.selectByUsername(username));
     }
 
+    @GetMapping("/like/{username}")
+    public R like(@PathVariable("username") String username){
+        return R.ok().put("data" , iSysUserService.selectListByLikeName(username));
+    }
+
     @PostMapping("/login")
     public R login(@RequestBody Map<String , String> params) throws AuthenticationException {
 

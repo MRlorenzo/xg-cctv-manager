@@ -17,17 +17,25 @@
 
       <!--序号-->
       <el-form-item label="序号">
-        <el-input v-model="q.no" placeholder="No" />
+        <el-input v-model="q.no" placeholder="" />
       </el-form-item>
 
       <!--台号-->
       <el-form-item label="台号">
-        <el-input v-model="q.tableCode" placeholder="No" />
+        <el-input v-model="q.tableCode" placeholder="" />
       </el-form-item>
 
       <!--币种-->
       <el-form-item label="币种">
-        <el-input v-model="q.coinCode" placeholder="No" />
+        <el-select v-model="q.coinCode" filterable>
+          <el-option
+            v-for="c in coinList"
+            :key="c.id"
+            :label="c.label"
+            :value="c.code"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
 
     </el-form>
@@ -79,7 +87,7 @@
         <el-form-item label="日期">
 
           <el-col :span="11">
-            <el-form-item prop="date1">
+            <el-form-item prop="date">
               <el-date-picker
                 v-model="d.date"
                 type="date"
@@ -91,9 +99,10 @@
           <el-col class="line" :span="2">-</el-col>
 
           <el-col :span="11">
-            <el-form-item prop="date2">
+            <el-form-item prop="time">
               <el-time-picker
                 placeholder="选择时间"
+                value-format="HH:mm:ss"
                 v-model="d.time"
                 style="width: 100%;"/>
             </el-form-item>
@@ -110,7 +119,15 @@
         </el-form-item>
         <!--币种-->
         <el-form-item label="币种" prop="coinCode">
-          <el-input v-model="d.coinCode" placeholder="" />
+          <el-select v-model="d.coinCode" filterable>
+            <el-option
+              v-for="c in coinList"
+              :key="c.id"
+              :label="c.label"
+              :value="c.code"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <!--通知人-->
         <el-form-item label="通知人" prop="alerterName">
@@ -138,8 +155,9 @@
 import CreditPage from './components/CredItPage'
 import {saveFillAndCredit , deleteFillAndCreditById , updateFillAndCredit , exportFillAndCreditExcel} from '@/api/fill-and-credit'
 import { downloadExcelByKey, deepClone } from "@/utils"
-
+import coinList from './common/coin-list'
 const data = {
+  type: 2, // 1.加彩 2.缴码
   no: null,
   date: '',
   time: '',
@@ -154,16 +172,18 @@ export default {
   components: { CreditPage },
   data() {
     return {
-      q: {},
+      q: { type: 2},
       d: deepClone(data),
       searchTime: [],
+      coinList: deepClone(coinList), // 币种列表
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
       formName: 'form',
       rules: {
         no: [{ required: true, trigger: 'blur' , message:'not null'}],
-        date: [{ required: true, trigger: 'blur' , message:'not null'}],
+        date: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+        time: [{ required: true, trigger: 'blur' , message:'not null'}],
         tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
         total: [{ required: true, trigger: 'blur' , message:'not null'}],
         coinCode: [{ required: true, trigger: 'blur' , message:'not null'}],
@@ -188,7 +208,7 @@ export default {
   },
   methods: {
     resetQueryData() {
-      this.q = {}
+      this.q = { type: 2}
     },
     handleAdd() {
       if (this.$refs[this.formName] != null){
@@ -238,6 +258,7 @@ export default {
       }
       if (res.code === 0){
         this.showMark = false
+        this.doSearch = true
         this.$message.success('提交成功')
       }
     },

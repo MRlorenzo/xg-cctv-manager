@@ -82,7 +82,7 @@
         <el-form-item label="日期">
 
           <el-col :span="11">
-            <el-form-item prop="date1">
+            <el-form-item prop="date">
               <el-date-picker
                 v-model="d.date"
                 type="date"
@@ -94,8 +94,9 @@
           <el-col class="line" :span="2">-</el-col>
 
           <el-col :span="11">
-            <el-form-item prop="date2">
+            <el-form-item prop="time">
               <el-time-picker
+                value-format="HH:mm:ss"
                 placeholder="选择时间"
                 v-model="d.time"
                 style="width: 100%;"/>
@@ -122,7 +123,7 @@
         </el-form-item>
         <!--部门-->
         <el-form-item label="部门" prop="departmentId">
-          <el-select v-model="d.departmentId" placeholder="请选择">
+          <el-select v-model="d.departmentId" filterable placeholder="请选择">
             <el-option
               v-for="item in departmentList"
               :key="item.departmentId"
@@ -192,6 +193,8 @@ export default {
       formName: 'form',
       rules: {
         no: [{ required: true, trigger: 'blur' , message:'not null'}],
+        date: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+        time: [{ required: true, trigger: 'blur' , message:'not null'}],
         tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
         subject: [{ required: true, trigger: 'blur' , message:'not null'}],
         details: [{ required: true, trigger: 'blur' , message:'not null'}],
@@ -272,6 +275,7 @@ export default {
       }
       if (res.code === 0){
         this.showMark = false
+        this.doSearch = true
         this.$message.success('提交成功')
       }
     },

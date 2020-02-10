@@ -1,5 +1,6 @@
 import serverUsers from '../../static_data/server_users'
 import { deepClone } from '../../../src/utils/index';
+import {asyncRoutes} from "../../static_data/routes";
 
 export default [
   // user login
@@ -91,6 +92,26 @@ export default [
       return {
         code: 0,
         data: 'success'
+      }
+    }
+  },
+  {
+    url: '/sysUser/find/[A-Za-z0-9]',
+    type: 'get',
+    response: _=>{
+      return {
+        code: 0,
+        data: serverUsers
+      }
+    }
+  } ,
+  {
+    url: '/sysUser/like/[A-Za-z0-9]',
+    type: 'get',
+    response: _=>{
+      return {
+        code: 0,
+        data: serverUsers
       }
     }
   }

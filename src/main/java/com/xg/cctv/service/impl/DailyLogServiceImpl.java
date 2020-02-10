@@ -47,35 +47,7 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
 
     @Override
     public QueryWrapper<DailyLogVo> getVoQueryWrapper(QueryWrapper<DailyLogVo> queryWrapper, Map<String, Object> params) {
-        //条件拼接
-        if (params == null){
-            return queryWrapper;
-        }
-
-        if (params.get("tableCode") != null){
-            queryWrapper.like("table_code" , params.get("tableCode"));
-        }
-
-        if (params.get("subject") != null){
-            queryWrapper.eq("subject" , params.get("subject"));
-        }
-
-        if (params.get("departmentId") != null){
-            queryWrapper.eq("department_id" , params.get("departmentId"));
-        }
-
-        if (params.get("monitor") != null){
-            queryWrapper.eq("monitor" , params.get("monitor"));
-        }
-
-        if (params.get("startDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
-        }
-
-        if (params.get("endDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
-        }
-        return queryWrapper;
+        return getWrapper(queryWrapper , params);
     }
 
     @Override
@@ -137,6 +109,10 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
     }
 
     public QueryWrapper<DailyLog> getQueryWrapper(QueryWrapper<DailyLog> queryWrapper, Map<String , Object> params){
+        return getWrapper(queryWrapper , params);
+    }
+
+    private QueryWrapper getWrapper(QueryWrapper queryWrapper , Map<String , Object> params){
         //条件拼接
         if (params == null){
             return queryWrapper;

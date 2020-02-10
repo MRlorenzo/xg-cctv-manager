@@ -82,6 +82,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public List<SysUser> selectListByLikeName(String name) {
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+        if (StringUtils.isNotEmpty(name)){
+            queryWrapper.like("username" , name);
+        }
+        return sysUserMapper.selectList(queryWrapper);
+    }
+
+    @Override
     public IPage<SysUser> selectPage(Page<SysUser> page, SysUser sysUser) {
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
         getQueryWrapper(queryWrapper,sysUser);
