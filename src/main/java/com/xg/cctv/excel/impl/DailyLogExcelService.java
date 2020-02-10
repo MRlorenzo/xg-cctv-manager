@@ -3,6 +3,7 @@ package com.xg.cctv.excel.impl;
 import com.xg.cctv.common.dto.DailyLogVo;
 import com.xg.cctv.common.util.jxls.JxlsMap;
 import com.xg.cctv.excel.ExportExcelService;
+import com.xg.cctv.exception.RRException;
 import com.xg.cctv.mybatis.po.DailyLog;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +18,11 @@ public class DailyLogExcelService implements ExportExcelService<DailyLogVo>{
 
     @Override
     public String exportExcel(List<DailyLogVo> list) {
+
+        if (list == null || list.isEmpty()){
+            throw new RRException("数据列表不能为空");
+        }
+
         Map<String, Object> model = new HashMap<>();
         model.put("list", list);
         model.put("dFormat" , DATE_FORMAT);

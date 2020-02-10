@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.IncidentLogVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.excel.impl.IncidentLogExcelService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,9 @@ import java.util.Map;
 public class IncidentLogController {
     @Autowired
     public IncidentLogService iIncidentLogService;
+
+    @Value("${local.fileserver.dir}")
+    private String basePath;
 
     /**
      * 分页查询数据
@@ -48,8 +53,13 @@ public class IncidentLogController {
     }
 
     @GetMapping("/excel")
-    public R getIncidentLogExcel(Map<String , Object> incidentLog){
+    public R getIncidentLogExcel(Map<String , Object> incidentLog) throws IOException {
         List<IncidentLogVo> incidentLogs = iIncidentLogService.selectVoList(incidentLog);
+
+        for (IncidentLogVo d: incidentLogs) {
+            d.initImages(basePath);
+        }
+
         return R.ok()
                 .put("key" , new IncidentLogExcelService().exportExcel(incidentLogs));
     }

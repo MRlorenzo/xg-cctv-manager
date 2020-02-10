@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.HighActionVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.excel.impl.HighActionExcelService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,9 @@ public class HighActionController {
     @Autowired
     public HighActionService iHighActionService;
 
+    @Value("${local.fileserver.dir}")
+    private String basePath;
+
     /**
      * 分页查询数据
      *
@@ -44,8 +49,13 @@ public class HighActionController {
     }
 
     @GetMapping("/excel")
-    public R getHighActionExcel(Map<String , Object> highAction){
+    public R getHighActionExcel(Map<String , Object> highAction) throws IOException {
         List<HighActionVo> highActions = iHighActionService.selectVoList(highAction);
+
+        for (HighActionVo d: highActions) {
+            d.initImages(basePath);
+        }
+
         return R.ok()
                 .put("key" , new HighActionExcelService().exportExcel(highActions));
     }

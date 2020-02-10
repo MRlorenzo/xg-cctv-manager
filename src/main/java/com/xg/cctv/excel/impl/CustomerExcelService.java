@@ -2,6 +2,7 @@ package com.xg.cctv.excel.impl;
 
 import com.xg.cctv.common.util.jxls.JxlsMap;
 import com.xg.cctv.excel.ExportExcelService;
+import com.xg.cctv.exception.RRException;
 import com.xg.cctv.mybatis.po.Customer;
 
 import java.util.HashMap;
@@ -13,6 +14,9 @@ public class CustomerExcelService implements ExportExcelService<Customer>{
 
     @Override
     public String exportExcel(List<Customer> list) {
+        if (list == null || list.isEmpty()){
+            throw new RRException("数据列表不能为空");
+        }
         Map<String, Object> model = new HashMap<>();
         model.put("list", list);
 

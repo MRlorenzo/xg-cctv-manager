@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.DailyLogVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.excel.impl.DailyLogExcelService;
-import org.springframework.validation.BindingResult;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +15,8 @@ import com.xg.cctv.common.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,9 @@ import java.util.Map;
 public class DailyLogController {
     @Autowired
     public DailyLogService iDailyLogService;
+
+    @Value("${local.fileserver.dir}")
+    private String basePath;
 
     /**
      * 分页查询数据
@@ -49,11 +54,16 @@ public class DailyLogController {
     }
 
     @GetMapping("/excel")
-    public R getDailyLogExcel(Map<String , Object> dailyLog){
+    public R getDailyLogExcel(Map<String , Object> dailyLog) throws IOException {
         List<DailyLogVo> dailyLogs = iDailyLogService.selectVoList(dailyLog);
+        for (DailyLogVo d: dailyLogs) {
+            d.initImages(basePath);
+        }
         return R.ok()
                 .put("key", new DailyLogExcelService().exportExcel(dailyLogs));
     }
+
+
 
     /**
      * 保存公用的

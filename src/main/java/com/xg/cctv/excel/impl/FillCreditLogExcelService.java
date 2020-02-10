@@ -2,6 +2,7 @@ package com.xg.cctv.excel.impl;
 
 import com.xg.cctv.common.util.jxls.JxlsMap;
 import com.xg.cctv.excel.ExportExcelService;
+import com.xg.cctv.exception.RRException;
 import com.xg.cctv.mybatis.po.FillCreditLog;
 
 import java.text.SimpleDateFormat;
@@ -15,6 +16,9 @@ public class FillCreditLogExcelService implements ExportExcelService<FillCreditL
 
     @Override
     public String exportExcel(List<FillCreditLog> list) {
+        if (list == null || list.isEmpty()){
+            throw new RRException("数据列表不能为空");
+        }
         Map<String, Object> model = new HashMap<>();
         model.put("list", list);
         model.put("dFormat" , DATE_FORMAT);
