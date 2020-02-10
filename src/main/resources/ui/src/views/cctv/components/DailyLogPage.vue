@@ -1,6 +1,12 @@
 <template>
   <div>
-    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
+    <el-table :data="dataList" height="500" border>
+
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+          <el-image v-for="url in getUrls(scope.row.urls)" :key="url" :src="url" lazy></el-image>
+        </template>
+      </el-table-column>
 
       <!--序号-->
       <el-table-column align="center" label="no" >
@@ -66,13 +72,13 @@
       -->
 
       <!--操作-->
-      <el-table-column align="center" label="Operations">
+      <el-table-column align="center" label="Operations" >
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
-            {{ $t('permission.editUser') }}
+            {{ 'edit' }}
           </el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">
-            {{ $t('permission.delete') }}
+            {{ 'delete' }}
           </el-button>
         </template>
       </el-table-column>
@@ -166,6 +172,14 @@
         },
         handleCurrentChange(val) {
           this.currPage = val
+        },
+        getUrls( urlsText ){
+          if (typeof urlsText !== 'string'){
+            return []
+          }
+          return urlsText.split(',').map(url => {
+            return 'file'+url
+          })
         }
       },
       created(){

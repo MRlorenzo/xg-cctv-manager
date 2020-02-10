@@ -36,14 +36,39 @@
         },
         deep: true
       },
-      urls( str ){
-        if (typeof str !== 'string'){
-          this.uploadedFileMap = {}
-          this.fileList = []
-        }else if (typeof str === 'string' && str.length === 0 && Object.keys(this.uploadedFileMap).length){
-          this.uploadedFileMap = {}
-          this.fileList = []
-        }
+      urls: {
+        handler( str ){
+          if (typeof str !== 'string'){
+            this.uploadedFileMap = {}
+            this.fileList = []
+          }else if (typeof str === 'string' && str.length === 0 && Object.keys(this.uploadedFileMap).length){
+            this.uploadedFileMap = {}
+            this.fileList = []
+          }else if (typeof str === 'string' &&str.trim().length && Object.keys(this.uploadedFileMap).length === 0){
+            let urllist = str.split(',')
+            this.fileList = urllist.map(url =>{
+              return {
+                name: url.substring(str.lastIndexOf('/') + 1),
+                url: 'file' + url
+              }
+            })
+          }
+        },
+        deep: true
+      }
+    },
+    created(){
+      let str = this.urls
+      if (typeof str === 'string' &&str.trim().length && Object.keys(this.uploadedFileMap).length === 0){
+        let urllist = str.split(',')
+        this.fileList = urllist.map(url =>{
+          let name = url.substring(str.lastIndexOf('/') + 1)
+          this.$set(this.uploadedFileMap , name , url)
+          return {
+            name: name,
+            url: 'file' + url
+          }
+        })
       }
     },
     methods: {
@@ -52,6 +77,7 @@
       },
       // upload
       handleRemove(file, fileList) {
+        console.log(file)
         this.$delete(this.uploadedFileMap , file.name)
       },
       async uploadFileupload(option) {

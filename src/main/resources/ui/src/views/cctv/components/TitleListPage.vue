@@ -3,39 +3,39 @@
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
 
       <!--事件标题-->
-      <el-table-column align="center" label="事件标题" width="220">
+      <el-table-column align="center" label="事件标题" >
         <template slot-scope="scope">
           {{ scope.row.subjectId }}
         </template>
       </el-table-column>
       <!--代码-->
-      <el-table-column align="center" label="代码" width="220">
+      <el-table-column align="center" label="代码" >
         <template slot-scope="scope">
           {{ scope.row.code }}
         </template>
       </el-table-column>
       <!--详细-->
-      <el-table-column align="center" label="详细" width="220">
+      <el-table-column align="center" label="详细" >
         <template slot-scope="scope">
           {{ scope.row.text }}
         </template>
       </el-table-column>
 
       <!--创建时间-->
-      <el-table-column align="center" label="创建时间" width="220">
+      <el-table-column align="center" label="创建时间" >
         <template slot-scope="scope">
           {{ scope.row.createTime }}
         </template>
       </el-table-column>
 
       <!--操作-->
-      <el-table-column align="center" label="Operations">
+      <el-table-column align="center" label="Operations" >
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
-            {{ $t('permission.editUser') }}
+            {{ 'edit' }}
           </el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">
-            {{ $t('permission.delete') }}
+            {{ 'delete' }}
           </el-button>
         </template>
       </el-table-column>

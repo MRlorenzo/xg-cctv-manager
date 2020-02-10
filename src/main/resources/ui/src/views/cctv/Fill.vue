@@ -143,6 +143,9 @@
         <el-button type="danger" @click="showMark=false">
           {{ $t('permission.cancel') }}
         </el-button>
+        <el-button type="info" @click="reset">
+          {{'reset'}}
+        </el-button>
         <el-button type="primary" @click="confirm">
           {{ $t('permission.confirm') }}
         </el-button>
@@ -183,7 +186,7 @@ export default {
       formName: 'form',
       rules: {
         no: [{ required: true, trigger: 'blur' , message:'not null'}],
-        date: [{ type: 'date', required: true, message: '请选择日期', trigger: 'change' }],
+        date: [{ required: true, message: 'not null', trigger: 'blur' }],
         time: [{ required: true, trigger: 'blur' , message:'not null'}],
         tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
         total: [{ required: true, trigger: 'blur' , message:'not null'}],
@@ -211,12 +214,14 @@ export default {
     resetQueryData() {
       this.q = { type: 1}
     },
-    handleAdd() {
+    reset(){
       if (this.$refs[this.formName] != null){
         this.$refs[this.formName].resetFields()
-      } else {
-        this.d = deepClone(data)
       }
+      this.d = deepClone(data)
+    },
+    handleAdd() {
+      this.reset()
       this.showMark = true
       this.dialogType = 'new'
     },
