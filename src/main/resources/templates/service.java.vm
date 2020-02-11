@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>

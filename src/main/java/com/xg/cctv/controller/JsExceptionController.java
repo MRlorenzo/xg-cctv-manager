@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  *
  * @author lorenzo
- * @since 2020-01-19
+ * @since 2020-02-11
  */
 @RestController
 @RequestMapping("/jsException")
@@ -31,9 +31,9 @@ public class JsExceptionController {
      * @param jsException 查询条件
      * @return
      */
-    @GetMapping("/getJsExceptionPageList")
-    public R getJsExceptionList(Page<JsException> page,JsException jsException){
-        return R.ok().put("page" , iJsExceptionService.selectPage(page, jsException));
+    @GetMapping("/page")
+    public R getJsExceptionList(Page<JsException> page,Map<String , Object> jsException){
+        return R.ok().put("data" , iJsExceptionService.selectPage(page, jsException));
     }
 
     /**
@@ -41,7 +41,7 @@ public class JsExceptionController {
      * @param jsException 传递的实体
      * @return R
      */
-    @PostMapping("/jsExceptionSave")
+    @PostMapping("/save")
     public R jsExceptionSave(@RequestBody JsException jsException){
         boolean rs = iJsExceptionService.saveOrUpdate(jsException);
         if (rs){
@@ -55,7 +55,7 @@ public class JsExceptionController {
      * @param id  实体ID
      * @return R
      */
-    @PostMapping("/jsExceptionDelete/{id}")
+    @PostMapping("/delete/{id}")
     public R jsExceptionDelete(@PathVariable String id){
         boolean rs = iJsExceptionService.removeById(id);
         if (rs) {
@@ -69,12 +69,12 @@ public class JsExceptionController {
      * @param requestMap 实体集合ID
      * @return R
      */
-    @PostMapping("/jsExceptionBatchDelete")
+    @PostMapping("/batchDelete")
     public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
         List<String> ids = requestMap.get("ids");
         boolean rs = iJsExceptionService.removeByIds(ids);
         if (rs){
-            return R.ok().put("row" , ids.size());
+            return R.ok().put("data" , ids.size());
         }
         return R.error();
     }

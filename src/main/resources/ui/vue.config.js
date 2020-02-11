@@ -28,10 +28,10 @@ module.exports = {
   outputDir: '../static',
   assetsDir: 'static',
   lintOnSave: false, // process.env.NODE_ENV === 'development'
-  productionSourceMap: false,
+  productionSourceMap: true,
   devServer: {
     port: port,
-    open: true,
+    open: false,
     overlay: {
       warnings: false,
       errors: true
@@ -80,11 +80,16 @@ module.exports = {
       })
       .end()
 
-    config
-      // https://webpack.js.org/configuration/devtool/#development
-      .when(process.env.NODE_ENV === 'development',
-        config => config.devtool('cheap-source-map')
-      )
+    // https://webpack.js.org/configuration/devtool/#development
+
+    config.devtool('source-map')
+    config.output.devtoolModuleFilenameTemplate = info => {
+      const resPath = info.resourcePath
+      if ((/\.vue$/.test(resPath) && !/type=script/.test(info.identifier)) || /node_modules/.test(resPath)){
+        return `webpack:///${resPath}?${info.hash}`
+      }
+      return `webpack:///${resPath.replace('./src', 'my-code/src')}`
+    }
 
     config
       .when(process.env.NODE_ENV !== 'development',

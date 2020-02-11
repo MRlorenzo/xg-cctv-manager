@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author lorenzo
- * @since 2020-01-19
+ * @since 2020-02-11
  */
 public interface JsExceptionMapper extends BaseMapper<JsException> {
 

@@ -1,28 +1,25 @@
 <template>
   <div class="errPage-container">
-    <ErrorA />
-    <ErrorB />
-    <!-- $t is vue-i18n global function to translate lang -->
-    <h3>{{ $t('errorLog.tips') }}</h3>
+    <h3>
+      <el-button size="mini" type="warning" @click="doIt" plain>Do It</el-button>
+      {{ $t('errorLog.tips') }}
+    </h3>
     <aside>
       {{ $t('errorLog.description') }}
-      <a target="_blank" class="link-type" href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/error.html">
+      <!--<a target="_blank" class="link-type" href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/error.html">
         {{ $t('errorLog.documentation') }}
-      </a>
+      </a>-->
     </aside>
     <a href="#">
-      <img src="https://wpimg.wallstcn.com/360e4842-4db5-42d0-b078-f9a84a825546.gif">
+      <img src="@/assets/bg_images/error-log.gif">
     </a>
   </div>
 </template>
 
 <script>
-import ErrorA from './components/ErrorTestA'
-import ErrorB from './components/ErrorTestB'
-
 export default {
   name: 'ErrorLog',
-  components: { ErrorA, ErrorB }
+  methods: { doIt() { return x; } }
 }
 </script>
 

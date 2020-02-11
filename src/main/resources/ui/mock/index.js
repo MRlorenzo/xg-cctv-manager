@@ -14,6 +14,8 @@ import incidentLog from './cctv/incident-log'
 import titleListItem from './cctv/title-liist-item'
 import titleMain from './cctv/title-main'
 
+import jsException from './cctv/js-exception'
+
 import sysOss from './oss'
 
 const mocks = [
@@ -30,7 +32,8 @@ const mocks = [
   ...titleListItem,
   ...titleMain,
 
-  ...sysOss
+  ...sysOss,
+  ...jsException
 ]
 
 // for front mock

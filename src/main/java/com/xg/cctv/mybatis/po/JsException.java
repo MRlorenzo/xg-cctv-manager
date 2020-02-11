@@ -15,7 +15,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lorenzo
- * @since 2020-01-19
+ * @since 2020-02-11
  */
 public class JsException extends Model<JsException> {
 
@@ -32,26 +32,6 @@ public class JsException extends Model<JsException> {
     private String userName;
 
     /**
-     * IP地址
-     */
-    private String ip;
-
-    /**
-     * 文件名
-     */
-    private String fileName;
-
-    /**
-     * 行号
-     */
-    private Integer lineNo;
-
-    /**
-     * 列号
-     */
-    private Integer colNo;
-
-    /**
      * 创建时间
      */
     private Date createDate;
@@ -59,7 +39,13 @@ public class JsException extends Model<JsException> {
     /**
      * 异常信息
      */
-    private String exceptionVal;
+    private String stack;
+
+    private String url;
+
+    private String message;
+
+    private String info;
 
 
     public Long getExceptionId() {
@@ -78,38 +64,6 @@ public class JsException extends Model<JsException> {
         this.userName = userName;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public Integer getLineNo() {
-        return lineNo;
-    }
-
-    public void setLineNo(Integer lineNo) {
-        this.lineNo = lineNo;
-    }
-
-    public Integer getColNo() {
-        return colNo;
-    }
-
-    public void setColNo(Integer colNo) {
-        this.colNo = colNo;
-    }
-
     public Date getCreateDate() {
         return createDate;
     }
@@ -118,12 +72,36 @@ public class JsException extends Model<JsException> {
         this.createDate = createDate;
     }
 
-    public String getExceptionVal() {
-        return exceptionVal;
+    public String getStack() {
+        return stack;
     }
 
-    public void setExceptionVal(String exceptionVal) {
-        this.exceptionVal = exceptionVal;
+    public void setStack(String stack) {
+        this.stack = stack;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     @Override
@@ -136,12 +114,11 @@ public class JsException extends Model<JsException> {
         return "JsException{" +
         "exceptionId=" + exceptionId +
         ", userName=" + userName +
-        ", ip=" + ip +
-        ", fileName=" + fileName +
-        ", lineNo=" + lineNo +
-        ", colNo=" + colNo +
         ", createDate=" + createDate +
-        ", exceptionVal=" + exceptionVal +
+        ", stack=" + stack +
+        ", url=" + url +
+        ", message=" + message +
+        ", info=" + info +
         "}";
     }
 }

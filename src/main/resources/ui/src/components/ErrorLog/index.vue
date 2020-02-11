@@ -17,7 +17,7 @@
             <div>
               <span class="message-title">Msg:</span>
               <el-tag type="danger">
-                {{ row.err.message }}
+                {{ row.message }}
               </el-tag>
             </div>
             <br>
@@ -38,7 +38,7 @@
         </el-table-column>
         <el-table-column label="Stack">
           <template slot-scope="scope">
-            {{ scope.row.err.stack }}
+            {{ scope.row.stack }}
           </template>
         </el-table-column>
       </el-table>

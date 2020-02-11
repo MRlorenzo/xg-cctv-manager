@@ -19,17 +19,21 @@ function checkNeed() {
 }
 
 if (checkNeed()) {
-  Vue.config.errorHandler = function(err, vm, info, a) {
+  Vue.config.errorHandler = function(err, vm, info) {
   // Don't ask me why I use Vue.nextTick, it just a hack.
   // detail see https://forum.vuejs.org/t/dispatch-in-vue-config-errorhandler-has-some-problem/23500
+    const username = store.getters.name
     Vue.nextTick(() => {
       store.dispatch('errorLog/addErrorLog', {
+        username,
+        stack: err.stack,
+        message: err.message,
         err,
         vm,
         info,
         url: window.location.href
       })
-      console.error(err, info)
     })
+    console.error(err)
   }
 }

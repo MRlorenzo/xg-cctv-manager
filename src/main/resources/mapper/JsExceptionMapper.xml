@@ -6,16 +6,15 @@
     <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.JsException">
                 <id column="exception_id" property="exceptionId" />
                 <result column="user_name" property="userName" />
-                <result column="ip" property="ip" />
-                <result column="file_name" property="fileName" />
-                <result column="line_no" property="lineNo" />
-                <result column="col_no" property="colNo" />
                 <result column="create_date" property="createDate" />
-                <result column="exception_val" property="exceptionVal" />
+                <result column="stack" property="stack" />
+                <result column="url" property="url" />
+                <result column="message" property="message" />
+                <result column="info" property="info" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        exception_id, user_name, ip, file_name, line_no, col_no, create_date, exception_val
+        exception_id, user_name, create_date, stack, url, message, info
     </sql>
 </mapper>

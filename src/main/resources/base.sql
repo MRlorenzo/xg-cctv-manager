@@ -22,15 +22,13 @@ DROP TABLE IF EXISTS `js_exception`;
 CREATE TABLE `js_exception` (
   `exception_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '异常主键',
   `user_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户名',
-  `ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'IP地址',
-  `file_name` varchar(255) DEFAULT NULL COMMENT '文件名',
-  `line_no` int(11) DEFAULT NULL COMMENT '行号',
-  `col_no` int(11) DEFAULT NULL COMMENT '列号',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
-  `exception_val` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '异常信息',
+  `stack` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '异常信息',
+  `url` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `info` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`exception_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4288 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
 -- ----------------------------
 -- Records of js_exception
 -- ----------------------------

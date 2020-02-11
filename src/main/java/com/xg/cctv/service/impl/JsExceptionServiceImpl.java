@@ -14,13 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  *  服务实现类
  * </p>
  *
  * @author lorenzo
- * @since 2020-01-19
+ * @since 2020-02-11
  */
 @Service
 @Transactional
@@ -37,9 +39,23 @@ public class JsExceptionServiceImpl extends ServiceImpl<JsExceptionMapper, JsExc
     }
 
     @Override
+    public IPage<JsException> selectPage(Page<JsException> page, Map<String, Object> params) {
+        QueryWrapper<JsException> queryWrapper = new QueryWrapper<JsException>();
+        getQueryWrapper(queryWrapper , params);
+        return jsExceptionMapper.selectPage(page , queryWrapper);
+    }
+
+    @Override
     public List<JsException> selectList(JsException jsException) {
         QueryWrapper<JsException> queryWrapper = new QueryWrapper<JsException>();
-        getQueryWrapper(queryWrapper,jsException);
+        getQueryWrapper(queryWrapper , jsException);
+        return jsExceptionMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<JsException> selectList(Map<String , Object> params) {
+        QueryWrapper<JsException> queryWrapper = new QueryWrapper<JsException>();
+        getQueryWrapper(queryWrapper , params);
         return jsExceptionMapper.selectList(queryWrapper);
     }
 
@@ -52,5 +68,10 @@ public class JsExceptionServiceImpl extends ServiceImpl<JsExceptionMapper, JsExc
         //条件拼接
     
         return queryWrapper;
+    }
+
+    public QueryWrapper<JsException> getQueryWrapper(QueryWrapper<JsException> queryWrapper,Map<String , Object> params){
+    //条件拼接
+    return queryWrapper;
     }
 }

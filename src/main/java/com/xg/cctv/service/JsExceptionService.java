@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.mybatis.po.JsException;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -12,7 +13,7 @@ import java.util.List;
  * </p>
  *
  * @author lorenzo
- * @since 2020-01-19
+ * @since 2020-02-11
  */
 public interface JsExceptionService extends IService<JsException> {
 
@@ -24,9 +25,13 @@ public interface JsExceptionService extends IService<JsException> {
      */
     IPage<JsException> selectPage(Page<JsException> page,JsException jsException);
 
+    IPage<JsException> selectPage(Page<JsException> page,Map<String , Object> params);
+
     /**
      * 查询所有
      * @param jsException
      */
     List<JsException> selectList(JsException jsException);
+
+    List<JsException> selectList(Map<String , Object> params);
 }
