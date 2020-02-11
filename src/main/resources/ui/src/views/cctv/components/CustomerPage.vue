@@ -11,43 +11,43 @@
       </el-table-column>
       -->
       <!--姓名-->
-      <el-table-column align="center" label="name" >
+      <el-table-column align="center" :label="$t('cctv.name')" >
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
       <!--卡号-->
-      <el-table-column align="center" label="cardNumber" >
+      <el-table-column align="center" :label="$t('cctv.cardNumber')" >
         <template slot-scope="scope">
           {{ scope.row.cardNumber }}
         </template>
       </el-table-column>
       <!--位置-->
-      <el-table-column align="center" label="location" >
+      <el-table-column align="center" :label="$t('cctv.location')" >
         <template slot-scope="scope">
           {{ scope.row.location }}
         </template>
       </el-table-column>
       <!--平均下注-->
-      <el-table-column align="center" label="avgBetting" >
+      <el-table-column align="center" :label="$t('cctv.avgBetting')" >
         <template slot-scope="scope">
           {{ scope.row.avgBetting }}
         </template>
       </el-table-column>
       <!--国籍-->
-      <el-table-column align="center" label="nationality" >
+      <el-table-column align="center" :label="$t('cctv.nationality')" >
         <template slot-scope="scope">
           {{ scope.row.nationality }}
         </template>
       </el-table-column>
       <!--照片-->
-      <el-table-column align="center" label="photo" >
+      <el-table-column align="center" :label="$t('cctv.image')" >
         <template slot-scope="scope">
           {{ scope.row.photo }}
         </template>
       </el-table-column>
       <!--状态-->
-      <el-table-column align="center" label="status" >
+      <el-table-column align="center" :label="$t('cctv.status')" >
         <template slot-scope="scope">
           {{ scope.row.status }}
         </template>
@@ -58,10 +58,10 @@
       <el-table-column align="center" label="Operations" >
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
-            {{ 'edit' }}
+            {{ $t('cctv.edit') }}
           </el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">
-            {{ 'delete' }}
+            {{ $t('cctv.delete') }}
           </el-button>
         </template>
       </el-table-column>

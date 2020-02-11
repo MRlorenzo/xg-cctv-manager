@@ -1,97 +1,88 @@
 <template>
   <div>
     <el-table :data="dataList" height="500" border>
-
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+          <el-image v-for="url in getUrls(scope.row.urls)" :key="url" :src="url" lazy></el-image>
+        </template>
+      </el-table-column>
       <!--序号-->
-      <el-table-column align="center" label="no" >
+      <el-table-column align="center" :label="$t('cctv.no')" >
         <template slot-scope="scope">
           {{ scope.row.no }}
         </template>
       </el-table-column>
       <!--日期-->
-      <el-table-column align="center" label="date" >
+      <el-table-column align="center" :label="$t('cctv.date')" >
         <template slot-scope="scope">
           {{ scope.row.date | dateTimeFilter }}
         </template>
       </el-table-column>
 
       <!--台号-->
-      <el-table-column align="center" label="tableCode" >
+      <el-table-column align="center" :label="$t('cctv.tableCode')" >
         <template slot-scope="scope">
           {{ scope.row.tableCode }}
         </template>
       </el-table-column>
-      <!--编码-->
-      <el-table-column align="center" label="tableCode" >
-        <template slot-scope="scope">
-          {{ scope.row.tableCode }}
-        </template>
-      </el-table-column>
+
       <!--事件-->
-      <el-table-column align="center" label="code">
+      <el-table-column align="center" :label="$t('cctv.eventCode')">
         <template slot-scope="scope">
           {{ scope.row.code }}
         </template>
       </el-table-column>
       <!--币种-->
-      <el-table-column align="center" label="coinCode" >
+      <el-table-column align="center" :label="$t('cctv.coinType')" >
         <template slot-scope="scope">
           {{ scope.row.coinCode }}
         </template>
       </el-table-column>
       <!--金额-->
-      <el-table-column align="center" label="total" >
+      <el-table-column align="center" :label="$t('cctv.total')" >
         <template slot-scope="scope">
           {{ scope.row.total }}
         </template>
       </el-table-column>
       <!--报告-->
-      <el-table-column align="center" label="report" >
+      <el-table-column align="center" :label="$t('cctv.report')" >
         <template slot-scope="scope">
           {{ scope.row.report }}
         </template>
       </el-table-column>
       <!--涉事员工-->
-      <el-table-column align="center" label="involveUid" >
+      <el-table-column align="center" :label="$t('cctv.involveEmp')" >
         <template slot-scope="scope">
-          {{ scope.row.involveUid}}
+          {{ scope.row.username}}
         </template>
       </el-table-column>
       <!--部门-->
-      <el-table-column align="center" label="departmentId" >
+      <el-table-column align="center" :label="$t('cctv.department')" >
         <template slot-scope="scope">
-          {{ scope.row.departmentId }}
+          {{ scope.row.departmentCode }}
         </template>
       </el-table-column>
       <!--监控部-->
-      <el-table-column align="center" label="monitor" >
+      <el-table-column align="center" :label="$t('cctv.monitor')" >
         <template slot-scope="scope">
           {{ scope.row.monitor }}
         </template>
       </el-table-column>
       <!--备注-->
-      <el-table-column align="center" label="remarks" >
+      <el-table-column align="center" :label="$t('cctv.remarks')" >
         <template slot-scope="scope">
           {{ scope.row.remarks }}
         </template>
       </el-table-column>
-      <!--图片-->
-      <!--
-      <el-table-column align="center" label="" >
-        <template slot-scope="scope">
-          {{ scope.row }}
-        </template>
-      </el-table-column>
-      -->
 
       <!--操作-->
       <el-table-column align="center" label="Operations" >
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
-            {{ 'edit' }}
+            {{ $t('cctv.edit') }}
           </el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">
-            {{ 'delete' }}
+            {{ $t('cctv.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -184,6 +175,14 @@
         },
         handleCurrentChange(val) {
           this.currPage = val
+        },
+        getUrls( urlsText ){
+          if (typeof urlsText !== 'string'){
+            return []
+          }
+          return urlsText.split(',').map(url => {
+            return 'file'+url
+          })
         }
       },
       created(){

@@ -44,8 +44,8 @@ public class HighActionController {
      * @return
      */
     @GetMapping("/page")
-    public R getHighActionList(Page<HighAction> page,Map<String , Object> highAction){
-        return R.ok().put("data" , iHighActionService.selectPage(page, highAction));
+    public R getHighActionList(Page<HighActionVo> page,Map<String , Object> highAction){
+        return R.ok().put("data" , iHighActionService.selectVoPage(page, highAction));
     }
 
     @GetMapping("/excel")

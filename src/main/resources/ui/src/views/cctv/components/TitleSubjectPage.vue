@@ -3,13 +3,13 @@
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
 
       <!--事件名称-->
-      <el-table-column align="center" label="事件名称" >
+      <el-table-column align="center" :label="$t('cctv.subject')" >
         <template slot-scope="scope">
           {{ scope.row.subject }}
         </template>
       </el-table-column>
       <!--创建时间-->
-      <el-table-column align="center" label="创建时间">
+      <el-table-column align="center" :label="$t('cctv.createTime')">
         <template slot-scope="scope">
           {{ scope.row.createTime }}
         </template>

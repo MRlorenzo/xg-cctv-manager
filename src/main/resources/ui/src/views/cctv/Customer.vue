@@ -2,18 +2,18 @@
   <div class="app-container">
     <el-form :inline="true">
       <!--卡号-->
-      <el-form-item label="卡号">
-        <el-input v-model="q.cardNumber" placeholder="No" />
+      <el-form-item :label="$t('cctv.cardNumber')">
+        <el-input v-model="q.cardNumber" :placeholder="$t('cctv.pe_cardNumber')" />
       </el-form-item>
       <!--位置-->
-      <el-form-item label="位置">
-        <el-input v-model="q.location" placeholder="No" />
+      <el-form-item :label="$t('cctv.location')">
+        <el-input v-model="q.location" :placeholder="$t('cctv.pe_location')" />
       </el-form-item>
 
       <!--状态-->
-      <el-form-item label="状态">
-        <el-radio v-model="q.status" :label="0" border>禁用</el-radio>
-        <el-radio v-model="q.status" :label="1" border>正常</el-radio>
+      <el-form-item :label="$t('cctv.status')">
+        <el-radio v-model="q.status" :label="0" border>{{$t('cctv.disable')}}</el-radio>
+        <el-radio v-model="q.status" :label="1" border>{{$t('cctv.normal')}}</el-radio>
       </el-form-item>
 
     </el-form>
@@ -22,28 +22,28 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          Search
+          {{$t('cctv.search')}}
         </el-button>
       </el-form-item>
 
       <!-- 导出按钮 -->
       <el-form-item>
         <el-button type="info" @click="handleExcel">
-          Excel
+          {{$t('cctv.exportExcel')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          Reset
+          {{$t('cctv.reset')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          Add
+          {{$t('cctv.new')}}
         </el-button>
       </el-form-item>
     </el-form>
@@ -58,44 +58,44 @@
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
       <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--名称-->
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="d.name" placeholder="" />
+        <el-form-item :label="$t('cctv.name')" prop="name">
+          <el-input v-model="d.name" :placeholder="$t('cctv.pe_name')" />
         </el-form-item>
         <!--卡号-->
-        <el-form-item label="卡号" prop="cardNumber">
-          <el-input v-model="d.cardNumber" placeholder="" />
+        <el-form-item :label="$t('cctv.cardNumber')" prop="cardNumber">
+          <el-input v-model="d.cardNumber" :placeholder="$t('cctv.pe_cardNumber')" />
         </el-form-item>
         <!--位置-->
-        <el-form-item label="位置" prop="location">
-          <el-input v-model="d.location" placeholder="" />
+        <el-form-item :label="$t('cctv.localtion')" prop="location">
+          <el-input v-model="d.location" :placeholder="$t('cctv.pe_localtion')" />
         </el-form-item>
         <!--平均下注-->
-        <el-form-item label="平均下注" prop="avgBetting">
-          <el-input v-model="d.avgBetting" placeholder="" />
+        <el-form-item :label="$t('cctv.avgBetting')" prop="avgBetting">
+          <el-input v-model="d.avgBetting" :placeholder="$t('cctv.pe_avgBetting')" />
         </el-form-item>
         <!--国籍-->
-        <el-form-item label="国籍" prop="nationality">
-          <el-input v-model="d.nationality" placeholder="" />
+        <el-form-item :label="$t('cctv.nationality')" prop="nationality">
+          <el-input v-model="d.nationality" :placeholder="$t('cctv.pe_nationality')" />
         </el-form-item>
         <!--照片-->
-        <el-form-item label="照片">
+        <el-form-item :label="$t('cctv.image')">
           <avatar-image :url.sync="d.imageUrl"/>
         </el-form-item>
         <!--状态-->
-        <el-form-item label="状态">
-          <el-radio v-model="d.status" :label="0" border>禁用</el-radio>
-          <el-radio v-model="d.status" :label="1" border>正常</el-radio>
+        <el-form-item :label="$t('cctv.status')">
+          <el-radio v-model="d.status" :label="0" border>{{$t('cctv.disable')}}</el-radio>
+          <el-radio v-model="d.status" :label="1" border>{{$t('cctv.normal')}}</el-radio>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
-          {{ $t('permission.cancel') }}
+          {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{'reset'}}
+          {{$t('cctv.reset')}}
         </el-button>
         <el-button type="primary" @click="confirm">
-          {{ $t('permission.confirm') }}
+          {{ $t('cctv.confirm') }}
         </el-button>
       </div>
     </el-dialog>

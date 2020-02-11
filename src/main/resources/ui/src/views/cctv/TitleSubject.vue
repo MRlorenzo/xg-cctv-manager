@@ -5,21 +5,21 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          Search
+          {{$t('cctv.search')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          Reset
+          {{$t('cctv.reset')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          Add
+          {{$t('cctv.new')}}
         </el-button>
       </el-form-item>
     </el-form>
@@ -34,16 +34,16 @@
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
       <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--主题-->
-        <el-form-item label="主题" prop="subject">
-          <el-input v-model="d.subject" placeholder="No" />
+        <el-form-item :label="$t('cctv.subject')" prop="subject">
+          <el-input v-model="d.subject" :placeholder="$t('cctv.pe_subject')" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
-          {{ $t('permission.cancel') }}
+          {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="primary" @click="confirm">
-          {{ $t('permission.confirm') }}
+          {{ $t('cctv.confirm') }}
         </el-button>
       </div>
     </el-dialog>

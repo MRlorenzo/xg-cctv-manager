@@ -5,21 +5,21 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          Search
+          {{$t('cctv.search')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          Reset
+          {{$t('cctv.reset')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          Add
+          {{$t('cctv.new')}}
         </el-button>
       </el-form-item>
     </el-form>
@@ -35,8 +35,8 @@
       <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
 
         <!--主题id-->
-        <el-form-item label="主题" prop="subjectId">
-          <el-select v-model="d.subjectId" placeholder="请选择">
+        <el-form-item :label="$t('cctv.subject')" prop="subjectId">
+          <el-select v-model="d.subjectId" :placeholder="$t('cctv.pe_subject')">
             <el-option
               v-for="item in mainList"
               :key="item.id"
@@ -47,21 +47,21 @@
         </el-form-item>
 
         <!--内容-->
-        <el-form-item label="内容" prop="text">
-          <el-input v-model="d.text" placeholder="" />
+        <el-form-item :label="$t('cctv.content')" prop="text">
+          <el-input v-model="d.text" :placeholder="$t('cctv.pe_content')" />
         </el-form-item>
 
         <!--代码-->
-        <el-form-item label="代码" prop="code">
-          <el-input v-model="d.code" placeholder="" />
+        <el-form-item :label="$t('cctv.code')" prop="code">
+          <el-input v-model="d.code" :placeholder="$t('cctv.code')" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
-          {{ $t('permission.cancel') }}
+          {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="primary" @click="confirm">
-          {{ $t('permission.confirm') }}
+          {{ $t('cctv.confirm') }}
         </el-button>
       </div>
     </el-dialog>

@@ -7,21 +7,21 @@
           v-model="searchTime"
           size="mini"
           type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('cctv.to')"
+          :start-placeholder="$t('cctv.startDate')"
+          :end-placeholder="$t('cctv.endDate')"
           value-format="yyyy-MM-dd"
         >
         </el-date-picker>
       </el-form-item>
 
       <!--台号-->
-      <el-form-item label="台号">
-        <el-input v-model="q.tableCode" placeholder="" />
+      <el-form-item :label="$t('cctv.tableCode')">
+        <el-input v-model="q.tableCode" :placeholder="$t('cctv.pe_tableCode')" />
       </el-form-item>
       <!--币种-->
-      <el-form-item label="币种">
-        <el-select v-model="q.coinCode" filterable>
+      <el-form-item :label="$t('cctv.coinType')">
+        <el-select v-model="q.coinCode" filterable :placeholder="$t('cctv.ps_coinType')">
           <el-option
             v-for="c in coinList"
             :key="c.id"
@@ -32,8 +32,8 @@
         </el-select>
       </el-form-item>
       <!--编码-->
-      <el-form-item label="主题">
-        <el-select v-model="q.code" filterable>
+      <el-form-item :label="$t('cctv.eventCode')">
+        <el-select v-model="q.code" filterable :placeholder="$t('cctv.ps_eventCode')">
           <el-option
             v-for="t in titleSubjectList"
             :key="t.id"
@@ -45,13 +45,13 @@
       </el-form-item>
 
       <!--涉及员工-->
-      <el-form-item label="涉及员工">
+      <el-form-item :label="$t('cctv.involveEmp')">
         <el-select
           v-model="q.involveUid"
           filterable
           remote
           reserve-keyword
-          placeholder="请输入关键词"
+          :placeholder="$t('cctv.pe_key')"
           :remote-method="remoteMethod"
           :loading="loading">
           <el-option
@@ -63,12 +63,12 @@
         </el-select>
       </el-form-item>
       <!--监控部-->
-      <el-form-item label="监控部">
-        <el-input v-model="q.monitor" placeholder="" />
+      <el-form-item :label="$t('cctv.monitor')">
+        <el-input v-model="q.monitor" :placeholder="$t('cctv.pe_monitor')" />
       </el-form-item>
       <!--备注-->
-      <el-form-item label="备注">
-        <el-input v-model="q.remarks" placeholder="" />
+      <el-form-item :label="$t('cctv.remarks')">
+        <el-input v-model="q.remarks" :placeholder="$t('cctv.pe_remarks')" />
       </el-form-item>
 
     </el-form>
@@ -77,28 +77,28 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          Search
+          {{$t('cctv.search')}}
         </el-button>
       </el-form-item>
 
       <!-- 导出按钮 -->
       <el-form-item>
         <el-button type="info" @click="handleExcel">
-          Excel
+          {{$t('cctv.exportExcel')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          Reset
+          {{$t('cctv.reset')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          Add
+          {{$t('cctv.new')}}
         </el-button>
       </el-form-item>
     </el-form>
@@ -113,18 +113,18 @@
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
       <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--序号-->
-        <el-form-item label="序号" prop="no">
-          <el-input v-model="d.no" placeholder="No" />
+        <el-form-item :label="$t('cctv.no')" prop="no">
+          <el-input v-model="d.no" :placeholder="$t('cctv.pe_no')" />
         </el-form-item>
         <!--日期-->
-        <el-form-item label="日期">
+        <el-form-item :label="$t('cctv.date')">
 
           <el-col :span="11">
             <el-form-item prop="date">
               <el-date-picker
                 v-model="d.date"
                 type="date"
-                placeholder="选择日期"
+                :placeholder="$t('cctv.ps_date')"
               />
             </el-form-item>
           </el-col>
@@ -134,7 +134,7 @@
           <el-col :span="11">
             <el-form-item prop="time">
               <el-time-picker
-                placeholder="选择时间"
+                :placeholder="$t('cctv.ps_time')"
                 value-format="HH:mm:ss"
                 v-model="d.time"
                 style="width: 100%;"/>
@@ -143,12 +143,12 @@
 
         </el-form-item>
         <!--台号-->
-        <el-form-item label="台号" prop="tableCode">
-          <el-input v-model="d.tableCode" placeholder="" />
+        <el-form-item :label="$t('cctv.tableCode')" prop="tableCode">
+          <el-input v-model="d.tableCode" :placeholder="$t('cctv.pe_tableCode')" />
         </el-form-item>
         <!--编码-->
-        <el-form-item label="编码" prop="code">
-          <el-select v-model="d.code" filterable>
+        <el-form-item :label="$t('cctv.eventCode')" prop="code">
+          <el-select v-model="d.code" filterable :placeholder="ps_eventCode">
             <el-option
               v-for="t in titleSubjectList"
               :key="t.id"
@@ -159,8 +159,8 @@
           </el-select>
         </el-form-item>
         <!--币种-->
-        <el-form-item label="币种" prop="coinCode">
-          <el-select v-model="d.coinCode" filterable>
+        <el-form-item :label="$t('cctv.coinType')" prop="coinCode">
+          <el-select v-model="d.coinCode" filterable :placeholder="$t('cctv.ps_coinType')">
             <el-option
               v-for="c in coinList"
               :key="c.id"
@@ -171,21 +171,21 @@
           </el-select>
         </el-form-item>
         <!--金额-->
-        <el-form-item label="金额" prop="total">
-          <el-input type="number" v-model="d.total" placeholder="" />
+        <el-form-item :label="$t('cctv.total')" prop="total">
+          <el-input type="number" v-model="d.total" :placeholder="$t('cctv.pe_total')" />
         </el-form-item>
         <!--上下水报告-->
-        <el-form-item label="上下水报告" prop="total">
-          <el-input v-model="d.report" placeholder="" />
+        <el-form-item :label="$t('cctv.report')" prop="total">
+          <el-input v-model="d.report" :placeholder="$t('cctv.pe_report')" />
         </el-form-item>
         <!--涉及员工-->
-        <el-form-item label="涉及员工" prop="involveUid">
+        <el-form-item :label="$t('cctv.involveEmp')" prop="involveUid">
           <el-select
             v-model="d.involveUid"
             filterable
             remote
             reserve-keyword
-            placeholder="请输入关键词"
+            :placeholder="$t('cctv.pe_key')"
             :remote-method="remoteMethod"
             :loading="loading">
             <el-option
@@ -197,27 +197,27 @@
           </el-select>
         </el-form-item>
         <!--监控部-->
-        <el-form-item label="监控部" prop="monitor">
-          <el-input v-model="d.monitor" placeholder="" />
+        <el-form-item :label="$t('cctv.monitor')" prop="monitor">
+          <el-input v-model="d.monitor" :placeholder="$t('cctv.pe_monitor')" />
         </el-form-item>
         <!--备注-->
-        <el-form-item label="备注" prop="remarks">
-          <el-input v-model="d.remarks" placeholder="" />
+        <el-form-item :label="$t('cctv.remarks')" prop="remarks">
+          <el-input v-model="d.remarks" :placeholder="$t('cctv.pe_remarks')" />
         </el-form-item>
         <!--图片-->
-        <el-form-item label="图片">
+        <el-form-item :label="$t('cctv.image')">
           <multiple-images :urls.sync="d.urls"/>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
-          {{ $t('permission.cancel') }}
+          {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{'reset'}}
+          {{$t('cctv.reset')}}
         </el-button>
         <el-button type="primary" @click="confirm">
-          {{ $t('permission.confirm') }}
+          {{ $t('cctv.confirm') }}
         </el-button>
       </div>
     </el-dialog>

@@ -8,8 +8,8 @@
     :http-request="uploadFileupload"
   >
 
-    <el-button size="small" type="primary">点击上传</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+    <el-button size="small" type="primary">{{$t('cctv.clickToUpload')}}</el-button>
+    <div slot="tip" class="el-upload__tip">{{$t('cctv.uploadTip')}}</div>
   </el-upload>
 </template>
 
@@ -47,8 +47,14 @@
           }else if (typeof str === 'string' &&str.trim().length && Object.keys(this.uploadedFileMap).length === 0){
             let urllist = str.split(',')
             this.fileList = urllist.map(url =>{
+              let lastIndex = url.lastIndexOf('/')
+              if (!~lastIndex){
+                lastIndex = url.lastIndexOf('\\')
+              }
+              let index = lastIndex + 1
+              let name = url.substring(index)
               return {
-                name: url.substring(str.lastIndexOf('/') + 1),
+                name: name,
                 url: 'file' + url
               }
             })
@@ -62,7 +68,12 @@
       if (typeof str === 'string' &&str.trim().length && Object.keys(this.uploadedFileMap).length === 0){
         let urllist = str.split(',')
         this.fileList = urllist.map(url =>{
-          let name = url.substring(str.lastIndexOf('/') + 1)
+          let lastIndex = url.lastIndexOf('/')
+          if (!~lastIndex){
+            lastIndex = url.lastIndexOf('\\')
+          }
+          let index = lastIndex + 1
+          let name = url.substring(index)
           this.$set(this.uploadedFileMap , name , url)
           return {
             name: name,

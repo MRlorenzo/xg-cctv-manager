@@ -9,55 +9,55 @@
       </el-table-column>
 
       <!--序号-->
-      <el-table-column align="center" label="no" >
+      <el-table-column align="center" :label="$t('cctv.no')" >
         <template slot-scope="scope">
           {{ scope.row.no }}
         </template>
       </el-table-column>
       <!--日期-->
-      <el-table-column align="center" label="date" >
+      <el-table-column align="center" :label="$t('cctv.date')" >
         <template slot-scope="scope">
           {{ scope.row.date | dateTimeFilter}}
         </template>
       </el-table-column>
       <!--时间-->
-      <el-table-column align="center" label="time" >
+      <el-table-column align="center" :label="$t('cctv.time')" >
         <template slot-scope="scope">
           {{ scope.row.time }}
         </template>
       </el-table-column>
       <!--台号-->
-      <el-table-column align="center" label="tableCode" >
+      <el-table-column align="center" :label="$t('cctv.tableCode')" >
         <template slot-scope="scope">
           {{ scope.row.tableCode }}
         </template>
       </el-table-column>
       <!--主题-->
-      <el-table-column align="center" label="subject" >
+      <el-table-column align="center" :label="$t('cctv.subject')" >
         <template slot-scope="scope">
           {{ scope.row.subject }}
         </template>
       </el-table-column>
       <!--相关信息-->
-      <el-table-column align="center" label="details" >
+      <el-table-column align="center" :label="$t('cctv.details')" >
         <template slot-scope="scope">
           {{ scope.row.details }}
         </template>
       </el-table-column>
       <!--通知人-->
-      <el-table-column align="center" label="alerterName" >
+      <el-table-column align="center" :label="$t('cctv.alerterName')" >
         <template slot-scope="scope">
           {{ scope.row.alerterName }}
         </template>
       </el-table-column>
       <!--部门-->
-      <el-table-column align="center" label="departmentId" >
+      <el-table-column align="center" :label="$t('cctv.department')" >
         <template slot-scope="scope">
-          {{ scope.row.departmentId }}
+          {{ scope.row.departmentCode }}
         </template>
       </el-table-column>
       <!--监控部-->
-      <el-table-column align="center" label="monitor" >
+      <el-table-column align="center" :label="$t('cctv.monitor')" >
         <template slot-scope="scope">
           {{ scope.row.monitor }}
         </template>
@@ -75,10 +75,10 @@
       <el-table-column align="center" label="Operations" >
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
-            {{ 'edit' }}
+            {{ $t('cctv.edit') }}
           </el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">
-            {{ 'delete' }}
+            {{ $t('cctv.delete') }}
           </el-button>
         </template>
       </el-table-column>

@@ -7,30 +7,30 @@
           v-model="searchTime"
           size="mini"
           type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('cctv.to')"
+          :start-placeholder="$t('cctv.startDate')"
+          :end-placeholder="$t('cctv.endDate')"
           value-format="yyyy-MM-dd"
         >
         </el-date-picker>
       </el-form-item>
 
       <!--台号-->
-      <el-form-item label="台号">
-        <el-input v-model="q.tableCode" placeholder="" />
+      <el-form-item :label="$t('cctv.tableCode')">
+        <el-input v-model="q.tableCode" :placeholder="$t('cctv.pe_tableCode')" />
       </el-form-item>
       <!--主题-->
-      <el-form-item label="主题">
-        <el-input v-model="q.subject" placeholder="" />
+      <el-form-item :label="$t('cctv.subject')">
+        <el-input v-model="q.subject" :placeholder="$t('cctv.pe_subject')" />
       </el-form-item>
 
       <!--部门-->
-      <el-form-item label="部门">
-        <el-input v-model="q.departmentId" placeholder="" />
+      <el-form-item :label="$t('cctv.department')">
+        <el-input v-model="q.departmentId" :placeholder="$t('cctv.pe_department')" />
       </el-form-item>
       <!--监控部-->
-      <el-form-item label="监控部">
-        <el-input v-model="q.monitor" placeholder="" />
+      <el-form-item :label="$t('cctv.monitor')">
+        <el-input v-model="q.monitor" :placeholder="$t('cctv.pe_monitor')" />
       </el-form-item>
 
     </el-form>
@@ -39,28 +39,28 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          Search
+          {{ $t('cctv.search') }}
         </el-button>
       </el-form-item>
 
       <!-- 导出按钮 -->
       <el-form-item>
         <el-button type="info" @click="handleExcel">
-          Excel
+          {{ $t('cctv.exportExcel') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          Reset
+          {{ $t('cctv.reset') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          Add
+          {{ $t('cctv.new') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -75,18 +75,18 @@
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
       <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
         <!--序号-->
-        <el-form-item label="序号" prop="no">
-          <el-input v-model="d.no" placeholder="No" />
+        <el-form-item :label="$t('cctv.no')" prop="no">
+          <el-input v-model="d.no" :placeholder="$t('cctv.pe_no')" />
         </el-form-item>
         <!--日期-->
-        <el-form-item label="日期">
+        <el-form-item :label="$t('cctv.date')">
 
           <el-col :span="11">
             <el-form-item prop="date">
               <el-date-picker
                 v-model="d.date"
                 type="date"
-                placeholder="选择日期"
+                :placeholder="$t('cctv.ps_date')"
               />
             </el-form-item>
           </el-col>
@@ -97,7 +97,7 @@
             <el-form-item prop="time">
               <el-time-picker
                 value-format="HH:mm:ss"
-                placeholder="选择时间"
+                :placeholder="$t('cctv.ps_time')"
                 v-model="d.time"
                 style="width: 100%;"/>
             </el-form-item>
@@ -106,24 +106,24 @@
         </el-form-item>
 
         <!--台号-->
-        <el-form-item label="台号" prop="tableCode">
-          <el-input v-model="d.tableCode" placeholder="" />
+        <el-form-item :label="$t('cctv.tableCode')" prop="tableCode">
+          <el-input v-model="d.tableCode" :placeholder="$t('cctv.pe_tableCode')" />
         </el-form-item>
         <!--主题-->
-        <el-form-item label="主题" prop="subject">
-          <el-input v-model="d.subject" placeholder="" />
+        <el-form-item :label="$t('cctv.subject')" prop="subject">
+          <el-input v-model="d.subject" :placeholder="$t('cctv.pe_subject')" />
         </el-form-item>
         <!--细节-->
-        <el-form-item label="细节" prop="details">
-          <el-input v-model="d.details" placeholder="" />
+        <el-form-item :label="$t('cctv.details')" prop="details">
+          <el-input v-model="d.details" :placeholder="$t('cctv.pe_details')" />
         </el-form-item>
         <!--通知人-->
-        <el-form-item label="通知人" prop="alerterName">
-          <el-input v-model="d.alerterName" placeholder="" />
+        <el-form-item :label="$t('cctv.alerterName')" prop="alerterName">
+          <el-input v-model="d.alerterName" placeholder="$t('cctv.pe_alerterName')" />
         </el-form-item>
         <!--部门-->
-        <el-form-item label="部门" prop="departmentId">
-          <el-select v-model="d.departmentId" filterable placeholder="请选择">
+        <el-form-item :label="$t('cctv.department')" prop="departmentId">
+          <el-select v-model="d.departmentId" filterable :placeholder="$t('cctv.pe_department')">
             <el-option
               v-for="item in departmentList"
               :key="item.departmentId"
@@ -133,28 +133,28 @@
           </el-select>
         </el-form-item>
         <!--监控部-->
-        <el-form-item label="监控部" prop="monitor">
-          <el-input v-model="d.monitor" placeholder="" />
+        <el-form-item :label="$t('cctv.monitor')" prop="monitor">
+          <el-input v-model="d.monitor" :placeholder="$t('cctv.pe_monitor')" />
         </el-form-item>
         <!--结论-->
-        <el-form-item label="结论" prop="conclusion">
-          <el-input v-model="d.conclusion" placeholder="" />
+        <el-form-item :label="$t('cctv.ending')" prop="conclusion">
+          <el-input v-model="d.conclusion" :placeholder="$t('cctv.pe_ending')" />
         </el-form-item>
 
         <!--图片-->
-        <el-form-item label="图片">
+        <el-form-item :label="$t('cctv.image')">
           <multiple-images :urls.sync="d.urls"/>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
-          {{ $t('permission.cancel') }}
+          {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{'reset'}}
+          {{$t('cctv.reset')}}
         </el-button>
         <el-button type="primary" @click="confirm">
-          {{ $t('permission.confirm') }}
+          {{ $t('cctv.confirm') }}
         </el-button>
       </div>
     </el-dialog>
