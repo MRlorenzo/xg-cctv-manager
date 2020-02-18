@@ -2,6 +2,10 @@ package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.util.ShiroUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +28,7 @@ import java.util.Map;
  */
 @RestController
 @Validated
+@Api(value = "TitleListItemController", description = "事件主题子项")
 @RequestMapping("/titleListItem")
 public class TitleListItemController {
     @Autowired
@@ -37,11 +42,17 @@ public class TitleListItemController {
      * @return
      */
     @GetMapping("/page")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "current", value = "当前页", required = false),
+            @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
+    })
+    @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
     public R getTitleListItemList(Page<TitleListItem> page,TitleListItem titleListItem){
         return R.ok().put("data" , iTitleListItemService.selectPage(page, titleListItem));
     }
 
     @GetMapping("/list")
+    @ApiOperation(value="查询所有事件主题子项列表", notes="查询所有事件主题子项列表接口" , httpMethod = "GET" , response = R.class)
     public R getTitleListItems(){
         return R.ok().put("data" , iTitleListItemService.selectList(null));
     }
@@ -52,6 +63,7 @@ public class TitleListItemController {
      * @return R
      */
     @PostMapping("/save")
+    @ApiOperation(value="保存", notes="保存信息接口" , httpMethod = "POST" , response = R.class)
     public R titleListItemSave(@RequestBody @Valid TitleListItem titleListItem){
         if (titleListItem.getId() == null){
             titleListItem.setCreateUid(ShiroUtils.getUserId());
@@ -70,6 +82,8 @@ public class TitleListItemController {
      * @return R
      */
     @PostMapping("/delete/{id}")
+    @ApiImplicitParam(name = "id", value = "id", required = true )
+    @ApiOperation(value="根据id删除", notes="根据id删除接口" , httpMethod = "POST" , response = R.class)
     public R titleListItemDelete(@PathVariable String id){
         boolean rs = iTitleListItemService.removeById(id);
         if (rs) {
@@ -84,6 +98,8 @@ public class TitleListItemController {
      * @return R
      */
     @PostMapping("/batchDelete")
+    @ApiImplicitParam(name = "ids", value = "ids", required = true )
+    @ApiOperation(value="批量删除", notes="批量删除接口" , httpMethod = "POST" , response = R.class)
     public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
         List<String> ids = requestMap.get("ids");
         boolean rs = iTitleListItemService.removeByIds(ids);

@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +19,7 @@ import java.io.Serializable;
  * @author lorenzo
  * @since 2020-01-24
  */
+@ApiModel(value = "用户与角色对应关系实体:SysUserRole", description = "用户与角色对应关系")
 public class SysUserRole extends Model<SysUserRole> {
 
 
@@ -25,11 +29,13 @@ public class SysUserRole extends Model<SysUserRole> {
     /**
      * 用户ID
      */
+    @ApiModelProperty( value = "用户ID" , required=true)
     private Long userId;
 
     /**
      * 角色ID
      */
+    @ApiModelProperty( value = "角色ID" , required=true)
     private Long roleId;
 
 

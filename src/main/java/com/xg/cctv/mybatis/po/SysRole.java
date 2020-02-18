@@ -6,6 +6,9 @@ import java.util.Date;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import java.util.List;
  * @author lorenzo
  * @since 2020-01-24
  */
+@ApiModel(value = "角色表实体:SysRole", description = "角色表")
 public class SysRole extends Model<SysRole> {
 
 
@@ -26,32 +30,38 @@ public class SysRole extends Model<SysRole> {
     /**
      * 角色名称
      */
+    @ApiModelProperty( value = "角色名称" , required=true)
     private String name;
 
     /**
      * 备注
      */
+    @ApiModelProperty( value = "备注" , required=true)
     private String description;
 
     /**
      * 创建者ID
      */
+    @ApiModelProperty( hidden = true ,value = "创建者ID" , required=false)
     private Long createUserId;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty(hidden = true ,value = "创建时间" , required=false)
     private Date createTime;
 
     /**
      * 是否已删除 0否 1是
      */
+    @ApiModelProperty( value = "是否已删除 0否 1是" , required=false)
     private Integer isDel;
 
 
     /**
      * 排序
      */
+    @ApiModelProperty( value = "排序" , required=false)
     private Integer sort;
 
 

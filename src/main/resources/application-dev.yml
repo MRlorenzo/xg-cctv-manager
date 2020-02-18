@@ -18,3 +18,7 @@ local:
 resources:
  # log文件写入地址
  logdir: "logs/"
+
+
+swagger:
+  enabled: true

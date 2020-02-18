@@ -5,12 +5,17 @@ import com.xg.cctv.common.StatusCode;
 import com.xg.cctv.common.dto.SysUserVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.exception.RRException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
@@ -34,6 +39,8 @@ import java.util.Map;
  * @author lorenzo
  * @since 2020-01-24
  */
+// @Api  注解可以用来标记 Controller 的功能
+@Api(value = "SysUserController", description = "用户相关")
 @RestController
 @Validated
 @RequestMapping("/sysUser")
@@ -42,15 +49,26 @@ public class SysUserController {
     public SysUserService iSysUserService;
 
     @GetMapping("/find/{username}")
+    @ApiImplicitParam(name = "username", value = "用户名", required = false )
+    @ApiOperation(value="精确查找用户信息", notes="精确查找用户信息接口" , httpMethod = "GET" , response = R.class)
     public R find(@PathVariable("username") String username){
         return R.ok().put("data" , iSysUserService.selectByUsername(username));
     }
 
     @GetMapping("/like/{username}")
+    @ApiImplicitParam(name = "username", value = "用户名", required = false )
+    @ApiOperation(value="模糊匹配用户信息，根据用户名", notes="模糊匹配用户信息接口" , httpMethod = "GET" , response = R.class)
     public R like(@PathVariable("username") String username){
         return R.ok().put("data" , iSysUserService.selectListByLikeName(username));
     }
 
+    // @ApiOperation 注解用来标记一个方法的作用
+    @ApiOperation(value="用户登录", notes="用户登录接口" , httpMethod = "POST" , response = R.class)
+    @ApiImplicitParams({
+            // @ApilmplicitParam 注解用来描述一个参数，可以配置参数的中文含义，也可以给参数设置默认值，这样在接口测试的时候可以避免手动输入
+            @ApiImplicitParam(name = "username", value = "用户名", required = true ,dataType = "string"),
+            @ApiImplicitParam(name = "password", value = "密码", required = true ,dataType = "string")
+    })
     @PostMapping("/login")
     public R login(@RequestBody Map<String , String> params) throws AuthenticationException {
 
@@ -72,6 +90,7 @@ public class SysUserController {
     }
 
     @GetMapping("/info")
+    @ApiOperation(value="获取用户信息", notes="用户信息接口" , httpMethod = "GET" , response = R.class)
     // @RequiresPermissions("sysuser:info")
     public R info(){
         return R.ok().put("data" , ShiroUtils.getUserEntity());
@@ -101,6 +120,11 @@ public class SysUserController {
     }*/
 
     @GetMapping("/page")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "current", value = "当前页", required = false),
+            @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
+    })
+    @ApiOperation(value="获取用户信息分页", notes="用户信息分页接口" , httpMethod = "GET" , response = R.class)
     public R getSysUserList(Page<SysUserVo> page , Map<String , Object> params){
         return R.ok().put("data" , iSysUserService.selectVoPage(page , params ));
     }
@@ -111,6 +135,7 @@ public class SysUserController {
      * @return R
      */
     @PostMapping("/save")
+    @ApiOperation(value="保存用户", notes="保存用户接口" , httpMethod = "POST" , response = R.class)
     public R sysUserSave(@RequestBody @Valid SysUser user){
         if (user == null || !StringUtils.isNotEmpty(user.getPassword())){
             return R.error();
@@ -132,6 +157,9 @@ public class SysUserController {
      * @return R
      */
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("sysuser:delete")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true )
+    @ApiOperation(value="根据id删除对象", notes="根据id删除对象接口" , httpMethod = "POST" , response = R.class)
     public R sysUserDelete(@PathVariable String id){
         boolean rs = iSysUserService.removeById(id);
         if (rs) {
@@ -146,6 +174,9 @@ public class SysUserController {
      * @return R
      */
     @PostMapping("/batchDelete")
+    @RequiresPermissions("sysuser:delete")
+    @ApiImplicitParam(name = "ids", value = "用户ids", required = true )
+    @ApiOperation(value="批量删除对象", notes="批量删除对象接口" , httpMethod = "POST" , response = R.class)
     public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
         List<String> ids = requestMap.get("ids");
         boolean rs = iSysUserService.removeByIds(ids);

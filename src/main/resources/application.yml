@@ -142,3 +142,11 @@ local:
   fileserver:
     dir:  "D:\\TEMP"
     path: file
+swagger:
+  print-init: true
+  enabled: true
+  docket:
+    base-package: com.xg.cctv.controller
+  profiles:
+    - dev
+    - test

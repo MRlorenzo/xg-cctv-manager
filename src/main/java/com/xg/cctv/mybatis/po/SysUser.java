@@ -6,6 +6,8 @@ import java.util.Date;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,6 +22,7 @@ import java.util.List;
  * @author lorenzo
  * @since 2020-01-24
  */
+@ApiModel(value = "系统用户实体:SysUser", description = "系统用户")
 public class SysUser extends Model<SysUser> {
 
 
@@ -31,6 +34,7 @@ public class SysUser extends Model<SysUser> {
      */
     @NotBlank
     @Size(max = 100 , min = 2)
+    @ApiModelProperty( value = "用户名" , required=true)
     private String username;
 
     /**
@@ -38,11 +42,13 @@ public class SysUser extends Model<SysUser> {
      */
     @NotBlank
     @Size(max = 100 , min = 6)
+    @ApiModelProperty( value = "密码" , required=true)
     private String password;
 
     /**
      * 状态  0：禁用   1：正常
      */
+    @ApiModelProperty( value = "状态  0：禁用   1：正常" , required=true)
     private Integer status;
 
     /**
@@ -58,64 +64,76 @@ public class SysUser extends Model<SysUser> {
     /**
      * 部门id
      */
+    @ApiModelProperty( value = "部门id" , required=true)
     private Long departmentId;
 
     /**
      * 描述
      */
+    @ApiModelProperty( value = "描述" , required=true)
     private String description;
 
     /**
      * 序号
      */
+    @ApiModelProperty( value = "序号" , required=true)
     private String no;
 
     /**
      * 姓名
      */
+    @ApiModelProperty( value = "姓名" , required=true)
     private String nickName;
 
     /**
      * 工号
      */
+    @ApiModelProperty( value = "工号" , required=true)
     private String workNo;
 
     /**
      * 国籍
      */
+    @ApiModelProperty( value = "国籍" , required=true)
     private String nationality;
 
     /**
      * 照片
      */
+    @ApiModelProperty( value = "照片" , required=true)
     private String avatar;
 
     /**
      * 职位
      */
+    @ApiModelProperty( value = "职位" , required=true)
     private String position;
 
     /**
      * 聘用日期
      */
+    @ApiModelProperty( value = "聘用日期" , required=true)
     private Date hireDate;
 
     /**
      * 角色列表（关联sysRole）
      */
     @TableField(exist=false)
+    @ApiModelProperty( value = "角色列表（关联sysRole）" , required=true)
     private List<SysRole> roles;
 
     /**
      * 路由表，也相当于权限列表（关联sysPermission）
      */
     @TableField(exist=false)
+    @ApiModelProperty( value = "路由表，也相当于权限列表（关联sysPermission）" , required=true)
     private List<SysPermission> routes;
 
     /**
      * 部门信息
      */
     @TableField(exist=false)
+    @ApiModelProperty( value = "部门信息" , required=true)
     private SysDepartment department;
 
     public SysDepartment getDepartment() {

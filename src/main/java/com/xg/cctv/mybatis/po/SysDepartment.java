@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +19,7 @@ import java.io.Serializable;
  * @author lorenzo
  * @since 2020-01-24
  */
+@ApiModel(value = "部门表实体:SysDepartment", description = "部门表")
 public class SysDepartment extends Model<SysDepartment> {
 
 
@@ -28,21 +32,25 @@ public class SysDepartment extends Model<SysDepartment> {
     /**
      * 部门中文名称
      */
+    @ApiModelProperty( value = "部门中文名称" , required=true)
     private String name;
 
     /**
      * 描述
      */
+    @ApiModelProperty( value = "描述" , required=true)
     private String description;
 
     /**
      * 部门编号
      */
+    @ApiModelProperty( value = "部门编号" , required=true)
     private String departmentCode;
 
     /**
      * 排序字段
      */
+    @ApiModelProperty( value = "排序字段" , required=true)
     private Integer sort;
 
 

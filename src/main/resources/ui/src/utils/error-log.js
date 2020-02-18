@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from '@/store'
 import { isString, isArray } from '@/utils/validate'
 import settings from '@/settings'
+// import ErrorParser from 'error-stack-parser'
 
 // you can set in settings.js
 // errorLog:'production' | ['production', 'development']
@@ -17,6 +18,12 @@ function checkNeed() {
   }
   return false
 }
+// const errorFn = console.error
+// console.error = function () {
+//   let args =[].slice.call(arguments);
+//   // 中间可以做一些事情
+//   errorFn.apply(this , args);
+// }
 
 if (checkNeed()) {
   Vue.config.errorHandler = function(err, vm, info) {
@@ -35,5 +42,6 @@ if (checkNeed()) {
       })
     })
     console.error(err)
+    // console.log(ErrorParser.parse(err))
   }
 }

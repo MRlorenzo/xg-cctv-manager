@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -17,6 +20,7 @@ import java.io.Serializable;
  * @author lorenzo
  * @since 2020-02-04
  */
+@ApiModel(value = "文件上传实体:SysOss", description = "文件上传")
 public class SysOss extends Model<SysOss> {
 
 
@@ -26,6 +30,7 @@ public class SysOss extends Model<SysOss> {
     /**
      * URL地址
      */
+    @ApiModelProperty( value = "" , required=true)
     private String url;
 
     /**

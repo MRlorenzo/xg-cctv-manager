@@ -6,16 +6,20 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 路由(权限)表
  * </p>
  *
  * @author lorenzo
  * @since 2020-01-24
  */
+@ApiModel(value = "路由(权限)表实体:SysPermission", description = "路由(权限)表")
 public class SysPermission extends Model<SysPermission> {
 
 
@@ -25,27 +29,32 @@ public class SysPermission extends Model<SysPermission> {
     /**
      * 请求路径
      */
+    @ApiModelProperty( value = "请求路径" , required=true)
     private String path;
 
     /**
      * 父id
      */
+    @ApiModelProperty( value = "父id" , required=true)
     private Long pid;
 
     /**
      * 是否删除了
      */
+    @ApiModelProperty( value = "是否删除了 0 否 1 是" , required=true)
     private Integer isDel;
 
 
     /**
      * 权限字符串
      */
+    @ApiModelProperty( value = "权限字符串" , required=false)
     private String perms;
 
     /**
      * 描述
      */
+    @ApiModelProperty( value = "描述" , required=true)
     private String description;
 
 

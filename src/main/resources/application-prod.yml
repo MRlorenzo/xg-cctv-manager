@@ -16,3 +16,7 @@ local:
 resources:
  # log文件写入地址
  logdir: "/home/cctv/logs"
+
+swagger:
+  enabled: false
+

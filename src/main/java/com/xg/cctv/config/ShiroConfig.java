@@ -1,4 +1,4 @@
-package com.xg.cctv.shiro;
+package com.xg.cctv.config;
 
 import com.xg.cctv.shiro.filter.MyFilter;
 import com.xg.cctv.shiro.manager.MySessionManger;
@@ -89,7 +89,13 @@ public class ShiroConfig {
                 "/sysUser/logout", // 登出逻辑接口
                 "/index.html",
                 "/static/**",
-                "/favicon.ico"
+                "/favicon.ico",
+                /* swagger界面   */
+                "/webjars/**",
+                "/v2/api-docs",
+                "/csrf",
+                "/swagger-resources/**",
+                "/swagger-ui.html"
         ).forEach(url ->{
             filterChainDefinitionMap.put(url , "anon");
         });

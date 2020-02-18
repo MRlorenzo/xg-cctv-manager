@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,6 +23,7 @@ import java.io.Serializable;
  * @author lorenzo
  * @since 2020-02-05
  */
+@ApiModel(value = "西港监控部事件报告表实体:IncidentLog", description = "西港监控部事件报告表")
 public class IncidentLog extends Model<IncidentLog> {
 
 
@@ -31,60 +34,71 @@ public class IncidentLog extends Model<IncidentLog> {
      * 日期
      */
     @NotNull
+    @ApiModelProperty( value = "日期" , required=true)
     private Date date;
 
     /**
      * 时间
      */
     @NotBlank
+    @ApiModelProperty( value = "时间" , required=true)
     private String time;
     /**
      * 台号
      */
     @NotBlank
+    @ApiModelProperty( value = "台号" , required=true)
     private String tableCode;
 
     /**
      * 事件编码
      */
     @NotBlank
+    @ApiModelProperty( value = "事件编码" , required=true)
     private String code;
 
     /**
      * 币种
      */
+    @ApiModelProperty( value = "币种" , required=true)
     private String coinCode;
 
     /**
      * 金额
      */
+    @ApiModelProperty( value = "金额" , required=true)
     private BigDecimal total;
 
     /**
      * 报告
      */
+    @ApiModelProperty( value = "报告" , required=true)
     private String report;
 
     /**
      * 涉及员工
      */
     @NotNull
+    @ApiModelProperty( value = "涉及员工" , required=true)
     private Long involveUid;
 
     /**
      * 部门id
      */
     @NotNull
+    @ApiModelProperty( value = "部门id" , required=true)
     private Long departmentId;
 
     /**
      * 监控部
      */
+    @ApiModelProperty( value = "监控部" , required=true)
     private String monitor;
 
     /**
      * 备注
      */
+    @ApiModelProperty( value = "备注" , required=true)
     private String remarks;
 
     /**
@@ -100,6 +114,7 @@ public class IncidentLog extends Model<IncidentLog> {
     /**
      * 图片路径以','分割
      */
+    @ApiModelProperty( value = "图片路径以','分割" , required=false)
     private String urls;
 
 

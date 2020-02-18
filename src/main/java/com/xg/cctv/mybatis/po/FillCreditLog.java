@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,6 +23,7 @@ import java.io.Serializable;
  * @author lorenzo
  * @since 2020-02-01
  */
+@ApiModel(value = "西港监控部日常加彩/缴码表实体:FillCreditLog" , description = "西港监控部日常加彩/缴码表")
 public class FillCreditLog extends Model<FillCreditLog> {
 
 
@@ -31,24 +34,28 @@ public class FillCreditLog extends Model<FillCreditLog> {
      * 1 加彩 2 缴码
      */
     @NotNull
+    @ApiModelProperty( value = "1 加彩 2 缴码" , required=true)
     private Integer type;
 
     /**
      * 序列号
      */
     @NotBlank
+    @ApiModelProperty( value = "序列号" , required=true)
     private String no;
 
     /**
      * 日期
      */
     @NotNull
+    @ApiModelProperty( value = "日期" , required=true)
     private Date date;
 
     /**
      * 时间
      */
     @NotBlank
+    @ApiModelProperty( value = "时间" , required=true)
     private String time;
 
 
@@ -56,26 +63,31 @@ public class FillCreditLog extends Model<FillCreditLog> {
      * 台号
      */
     @NotBlank
+    @ApiModelProperty( value = "台号" , required=true)
     private String tableCode;
 
     /**
      * 金额
      */
+    @ApiModelProperty( value = "金额" , required=true)
     private BigDecimal total;
 
     /**
      * 币种
      */
+    @ApiModelProperty( value = "币种" , required=true)
     private String coinCode;
 
     /**
      * 通知人
      */
+    @ApiModelProperty( value = "通知人" , required=true)
     private String alerterName;
 
     /**
      * 监控部
      */
+    @ApiModelProperty( value = "监控部" , required=true)
     private String monitor;
 
     /**

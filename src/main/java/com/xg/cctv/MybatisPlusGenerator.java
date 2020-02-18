@@ -194,7 +194,7 @@ public class MybatisPlusGenerator {
         gc.setBaseResultMap(true);
         // XML columList
         gc.setBaseColumnList(true);
-        //gc.setSwagger2(true);// 实体属性 Swagger2 注解
+        gc.setSwagger2(true);// 实体属性 Swagger2 注解
         //是否生成 kotlin 代码
         //gc.setKotlin(true);
         gc.setAuthor("lorenzo");

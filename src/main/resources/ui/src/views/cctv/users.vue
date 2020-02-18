@@ -209,7 +209,7 @@
     data(){
       return {
         user: Object.assign({} ,defaultUser),
-        doSearch: false,
+        doSearch: true,
         dialogVisible: false,
         dialogType: 'new',
         queryText: '',

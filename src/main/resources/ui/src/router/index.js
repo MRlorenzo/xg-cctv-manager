@@ -147,14 +147,6 @@ export const asyncRoutes = [
         }
       },
       {
-        path: 'users',
-        component: () => import('@/views/permission/users'),
-        name: 'Users',
-        meta: {
-          title: 'users'
-        }
-      },
-      {
         path: 'menus',
         component: () => import('@/views/permission/menus'),
         name: 'Menus',
@@ -190,6 +182,18 @@ export const asyncRoutes = [
         meta: { title: 'highAction'},
       },
       {
+        path: 'fill',
+        component: ()=> import('@/views/cctv/Fill'),
+        name: 'Fill',
+        meta: { title: 'fill'},
+      },
+      {
+        path: 'credit',
+        component: ()=> import('@/views/cctv/Credit'),
+        name: 'Credit',
+        meta: { title: 'credit'},
+      },
+      {
         path: 'title-list',
         component: ()=> import('@/views/cctv/TitleList'),
         name: 'TitleList',
@@ -202,16 +206,12 @@ export const asyncRoutes = [
         meta: { title: 'titleSubject'},
       },
       {
-        path: 'fill',
-        component: ()=> import('@/views/cctv/Fill'),
-        name: 'Fill',
-        meta: { title: 'fill'},
-      },
-      {
-        path: 'credit',
-        component: ()=> import('@/views/cctv/Credit'),
-        name: 'Credit',
-        meta: { title: 'credit'},
+        path: 'users',
+        component: () => import('@/views/cctv/users'),
+        name: 'Users',
+        meta: {
+          title: 'users'
+        }
       },
       {
         path: 'customer',

@@ -1,6 +1,10 @@
 package com.xg.cctv.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.SysPermission;
@@ -19,12 +23,14 @@ import java.util.Map;
  * @since 2020-01-24
  */
 @RestController
+@Api(value = "SysPermissionController", description = "权限相关")
 @RequestMapping("/sysPermission")
 public class SysPermissionController {
     @Autowired
     public SysPermissionService iSysPermissionService;
 
     @GetMapping("/root")
+    @ApiOperation(value="查询一级路由列表", notes="查询一级路由列表接口" , httpMethod = "GET" , response = R.class)
     public R root(){
         SysPermission sysPermission = new SysPermission();
         sysPermission.setPid(0L);
@@ -33,11 +39,13 @@ public class SysPermissionController {
     }
 
     @GetMapping("/find/roleId/{roleId}")
+    @ApiOperation(value="根据角色id查询路由(权限)列表", notes="根据角色id查询路由(权限)列表接口" , httpMethod = "GET" , response = R.class)
     public R findByRoleId(@PathVariable("roleId") Long roleId){
         return R.ok().put("data" , iSysPermissionService.selectPermissionByRoleId(roleId));
     }
 
     @GetMapping("/routes")
+    @ApiOperation(value="查询所有路由(权限)列表", notes="查询所有路由(权限)列表接口" , httpMethod = "GET" , response = R.class)
     public R getRoutes(){
         return R.ok().put("data" , iSysPermissionService.selectList(null));
     }
@@ -50,6 +58,11 @@ public class SysPermissionController {
      * @return
      */
     @GetMapping("/page")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "current", value = "当前页", required = false),
+            @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
+    })
+    @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
     public R getSysPermissionList(Page<SysPermission> page,SysPermission sysPermission){
         return R.ok().put("data" , iSysPermissionService.selectPage(page, sysPermission));
     }
@@ -60,6 +73,7 @@ public class SysPermissionController {
      * @return R
      */
     @PostMapping("/save")
+    @ApiOperation(value="保存", notes="保存信息接口" , httpMethod = "POST" , response = R.class)
     public R sysPermissionSave(@RequestBody SysPermission sysPermission){
         boolean rs = iSysPermissionService.saveOrUpdate(sysPermission);
         if (rs){
@@ -68,32 +82,4 @@ public class SysPermissionController {
         return R.error();
     }
 
-    /**
-     * 根据id删除对象
-     * @param id  实体ID
-     * @return R
-     */
-    @PostMapping("/delete/{id}")
-    public R sysPermissionDelete(@PathVariable String id){
-        boolean rs = iSysPermissionService.removeById(id);
-        if (rs) {
-            return R.ok();
-        }
-        return R.error();
-    }
-
-    /**
-     * 批量删除对象
-     * @param requestMap 实体集合ID
-     * @return R
-     */
-    @PostMapping("/batchDelete")
-    public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
-        List<String> ids = requestMap.get("ids");
-        boolean rs = iSysPermissionService.removeByIds(ids);
-        if (rs){
-            return R.ok().put("data" , ids.size());
-        }
-        return R.error();
-    }
 }

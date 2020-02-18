@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,6 +22,7 @@ import java.io.Serializable;
  * @author lorenzo
  * @since 2020-01-30
  */
+@ApiModel(value = "事件名称子项实体:TitleListItem", description = "事件名称子项")
 public class TitleListItem extends Model<TitleListItem> {
 
 
@@ -30,18 +33,21 @@ public class TitleListItem extends Model<TitleListItem> {
      * 事件主题名称Id
      */
     @NotNull
+    @ApiModelProperty( value = "事件主题名称Id" , required=true)
     private Long subjectId;
 
     /**
      * 错误内容
      */
     @NotBlank
+    @ApiModelProperty( value = "错误内容" , required=true)
     private String text;
 
     /**
      * 代码
      */
     @NotBlank
+    @ApiModelProperty( value = "代码" , required=true)
     private String code;
 
     /**

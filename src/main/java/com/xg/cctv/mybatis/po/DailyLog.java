@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -20,6 +22,7 @@ import java.io.Serializable;
  * @author lorenzo
  * @since 2020-02-05
  */
+@ApiModel(value = "西港监控部日志表实体:DailyLog", description = "西港监控部日志表")
 public class DailyLog extends Model<DailyLog> {
 
 
@@ -30,70 +33,83 @@ public class DailyLog extends Model<DailyLog> {
      * 序号
      */
     @NotBlank
+    @ApiModelProperty( value = "序号" , required=true)
     private String no;
 
     /**
      * 日期
      */
     @NotNull
+    @ApiModelProperty( value = "日期" , required=true)
     private Date date;
 
     /**
      * 时间
      */
     @NotBlank
+    @ApiModelProperty( value = "时间" , required=true)
     private String time;
 
     /**
      * 台号
      */
     @NotBlank
+    @ApiModelProperty( value = "台号" , required=true)
     private String tableCode;
 
     /**
      * 主题
      */
+    @ApiModelProperty( value = "主题" , required=true)
     private String subject;
 
     /**
      * 细节
      */
+    @ApiModelProperty( value = "细节" , required=true)
     private String details;
 
     /**
      * 通知人
      */
+    @ApiModelProperty( value = "通知人" , required=true)
     private String alerterName;
 
     /**
      * 部门ID
      */
     @NotNull
+    @ApiModelProperty( value = "部门ID" , required=true)
     private Long departmentId;
 
     /**
      * 监控部
      */
+    @ApiModelProperty( value = "监控部" , required=true)
     private String monitor;
 
     /**
      * 结论
      */
+    @ApiModelProperty( value = "结论" , required=true)
     private String conclusion;
 
     /**
      * 创建人
      */
+    @ApiModelProperty( hidden = true ,value = "创建人" , required=false)
     private Long createUid;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty(hidden = true ,value = "创建时间" , required=false)
     private Date createTime;
 
     /**
      * 图片路径以','分割
      */
+    @ApiModelProperty( value = "图片路径以','分割" , required=false)
     private String urls;
 
 
