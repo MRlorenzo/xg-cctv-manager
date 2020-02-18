@@ -5,8 +5,13 @@
       :label="label + (index + 1)"
       :key="domain.key"
     >
-      <el-input v-model="domain.value" @input="onChangeHandle" :placeholder="placeholder"></el-input>
-      <el-button @click.prevent="removeDomain(domain)">删除</el-button>
+      <el-col :span="20">
+        <el-input v-model="domain.value" @input="onChangeHandle" :placeholder="placeholder"></el-input>
+      </el-col>
+      <el-col :span="4">
+        <el-button @click.prevent="removeDomain(domain)">删除</el-button>
+      </el-col>
+
     </el-form-item>
   </div>
 </template>
