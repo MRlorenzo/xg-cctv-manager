@@ -154,9 +154,7 @@
         </el-form-item>
 
         <!--权限字符串-->
-        <el-form-item label="Permission">
-          <el-input v-model="menu.perms" placeholder="Permission Codes" />
-        </el-form-item>
+        <multiple-input v-model="menu.perms" label="Permission"  placeholder="Permission Codes"/>
 
         <!--排序号-->
         <el-form-item label="Sort">
@@ -211,6 +209,7 @@
   import { asyncRoutes } from '@/router'
   import i18n from '@/lang'
   import BackToTop from '@/components/BackToTop'
+  import MultipleInput from '@/components/MultipleInput'
   const defaultMenu = {
     path: '',
     pid: 0,
@@ -225,7 +224,7 @@
     directives: {
       waves
     },
-    components: { BackToTop },
+    components: { BackToTop , MultipleInput },
     data(){
       return {
         menu: Object.assign({} ,defaultMenu),
@@ -334,7 +333,8 @@
       handleEdit( scope ){
         this.dialogType = 'edit'
         this.dialogVisible = true
-        this.menu = deepClone(scope.row)
+        // this.menu = deepClone(scope.row)
+        this.$set(this , 'menu' , deepClone(scope.row))
       },
       handleAddLocalMenu( scope ){
         let cloneItem = deepClone(scope.row)

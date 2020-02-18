@@ -5,7 +5,7 @@ export default [
     "pid": 0,
     "isDel": 0,
     "sort": 0,
-    "perms": null,
+    "perms": "a,b,c",
     "description": "权限相关"
   },
   {
@@ -14,7 +14,7 @@ export default [
     "pid": 53,
     "isDel": 0,
     "sort": 0,
-    "perms": null,
+    "perms": '',
     "description": "编辑角色"
   },
   {
