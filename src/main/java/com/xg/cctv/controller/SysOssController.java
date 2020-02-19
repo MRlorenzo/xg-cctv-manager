@@ -7,6 +7,10 @@ import com.xg.cctv.common.util.jxls.JxlsMap;
 import com.xg.cctv.common.util.jxls.JxlsUtils;
 import com.xg.cctv.excel.impl.DailyLogExcelService;
 import com.xg.cctv.exception.RRException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +35,7 @@ import java.util.Map;
  * @since 2020-02-04
  */
 @RestController
+@Api(value = "SysOssController", description = "Oss相关")
 @RequestMapping("/sysOss")
 public class SysOssController {
     @Autowired
@@ -47,6 +52,11 @@ public class SysOssController {
      * @return
      */
     @GetMapping("/page")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "current", value = "当前页", required = false),
+            @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
+    })
+    @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
     public R getSysOssList(Page<SysOss> page,SysOss sysOss){
         return R.ok().put("data" , iSysOssService.selectPage(page, sysOss));
     }
@@ -54,8 +64,9 @@ public class SysOssController {
     /**
      * 本地上传文件
      */
-    @RequestMapping("/upload")
-    /*@RequiresPermissions("sys:oss:all")*/
+    @PostMapping("/upload")
+    @ApiImplicitParam(name = "file", value = "文件", required = true)
+    @ApiOperation(value="上传文件", notes="上传文件接口" , httpMethod = "POST" , response = R.class)
     public R localUpload(@RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             throw new RRException("UploadFilesNotEmpty");
@@ -83,6 +94,8 @@ public class SysOssController {
      * @return
      */
     @GetMapping("/download/excel/{uuid}")
+    @ApiImplicitParam(paramType = "path", name = "uuid", value = "redis中的key,将会得到excel的模板路径，文件名称，待写入的数据等", required = true)
+    @ApiOperation(value="下载excel文件", notes="下载excel文件接口" , httpMethod = "GET" , response = JxlsEntity.class)
     public R downloadExcel(@PathVariable("uuid") String uuid,HttpServletResponse response){
         JxlsEntity jxls = JxlsMap.get(uuid);
         if (jxls == null) {
@@ -107,7 +120,8 @@ public class SysOssController {
         return null;
     }
 
-    @RequestMapping("/test")
+    @GetMapping("/test")
+    @ApiOperation(value="测试导出excel文件功能", notes="测试接口" , httpMethod = "GET" , response = R.class)
     public R test(){
 
         return R.ok().put("key" , new DailyLogExcelService().exportExcel(new ArrayList<>()));

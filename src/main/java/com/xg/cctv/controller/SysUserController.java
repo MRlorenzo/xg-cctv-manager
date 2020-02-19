@@ -5,10 +5,7 @@ import com.xg.cctv.common.StatusCode;
 import com.xg.cctv.common.dto.SysUserVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.exception.RRException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -64,11 +61,7 @@ public class SysUserController {
 
     // @ApiOperation 注解用来标记一个方法的作用
     @ApiOperation(value="用户登录", notes="用户登录接口" , httpMethod = "POST" , response = R.class)
-    @ApiImplicitParams({
-            // @ApilmplicitParam 注解用来描述一个参数，可以配置参数的中文含义，也可以给参数设置默认值，这样在接口测试的时候可以避免手动输入
-            @ApiImplicitParam(name = "username", value = "用户名", required = true ,dataType = "string"),
-            @ApiImplicitParam(name = "password", value = "密码", required = true ,dataType = "string")
-    })
+    @ApiImplicitParam(name = "params" , paramType = "body")
     @PostMapping("/login")
     public R login(@RequestBody Map<String , String> params) throws AuthenticationException {
 
