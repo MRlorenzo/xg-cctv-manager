@@ -148,6 +148,20 @@
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Menu':'New Menu'">
       <el-form :model="menu" label-width="80px" label-position="left">
 
+        <!--pid-->
+        <el-form-item label="PID">
+          <el-cascader
+            v-model="menu.pid"
+            :options="rootMenuList"
+            :props="{
+              checkStrictly: true,
+              emitPath: false,
+              value: 'id',
+              label: 'path'
+            }"
+            clearable></el-cascader>
+        </el-form-item>
+
         <!--路径-->
         <el-form-item label="Path">
           <el-input v-model="menu.path" placeholder="Path used to match" />
@@ -155,23 +169,6 @@
 
         <!--权限字符串-->
         <multiple-input v-model="menu.perms" label="Permission"  placeholder="Permission Codes"/>
-
-        <!--排序号-->
-        <el-form-item label="Sort">
-          <el-input v-model="menu.sort" placeholder="Sort priority" />
-        </el-form-item>
-
-        <!--pid-->
-        <el-form-item label="PID">
-          <el-select v-model="menu.pid" placeholder="Parent ID">
-            <el-option
-              v-for="m in rootMenuList"
-              :key="m.id"
-              :label="m.path"
-              :value="m.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
 
         <!-- 描述-->
         <el-form-item label="Desc">
@@ -204,8 +201,8 @@
 
 <script>
   import waves from '@/directive/waves/index.js' // 水波纹指令
-  import { deepClone, filterUndefinedMenus } from '@/utils'
-  import { getDataPage , getRootMenuList, getMenuList, delMenu, updateMenu , addMenu} from "@/api/menu";
+  import { deepClone, filterUndefinedMenus , menus2trees } from '@/utils'
+  import { getDataPage , getRoutesByPid , getMenuList, delMenu, updateMenu , addMenu} from "@/api/menu";
   import { asyncRoutes } from '@/router'
   import i18n from '@/lang'
   import BackToTop from '@/components/BackToTop'
@@ -285,11 +282,15 @@
       },
       pageLimit(){
         this.loadData()
+      },
+      dbMenuList( menuList ){
+        if (menuList){
+          this.getRootMenuList()
+        }
       }
     },
     created(){
       this.loadData()
-      this.getRootMenuList()
       this.getDbMenuList()
     },
     methods: {
@@ -311,9 +312,9 @@
           this.dbMenuList = res.data
         }
       },
-      async getRootMenuList(){
-        const res = await getRootMenuList()
-        let dataList = res.data || []
+      getRootMenuList(){
+        const cloneMenuList = deepClone(this.dbMenuList).filter(m=>m.pid != null)
+        let dataList = menus2trees(cloneMenuList)
         dataList.unshift(
           Object.assign(
             deepClone(defaultMenu) ,
@@ -409,7 +410,6 @@
           `,
           type: 'success'
         })
-        this.getRootMenuList()
         this.getDbMenuList()
       },
       handleSizeChange(val) {

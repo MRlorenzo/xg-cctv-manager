@@ -15,17 +15,6 @@ export default [
   },
 
   {
-    url: '/sysPermission/routes',
-    type: 'get',
-    response: _=>{
-      return {
-        code: 0,
-        data: menus
-      }
-    }
-  },
-
-  {
     url: '/sysPermission/page',
     type: 'get',
     response: config => {
@@ -87,4 +76,14 @@ export default [
       }
     }
   },
+  {
+    url: '/sysPermission/find/pid/[A-Za-z0-9]',
+    type: 'get',
+    response: _=>{
+      return {
+        code: 0,
+        data: menus.filter(m=>m.pid === Math.ceil(Math.random() * 2))
+      }
+    }
+  }
 ]

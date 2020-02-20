@@ -11,6 +11,17 @@ export function getDataPage( data ){
   })
 }
 
+/**
+ * 根据pid查询路由列表
+ * @param pid
+ */
+export function getRoutesByPid( pid ) {
+  return request({
+    url: '/sysPermission/find/pid/' + pid,
+    method: 'get'
+  })
+}
+
 /*
 * 获取根菜单的列表
 * */

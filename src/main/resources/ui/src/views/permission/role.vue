@@ -73,7 +73,7 @@
 
 <script>
 import path from 'path'
-import { deepClone, checkOrParse2Json, referenceRouteId , eachTree2List} from '@/utils'
+import { deepClone, checkOrParse2Json, referenceRouteId  , eachTree2List} from '@/utils'
 import { getRoutes, getRoles, addRole, deleteRole, updateRole, getRoutesByRoleId } from '@/api/role'
 import { asyncRoutes } from '@/router'
 import i18n from '@/lang'
@@ -111,6 +111,103 @@ export default {
     window.roleVm = this
   },
   methods: {
+
+    generateTree(routes, checkedKeys) {
+      const res = []
+
+      for (const route of routes) {
+
+        // 递归子路由
+        if (route.children) {
+          route.children = this.generateTree(route.children, checkedKeys)
+        }
+
+        if (checkedKeys.includes(route.id) || (route.children && route.children.length >= 1)) {
+          res.push(route)
+        }
+      }
+      return res
+    },
+    // reference: src/view/layout/components/Sidebar/SidebarItem.vue
+    /*onlyOneShowingChild(children = [], parent) {
+      // 当children为null而不是undefined的时候，children参数的默认值会被抛弃，会导致children.filter()报错
+      children = children || []
+      let onlyOneChild = null
+      const showingChildren = children.filter(item => !item.hidden)
+
+      // 如果只有一条子路线，则默认显示该子路线
+      if (showingChildren.length === 1) {
+        onlyOneChild = showingChildren[0]
+        onlyOneChild.path = path.resolve(parent.path, onlyOneChild.path)
+        return onlyOneChild
+      }
+
+      // 如果没有子路线可显示，请显示父级
+      if (showingChildren.length === 0) {
+        onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        return onlyOneChild
+      }
+
+      return false
+    },*/
+    // 重塑路线结构，使其看起来与侧边栏相同
+    generateRoutes(routes) {
+      const res = []
+
+      for (let route of routes) {
+        // skip some route
+        if (route.hidden) { continue }
+
+        /*const onlyOneShowingChild = this.onlyOneShowingChild(route.children, route)
+        if (route.children && onlyOneShowingChild && !route.alwaysShow) {
+          const pid = route.id
+          route = onlyOneShowingChild
+          // 提交权限修改时可不能落下父ID，
+          route.pid = pid
+        }*/
+
+        /**
+         * 主要是防止Meta字段被人不小心定义成了string类型，因为数据库里面存的就是json string
+         */
+        let meta = checkOrParse2Json(route.meta)
+
+        const data = {
+          path: route.path,
+          title: meta && meta.title,
+          id: route.id,
+          pid: route.pid,
+          disabled: route.disabled
+        }
+
+        // 递归子路径
+        if (route.children) {
+          data.children = this.generateRoutes(route.children)
+        }
+        res.push(data)
+      }
+      return res
+    },
+    generateArr(routes) {
+      let data = []
+      routes.forEach(route => {
+        data.push(route)
+        if (route.children) {
+          const temp = this.generateArr(route.children)
+          if (temp.length > 0) {
+            data = [...data, ...temp]
+          }
+        }
+      })
+      return data
+    },
+    handleAddRole() {
+      this.role = Object.assign({}, defaultRole)
+      if (this.$refs.tree) {
+        this.$refs.tree.setCheckedNodes([])
+      }
+      this.dialogType = 'new'
+      this.dialogVisible = true
+    },
     async getRoutes() {
       const res = await getRoutes()
       /*
@@ -134,70 +231,6 @@ export default {
       })
       return app
     },
-    // Reshape the routes structure so that it looks the same as the sidebar
-    generateRoutes(routes) {
-      const res = []
-
-      for (let route of routes) {
-        // skip some route
-        if (route.hidden) { continue }
-
-        const onlyOneShowingChild = this.onlyOneShowingChild(route.children, route)
-        if (route.children && onlyOneShowingChild && !route.alwaysShow) {
-          const pid = route.id
-          route = onlyOneShowingChild
-          // 提交权限修改时可不能落下父ID，
-          route.pid = pid
-        }
-
-        /**
-         * 主要是防止Meta字段被人不小心定义成了string类型，因为数据库里面存的就是json string
-         */
-        let meta = checkOrParse2Json(route.meta)
-
-        const data = {
-          path: route.path,
-          title: meta && meta.title,
-          id: route.id,
-          pid: route.pid,
-          disabled: route.disabled
-        }
-
-        // recursive child routes
-        if (route.children) {
-          data.children = this.generateRoutes(route.children)
-        }
-        res.push(data)
-      }
-      return res
-    },
-    generateArr(routes) {
-      let data = []
-      routes.forEach(route => {
-        data.push(route)
-        if (route.children) {
-          const temp = this.generateArr(route.children)
-          if (temp.length > 0) {
-            data = [...data, ...temp]
-          }
-        }
-      })
-      return data
-    },
-    async getRoutesByRoleId( roleId ){
-      const res = await getRoutesByRoleId(roleId)
-      if (res.code === 0){
-        return res.data
-      }
-    },
-    handleAddRole() {
-      this.role = Object.assign({}, defaultRole)
-      if (this.$refs.tree) {
-        this.$refs.tree.setCheckedNodes([])
-      }
-      this.dialogType = 'new'
-      this.dialogVisible = true
-    },
     async handleEdit(scope) {
       this.dialogType = 'edit'
       this.dialogVisible = true
@@ -207,9 +240,15 @@ export default {
       this.$nextTick(() => {
         const routes = this.generateRoutes(permissions)
         this.$refs.tree.setCheckedNodes(this.generateArr(routes))
-        // set checked state of a node not affects its father and child nodes
+        // 设置节点的checked状态不影响其父节点和子节点
         this.checkStrictly = false
       })
+    },
+    async getRoutesByRoleId( roleId ){
+      const res = await getRoutesByRoleId(roleId)
+      if (res.code === 0){
+        return res.data
+      }
     },
     handleDelete({ $index, row }) {
       this.$confirm('Confirm to remove the role?', 'Warning', {
@@ -218,35 +257,16 @@ export default {
         type: 'warning'
       })
         .then(async() => {
-          await deleteRole(row.id)
-          this.rolesList.splice($index, 1)
-          this.$message({
-            type: 'success',
-            message: 'Delete succed!'
-          })
+          const res = await deleteRole(row.id)
+          if (res.code === 0){
+            this.rolesList.splice($index, 1)
+            this.$message({
+              type: 'success',
+              message: 'Delete succed!'
+            })
+          }
         })
         .catch(err => { console.error(err) })
-    },
-    generateTree(routes, checkedKeys) {
-      const res = []
-
-      for (const route of routes) {
-
-        // recursive child routes
-        if (route.children) {
-          route.children = this.generateTree(route.children, checkedKeys)
-        }
-
-        if (checkedKeys.includes(route.id) || (route.children && route.children.length >= 1)) {
-          res.push(route)
-
-          if (route.pid){
-            let tmp = deepClone(route)
-            res.push(Object.assign(tmp , { id : route.pid}))
-          }
-        }
-      }
-      return res
     },
     async confirmRole() {
       const isEdit = this.dialogType === 'edit'
@@ -257,52 +277,43 @@ export default {
       this.role.permissions = eachTree2List(tree)
 
       if (isEdit) {
-        await updateRole(this.role)
-        for (let index = 0; index < this.rolesList.length; index++) {
-          if (this.rolesList[index].name === this.role.name) {
-            this.rolesList.splice(index, 1, Object.assign({}, this.role))
-            break
+        const res = await updateRole(this.role)
+        if (res.code === 0){
+          for (let index = 0; index < this.rolesList.length; index++) {
+            if (this.rolesList[index].name === this.role.name) {
+              this.rolesList.splice(index, 1, Object.assign({}, this.role))
+              break
+            }
           }
-        }
-      } else {
-        await addRole(this.role)
-
-        this.getRoles()
-      }
-
-      const { description, name } = this.role
-      this.dialogVisible = false
-      this.$notify({
-        title: 'Success',
-        dangerouslyUseHTMLString: true,
-        message: `
+          const { description, name } = this.role
+          this.dialogVisible = false
+          this.$notify({
+            title: 'Success',
+            dangerouslyUseHTMLString: true,
+            message: `
             <div>Role Nmae: ${name}</div>
             <div>Description: ${description}</div>
           `,
-        type: 'success'
-      })
-    },
-    // reference: src/view/layout/components/Sidebar/SidebarItem.vue
-    onlyOneShowingChild(children = [], parent) {
-      // 当children为null而不是undefined的时候，children参数的默认值会被抛弃，会导致children.filter()报错
-      children = children || []
-      let onlyOneChild = null
-      const showingChildren = children.filter(item => !item.hidden)
-
-      // When there is only one child route, the child route is displayed by default
-      if (showingChildren.length === 1) {
-        onlyOneChild = showingChildren[0]
-        onlyOneChild.path = path.resolve(parent.path, onlyOneChild.path)
-        return onlyOneChild
+            type: 'success'
+          })
+        }
+      } else {
+        const res = await addRole(this.role)
+        if (res.code === 0){
+          this.getRoles()
+          const { description, name } = this.role
+          this.dialogVisible = false
+          this.$notify({
+            title: 'Success',
+            dangerouslyUseHTMLString: true,
+            message: `
+            <div>Role Nmae: ${name}</div>
+            <div>Description: ${description}</div>
+          `,
+            type: 'success'
+          })
+        }
       }
-
-      // Show parent if there are no child route to display
-      if (showingChildren.length === 0) {
-        onlyOneChild = { ... parent, path: '', noShowingChildren: true }
-        return onlyOneChild
-      }
-
-      return false
     }
   }
 }

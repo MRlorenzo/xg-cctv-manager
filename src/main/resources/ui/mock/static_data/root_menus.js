@@ -458,4 +458,4 @@ export default [
       }
     ]
   }
-]
+].map(m=>({id:m.id,path:m.path,pid:m.pid,perms:m.perms,description:m.description}))

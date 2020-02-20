@@ -83,7 +83,7 @@ export const constantRoutes = [
     ]
   },
   // 引导页
-  {
+  /*{
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
@@ -95,7 +95,7 @@ export const constantRoutes = [
         meta: { title: 'guide', icon: 'guide', noCache: true }
       }
     ]
-  },
+  },*/
   {
     path: '/profile',
     component: Layout,
@@ -226,7 +226,7 @@ export const asyncRoutes = [
     path: '/icon',
     component: Layout,
     alwaysShow:true,
-    name: 'Icons',
+    name: 'Icons$',
     meta: { title: 'icons', icon: 'icon', noCache: true },
     children: [
       {
@@ -270,7 +270,7 @@ export const asyncRoutes = [
     path: '/error-log',
     component: Layout,
     alwaysShow: true,
-    name: 'ErrorLog',
+    name: 'ErrorLog$',
     meta: { title: 'errorLog', icon: 'bug' },
     children: [
       {
@@ -340,7 +340,7 @@ export const asyncRoutes = [
     path: '/pdf',
     component: Layout,
     redirect: '/pdf/pdf-index',
-    name: 'PDF',
+    name: 'PDF$',
     alwaysShow: true,
     meta: { title: 'pdf', icon: 'pdf' },
     children: [
@@ -361,7 +361,7 @@ export const asyncRoutes = [
   {
     path: '/theme',
     component: Layout,
-    name: 'Theme',
+    name: 'Theme$',
     alwaysShow: true,
     meta: { title: 'theme', icon: 'theme' },
     children: [
@@ -394,7 +394,7 @@ export const asyncRoutes = [
     path: '/i18n',
     component: Layout,
     alwaysShow: true,
-    name: 'I18n',
+    name: 'I18n$',
     meta: { title: 'i18n', icon: 'international' },
     children: [
       {

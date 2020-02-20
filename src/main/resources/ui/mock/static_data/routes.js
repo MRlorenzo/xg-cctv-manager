@@ -331,5 +331,19 @@ export const asyncRoutes = [
     id: 102,
     pid: 95,
     path: 'title-list'
-  }
+  },
+  {
+    id: 103,
+    path: "menus:save",
+    pid: 57,
+    perms: null,
+    description: "编辑菜单的新增权限"
+  },
+  /*{
+    id: 104,
+    path: "menus:delete",
+    pid: 57,
+    perms: null,
+    description: "编辑菜单的删除权限"
+  }*/
 ]

@@ -351,7 +351,7 @@ export function removeClass(ele, cls) {
  * @param asyncRoutes  需要设置ID的目标
  * @param dbRoutes  ID的源
  */
-export function referenceRouteId( asyncRoutes = [] , dbRoutes = []){
+/*export function referenceRouteId( asyncRoutes = [] , dbRoutes = []){
   let list = []
 
   asyncRoutes.forEach(target => {
@@ -370,6 +370,35 @@ export function referenceRouteId( asyncRoutes = [] , dbRoutes = []){
     list.push(target)
   })
   return list
+}*/
+/**
+ * 映射数据库中的菜单，使其对应路由列表并将其id赋予对应的路由对象中。
+ * @param asyncRoutes 需要权限访问的路由
+ * @param menus
+ * @param children
+ * @returns {any[]}
+ */
+export function referenceRouteId(asyncRoutes = [] , menus = [] , children = [] ) {
+  return asyncRoutes.map(target => {
+    let sourceMenus = children.length ? children :menus
+    let source = equalRouteByPath(target , sourceMenus)
+
+    if ( source ){
+      target.id = source.id
+      let sourceChildren = menus.filter(m=>m.pid === source.id)
+      if (sourceChildren.length){
+        // 防止调用者传递过来的参数为 null , 因为null值会被判定是有效的值
+        target.children = referenceRouteId(
+          target.children || sourceChildren.map(s=>Object.assign(s,{meta: {title: s.path}})) ,
+          menus ,
+          sourceChildren)
+      }
+    } else {
+      // 没有ID的值，设置为禁用。
+      target.disabled = true
+    }
+    return target
+  })
 }
 
 function equalRouteByPath( route , sourceRoutes ){
@@ -464,4 +493,49 @@ export function downloadExcelByKey( key ) {
   let url = process.env.VUE_APP_BASE_API + '/sysOss/download/excel/' + key
 
   h5elementDownload(url)
+}
+
+function getValueByAttrList(target , attrs) {
+  let t = target;
+  for(let i=0 ; i<attrs.length; i++){
+    let key = attrs[i];
+    if(t){
+      t = t[key];
+    }
+  }
+  return t;
+}
+
+function listGroupBy(list , key) {
+  let map = {};
+  if(!Array.isArray(list)) return map;
+
+  if(typeof key === 'string'){
+    list.forEach(function (item) {
+      let k = getValueByAttrList(item , key.split('.'));
+      if(map[k]){
+        map[k].push(item);
+      }else{
+        map[k] = [item];
+      }
+    });
+  }else if(typeof key === 'function'){
+    list.forEach(function(item , i){
+      key(item , map , i);
+    });
+  }
+  return map;
+}
+
+export function menus2trees( menus = [], pid = 0) {
+  let trees = []
+  let groups = listGroupBy( menus , 'pid')
+  let targets = groups[pid]
+  if (targets && Array.isArray(targets)) {
+    trees = targets.map(t=>{
+      t.children = menus2trees( menus , t.id)
+      return t
+    })
+  }
+  return trees;
 }

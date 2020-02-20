@@ -43,5 +43,12 @@ export default [
     "sort": 0,
     "perms": null,
     "description": "编辑菜单，同时编辑权限"
+  },
+  {
+    "id": 58,
+    "path": "menus:add",
+    "pid": 57,
+    "perms": null,
+    "description": "编辑菜单的新增权限"
   }
 ]
