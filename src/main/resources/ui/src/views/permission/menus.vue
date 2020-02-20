@@ -4,14 +4,17 @@
     <el-form :inline="true">
 
       <el-form-item label="PID" v-show="!showLocalMenu">
-        <el-select v-model="q.pid" placeholder="Parent ID">
-          <el-option
-            v-for="m in rootMenuList"
-            :key="m.id"
-            :label="m.path"
-            :value="m.id">
-          </el-option>
-        </el-select>
+        <el-cascader
+          placeholder="Parent ID"
+          v-model="q.pid"
+          :options="rootMenuList"
+          :props="{
+              checkStrictly: true,
+              emitPath: false,
+              value: 'id',
+              label: 'path'
+            }"
+          clearable></el-cascader>
       </el-form-item>
 
       <el-form-item v-show="!showLocalMenu">
@@ -151,6 +154,7 @@
         <!--pid-->
         <el-form-item label="PID">
           <el-cascader
+            placeholder="Parent ID"
             v-model="menu.pid"
             :options="rootMenuList"
             :props="{

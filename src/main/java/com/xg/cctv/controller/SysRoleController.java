@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.SysRole;
@@ -34,6 +35,7 @@ public class SysRoleController {
      * @return
      */
     @GetMapping("/list")
+    @RequiresPermissions("sysRole:list")
     @ApiOperation(value="查询所有角色列表", notes="查询所有角色列表接口" , httpMethod = "GET" , response = R.class)
     public R getList(){
         return R.ok().put("data" , iSysRoleService.selectList(null));
@@ -47,6 +49,7 @@ public class SysRoleController {
      * @return
      */
     @GetMapping("/page")
+    @RequiresPermissions("sysRole:list")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", required = false),
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
@@ -62,6 +65,7 @@ public class SysRoleController {
      * @return R
      */
     @PostMapping("/save")
+    @RequiresPermissions("sysRole:save")
     @ApiOperation(value="保存", notes="保存信息接口" , httpMethod = "POST" , response = R.class)
     public R sysRoleSave(@RequestBody SysRole sysRole){
         boolean rs = iSysRoleService.saveOrUpdate(sysRole);

@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.SysRolePermission;
@@ -37,6 +38,7 @@ public class SysRolePermissionController {
      * @return
      */
     @GetMapping("/page")
+    @RequiresPermissions("sysRolePermission:list")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", required = false),
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
@@ -52,6 +54,7 @@ public class SysRolePermissionController {
      * @return R
      */
     @PostMapping("/save")
+    @RequiresPermissions("sysRolePermission:save")
     @ApiOperation(value="保存", notes="保存信息接口" , httpMethod = "POST" , response = R.class)
     public R sysRolePermissionSave(@RequestBody SysRolePermission sysRolePermission){
         boolean rs = iSysRolePermissionService.saveOrUpdate(sysRolePermission);

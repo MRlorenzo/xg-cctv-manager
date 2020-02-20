@@ -46,6 +46,7 @@ public class SysUserController {
     public SysUserService iSysUserService;
 
     @GetMapping("/find/{username}")
+    @RequiresPermissions("sysuser:search")
     @ApiImplicitParam(name = "username", value = "用户名", required = false )
     @ApiOperation(value="精确查找用户信息", notes="精确查找用户信息接口" , httpMethod = "GET" , response = R.class)
     public R find(@PathVariable("username") String username){
@@ -53,6 +54,7 @@ public class SysUserController {
     }
 
     @GetMapping("/like/{username}")
+    @RequiresPermissions("sysuser:search")
     @ApiImplicitParam(name = "username", value = "用户名", required = false )
     @ApiOperation(value="模糊匹配用户信息，根据用户名", notes="模糊匹配用户信息接口" , httpMethod = "GET" , response = R.class)
     public R like(@PathVariable("username") String username){
@@ -84,7 +86,7 @@ public class SysUserController {
 
     @GetMapping("/info")
     @ApiOperation(value="获取用户信息", notes="用户信息接口" , httpMethod = "GET" , response = R.class)
-    // @RequiresPermissions("sysuser:info")
+    @RequiresPermissions("sysuser:info")
     public R info(){
         return R.ok().put("data" , ShiroUtils.getUserEntity());
     }
@@ -113,6 +115,7 @@ public class SysUserController {
     }*/
 
     @GetMapping("/page")
+    @RequiresPermissions("sysuser:list")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", required = false),
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
@@ -128,6 +131,7 @@ public class SysUserController {
      * @return R
      */
     @PostMapping("/save")
+    @RequiresPermissions("sysuser:save")
     @ApiOperation(value="保存用户", notes="保存用户接口" , httpMethod = "POST" , response = R.class)
     public R sysUserSave(@RequestBody @Valid SysUser user){
         if (user == null || !StringUtils.isNotEmpty(user.getPassword())){

@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,7 @@ public class DailyLogController {
      * @return
      */
     @GetMapping("/page")
+    @RequiresPermissions("dailyLog:list")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "current", value = "当前页", required = false),
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
@@ -59,6 +61,7 @@ public class DailyLogController {
     }
 
     @GetMapping("/excel")
+    @RequiresPermissions("dailyLog:excel")
     @ApiOperation(value="导出EXCEL", notes="导出EXCEL接口" , httpMethod = "GET" , response = R.class)
     public R getDailyLogExcel(Map<String , Object> dailyLog) throws IOException {
         List<DailyLogVo> dailyLogs = iDailyLogService.selectVoList(dailyLog);
@@ -76,6 +79,7 @@ public class DailyLogController {
      * @return R
      */
     @PostMapping("/save")
+    @RequiresPermissions("dailyLog:save")
     @ApiOperation(value="保存", notes="保存信息接口" , httpMethod = "POST" , response = R.class)
     public R dailyLogSave(@RequestBody @Valid DailyLog dailyLog){
         if (dailyLog.getId() == null){
@@ -95,6 +99,7 @@ public class DailyLogController {
      * @return R
      */
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("dailyLog:delete")
     @ApiImplicitParam(name = "id", value = "id", required = true )
     @ApiOperation(value="根据id删除", notes="根据id删除接口" , httpMethod = "POST" , response = R.class)
     public R dailyLogDelete(@PathVariable String id){
@@ -111,6 +116,7 @@ public class DailyLogController {
      * @return R
      */
     @PostMapping("/batchDelete")
+    @RequiresPermissions("dailyLog:delete")
     @ApiImplicitParam(name = "ids", value = "ids", required = true )
     @ApiOperation(value="批量删除", notes="批量删除接口" , httpMethod = "POST" , response = R.class)
     public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){

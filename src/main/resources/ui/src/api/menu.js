@@ -70,6 +70,6 @@ export function updateMenu( data ){
 export function delMenu( id ){
   return request({
     url: `/sysPermission/delete/${id}`,
-    method: 'get'
+    method: 'post'
   })
 }

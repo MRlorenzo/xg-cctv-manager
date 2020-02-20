@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 import com.xg.cctv.mybatis.po.JsException;
@@ -67,6 +68,7 @@ public class JsExceptionController {
      * @return R
      */
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("jsException:delete")
     @ApiImplicitParam(name = "id", value = "id", required = true )
     @ApiOperation(value="根据id删除", notes="根据id删除接口" , httpMethod = "POST" , response = R.class)
     public R jsExceptionDelete(@PathVariable String id){
@@ -83,6 +85,7 @@ public class JsExceptionController {
      * @return R
      */
     @PostMapping("/batchDelete")
+    @RequiresPermissions("jsException:delete")
     @ApiImplicitParam(name = "ids", value = "ids", required = true )
     @ApiOperation(value="批量删除", notes="批量删除接口" , httpMethod = "POST" , response = R.class)
     public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
