@@ -27,7 +27,7 @@ export function getDataPage( data ){
 export function delUser( id ){
   return request({
     url: `/sysUser/delete/${id}`,
-    method: 'get'
+    method: 'post'
   })
 }
 

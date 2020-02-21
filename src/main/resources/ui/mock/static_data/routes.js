@@ -103,7 +103,7 @@ export const asyncRoutes = [
   {
     "id": 56,
     "path": "users",
-    "pid": 53,
+    "pid": 95,
     "isDel": 0,
     "sort": 0,
     "perms": null,
@@ -125,7 +125,7 @@ export const asyncRoutes = [
   {
     id: 59,
     pid: 58,
-    path: 'index',
+    path: 'icon-index',
     name: 'Icons'
   },
   {
@@ -193,7 +193,7 @@ export const asyncRoutes = [
   },
   {
     id: 73,
-    path: 'index'
+    path: 'pdf-index'
   },
   {
     id: 74,
@@ -202,7 +202,7 @@ export const asyncRoutes = [
   {
     id: 75,
     pid: 76,
-    path: 'index'
+    path: 'theme-index'
   },
 
   {
@@ -222,7 +222,7 @@ export const asyncRoutes = [
   {
     id: 80,
     pid: 79,
-    path: 'index'
+    path: 'i18n-index'
   },
   {
     id: 81,
@@ -295,7 +295,8 @@ export const asyncRoutes = [
   },
   {
     id: 95,
-    path: '/cctv'
+    path: '/cctv',
+    pid: 0
   },
   {
     id: 96,

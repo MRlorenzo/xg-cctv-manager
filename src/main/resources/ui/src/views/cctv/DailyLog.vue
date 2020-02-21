@@ -119,7 +119,7 @@
         </el-form-item>
         <!--通知人-->
         <el-form-item :label="$t('cctv.alerterName')" prop="alerterName">
-          <el-input v-model="d.alerterName" placeholder="$t('cctv.pe_alerterName')" />
+          <el-input v-model="d.alerterName" :placeholder="$t('cctv.pe_alerterName')" />
         </el-form-item>
         <!--部门-->
         <el-form-item :label="$t('cctv.department')" prop="departmentId">

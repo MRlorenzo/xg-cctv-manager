@@ -176,7 +176,10 @@ export default {
     pe_content: '请输入内容',
     createTime: '创建时间',
     clickToUpload: '点击上传',
-    uploadTip: '只能上传jpg/png文件，且不超过500kb'
+    uploadTip: '只能上传jpg/png文件，且不超过500kb',
+    workNo: '工号',
+    position: '职位',
+    hireDate: '聘用日期'
   },
   guide: {
     description: '引导页对于一些第一次进入项目的人很有用。',

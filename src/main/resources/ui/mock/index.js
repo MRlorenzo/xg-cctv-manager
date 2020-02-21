@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import { param2Obj } from '../src/utils'
 
-import user from './permission/user'
+import user from './cctv/user'
 import role from './permission/role'
 import menus from './permission/menus'
 import dep from './permission/department'

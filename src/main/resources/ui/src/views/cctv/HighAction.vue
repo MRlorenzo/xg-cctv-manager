@@ -148,7 +148,7 @@
         </el-form-item>
         <!--编码-->
         <el-form-item :label="$t('cctv.eventCode')" prop="code">
-          <el-select v-model="d.code" filterable :placeholder="ps_eventCode">
+          <el-select v-model="d.code" filterable :placeholder="$t('cctv.ps_eventCode')">
             <el-option
               v-for="t in titleSubjectList"
               :key="t.id"

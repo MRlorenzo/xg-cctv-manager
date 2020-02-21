@@ -12,9 +12,9 @@
           v-model="searchTime"
           size="mini"
           type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :range-separator="$t('cctv.to')"
+          :start-placeholder="$t('cctv.startDate')"
+          :end-placeholder="$t('cctv.endDate')"
           value-format="yyyy-MM-dd"
         >
         </el-date-picker>
@@ -22,11 +22,11 @@
 
       <el-form-item label="Status">
         <el-switch
-          v-model="q.status"
-          active-value="0"
-          inactive-value="1"
-          active-text="禁用"
-          inactive-text="正常">
+          v-model="user.status"
+          :active-value="0"
+          :inactive-value="1"
+          :active-text="$t('cctv.disable')"
+          :inactive-text="$t('cctv.normal')">
         </el-switch>
       </el-form-item>
 
@@ -45,21 +45,21 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          Search
+          {{$t('cctv.search')}}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData" >
-          Reset
+          {{$t('cctv.reset')}}
         </el-button>
       </el-form-item>
 
       <el-form-item >
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          {{ $t('permission.addUser') }}
+          {{ $t('cctv.new') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -72,51 +72,30 @@
       :handle-delete="handleDelete"/>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit User':'New User'">
-      <el-form :model="user" label-width="80px" label-position="left">
+      <el-form :model="user" :ref="formName" :rules="rules" label-width="80px" label-position="left">
 
         <!--序号-->
-        <el-form-item label="No">
+        <el-form-item :label="$t('cctv.no')" prop="no">
           <el-input v-model="user.no" />
         </el-form-item>
 
-        <!--用户名-->
-        <el-form-item label="account">
-          <el-input v-model="user.username" placeholder="User Name" />
-        </el-form-item>
-
-        <!--工号-->
-        <el-form-item label="工号">
-          <el-input v-model="user.workNo" placeholder="User Name" />
-        </el-form-item>
-
-        <!--名称-->
-        <el-form-item label="Name">
+        <!--姓名-->
+        <el-form-item :label="$t('cctv.name')" prop="nickName">
           <el-input v-model="user.nickName" />
         </el-form-item>
 
-        <!--密码-->
-        <el-form-item label="Pass">
-          <el-input type="password" v-model="user.password" placeholder="Password" />
+        <!--工号||用户名-->
+        <el-form-item :label="$t('cctv.workNo')" prop="username">
+          <el-input v-model="user.username"/>
         </el-form-item>
 
-        <!--部门-->
-        <el-form-item label="Dep">
-          <el-select v-model="user.departmentId" placeholder="Department">
-            <el-option
-              v-for="dep in departmentList"
-              :key="dep.departmentId"
-              :label="dep.departmentCode"
-              :value="dep.departmentId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <!--角色们-->
-        <el-form-item label="Roles">
+        <!--职位 || 角色-->
+        <el-form-item :label="$t('cctv.position')" prop="roleIds">
           <el-select
-            v-model="roleIds"
+            v-model="user.roleIds"
             :multiple="true"
-            placeholder="Roles">
+            value-key="id"
+            :placeholder="$t('cctv.position')">
             <el-option
               v-for="role in rolesList"
               :key="role.id"
@@ -126,29 +105,55 @@
           </el-select>
         </el-form-item>
 
+        <!--部门-->
+        <el-form-item :label="$t('cctv.department')" prop="departmentId">
+          <el-select v-model="user.departmentId" :placeholder="$t('cctv.pe_department')">
+            <el-option
+              v-for="dep in departmentList"
+              :key="dep.departmentId"
+              :label="dep.departmentCode"
+              :value="dep.departmentId">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
         <!--聘用日期-->
-        <el-form-item label="聘用日期">
-          <el-input type="password" v-model="user.hireDate" />
+        <el-form-item :label="$t('cctv.search')" prop="hireDate">
+          <el-date-picker
+            v-model="user.hireDate"
+            type="date"
+            :placeholder="$t('cctv.ps_date')"
+          />
         </el-form-item>
-        <!--职位-->
-        <el-form-item label="职位">
-          <el-input type="password" v-model="user.position" />
-        </el-form-item>
+
         <!--国籍-->
-        <el-form-item label="国籍">
-          <el-input type="password" v-model="user.nationality" />
+        <el-form-item :label="$t('cctv.nationality')" prop="nationality">
+          <el-input v-model="user.nationality" />
         </el-form-item>
+
         <!--照片-->
-        <el-form-item label="照片">
+        <el-form-item :label="$t('cctv.image')">
           <avatar-image :url.sync="user.avatar"/>
         </el-form-item>
+
+        <!--密码-->
+        <el-form-item :label="$t('login.password')" prop="password">
+          <el-input type="password" v-model="user.password" placeholder="Password" />
+        </el-form-item>
+
         <!--状态  0：禁用   1：正常-->
-        <el-form-item label="状态">
-          <el-input type="password" v-model="user.status" />
+        <el-form-item :label="$t('cctv.status')" prop="status">
+          <el-switch
+            v-model="user.status"
+            :active-value="0"
+            :inactive-value="1"
+            :active-text="$t('cctv.disable')"
+            :inactive-text="$t('cctv.normal')">
+          </el-switch>
         </el-form-item>
 
         <!-- 描述-->
-        <el-form-item label="Desc">
+        <el-form-item label="Desc" prop="description">
           <el-input
             v-model="user.description"
             :autosize="{ minRows: 2, maxRows: 4}"
@@ -157,14 +162,16 @@
           />
         </el-form-item>
 
-
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">
-          {{ $t('permission.cancel') }}
+          {{ $t('cctv.cancel') }}
+        </el-button>
+        <el-button type="info" @click="reset">
+          {{$t('cctv.reset')}}
         </el-button>
         <el-button type="primary" @click="confirm">
-          {{ $t('permission.confirm') }}
+          {{ $t('cctv.confirm') }}
         </el-button>
       </div>
     </el-dialog>
@@ -186,10 +193,13 @@
   import AvatarImage from '@/components/Upload/AvatarImage'
 
   const defaultUser = {
+    no: null,
+    nickName: null,
     username: '',
     password: '',
-    freePwd: '',
+    hireDate: null,
     status: 1,
+    nationality: null,
     description: '',
     departmentId: 1,
     roles: []
@@ -219,6 +229,18 @@
         // 查询参数
         q: Object.assign({} , defaultQueryData),
         searchTime: [],
+        formName: 'form',
+        rules: {
+          no: [{ required: true, trigger: 'blur' , message:'not null'}],
+          nickName: [{ required: true, trigger: 'blur' , message:'not null'}],
+          username: [{ required: true, trigger: 'blur' , message:'not null'}],
+          password: [{ required: true, trigger: 'blur' , message:'not null'}],
+          hireDate: [{ required: true, trigger: 'blur' , message:'not null'}],
+          status: [{ required: true, trigger: 'blur' , message:'not null'}],
+          nationality: [{ required: true, trigger: 'blur' , message:'not null'}],
+          departmentId: [{ required: true, trigger: 'blur' , message:'not null'}],
+          roleIds: [{ required: true, trigger: 'blur' , message:'not null'}]
+        },
         // customizable button style, show/hide critical point, return position
         myBackToTopStyle: {
           right: '50px',
@@ -251,6 +273,12 @@
       this.getDepartments()
     },
     methods: {
+      reset(){
+        if (this.$refs[this.formName] != null){
+          this.$refs[this.formName].resetFields()
+        }
+        this.user = deepClone(defaultUser)
+      },
       async getRoles() {
         const res = await getRoles()
         this.rolesList = res.data
@@ -260,7 +288,7 @@
         this.departmentList = res.data
       },
       handleAdd(){
-        this.roleIds = [];
+        this.user.roleIds = [];
         this.user = Object.assign({}, defaultUser)
         this.dialogType = 'new'
         this.dialogVisible = true
@@ -269,10 +297,13 @@
         this.dialogType = 'edit'
         this.dialogVisible = true
         let cloneUser = deepClone(scope.row)
+        // 此处不需要传routes,department
+        cloneUser.routes = null
+        cloneUser.department = null
         cloneUser.password = ''
         cloneUser.freePwd = ''
         if (Array.isArray(cloneUser.roles)){
-          this.roleIds = cloneUser.roles.map(role=>role.id)
+          cloneUser.roleIds = cloneUser.roles.map(role=>role.id)
         }
         this.user = cloneUser
       },
@@ -283,45 +314,39 @@
           type: 'warning'
         })
           .then(async() => {
-            await delUser(row.userId)
-            this.doSearch = true
-            this.$message({
-              type: 'success',
-              message: 'Delete succed!'
-            })
+            const res = await delUser(row.userId)
+            if (res.code === 0){
+              this.doSearch = true
+              this.$message({
+                type: 'success',
+                message: 'Delete succed!'
+              })
+            }
           })
           .catch(err => { console.error(err) })
       },
-      async confirm(){
-        const isEdit = this.dialogType === 'edit'
-        this.user.roles = this.roleIds.map(id=>({id}))
-        // 此处不需要传routes,department
-        this.user.routes = null
-        this.user.department = null
-
-        if (isEdit) {
-          await updateUser(this.user)
-
-        } else {
-          await addUser(this.user)
+      async submit(){
+        let res
+        this.user.roles = this.user.roleIds.map(id=>({id}))
+        if (this.user.id){
+          res = await updateUser(this.user)
+        }else {
+          res = await addUser(this.user)
         }
-
-        if (this.currPage === 1 ){
+        if (res.code === 0){
+          this.dialogVisible = false
           this.doSearch = true
+          this.$message.success('提交成功')
         }
-
-        const { description, username } = this.user
-        this.dialogVisible = false
-        this.$notify({
-          title: 'Success',
-          dangerouslyUseHTMLString: true,
-          message: `
-            <div>User Nmae: ${username}</div>
-            <div>Description: ${description}</div>
-          `,
-          type: 'success'
-        })
-        this.roleIds = []
+      },
+      confirm() {
+        this.$refs[this.formName].validate((valid) => {
+          if (valid) {
+            this.submit();
+          }else {
+            return false;
+          }
+        });
       },
       resetQueryData(){
         this.q = Object.assign({} , defaultQueryData)

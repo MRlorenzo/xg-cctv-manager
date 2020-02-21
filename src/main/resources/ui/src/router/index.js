@@ -135,6 +135,7 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: 'rolePermission',
+          icon: 'people',
           roles: ['admin']
         }
       },
@@ -143,7 +144,8 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/department'),
         name: 'Department',
         meta: {
-          title: 'department'
+          title: 'department',
+          icon: 'peoples'
         }
       },
       {
@@ -151,7 +153,8 @@ export const asyncRoutes = [
         component: () => import('@/views/permission/menus'),
         name: 'Menus',
         meta: {
-          title: 'menus'
+          title: 'menus',
+          icon: 'nested'
         }
       }
     ]
@@ -161,63 +164,64 @@ export const asyncRoutes = [
     path: '/cctv',
     component: Layout,
     name: 'CCTV',
-    meta: { title: 'cctv'},
+    meta: { title: 'cctv' , icon: 'tree-table'},
     children: [
       {
         path: 'daily-log',
         component: ()=> import('@/views/cctv/DailyLog'),
         name: 'DailyLog',
-        meta: { title: 'dailyLog'},
+        meta: { title: 'dailyLog' , icon: 'clipboard'},
       },
       {
         path: 'incident-log',
         component: ()=> import('@/views/cctv/IncidentLog'),
         name: 'IncidentLog',
-        meta: { title: 'incidentLog'},
+        meta: { title: 'incidentLog' , icon: 'education'},
       },
       {
         path: 'high-action',
         component: ()=> import('@/views/cctv/HighAction'),
         name: 'HighAction',
-        meta: { title: 'highAction'},
+        meta: { title: 'highAction' , icon: 'form'},
       },
       {
         path: 'fill',
         component: ()=> import('@/views/cctv/Fill'),
         name: 'Fill',
-        meta: { title: 'fill'},
+        meta: { title: 'fill' , icon: 'skill'},
       },
       {
         path: 'credit',
         component: ()=> import('@/views/cctv/Credit'),
         name: 'Credit',
-        meta: { title: 'credit'},
+        meta: { title: 'credit' , icon: 'documentation'},
       },
       {
         path: 'title-list',
         component: ()=> import('@/views/cctv/TitleList'),
         name: 'TitleList',
-        meta: { title: 'titleList'},
+        meta: { title: 'titleList' , icon: 'list'},
       },
       {
         path: 'title-subject',
         component: ()=> import('@/views/cctv/TitleSubject'),
         name: 'TitleSubject',
-        meta: { title: 'titleSubject'},
+        meta: { title: 'titleSubject' , icon: 'guide'},
       },
       {
         path: 'users',
         component: () => import('@/views/cctv/users'),
         name: 'Users',
         meta: {
-          title: 'users'
+          title: 'users',
+          icon: 'user'
         }
       },
       {
         path: 'customer',
         component: ()=> import('@/views/cctv/Customer'),
         name: 'Customer',
-        meta: { title: 'customer'},
+        meta: { title: 'customer' , icon: 'theme'},
       }
     ]
   },

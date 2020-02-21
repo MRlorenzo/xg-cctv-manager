@@ -1,13 +1,34 @@
 import { asyncRoutes } from './routes.js'
 export default [
+  /*{
+    username: 'testhr',
+    department: {
+      departmentId: 1
+    },
+    roles: [{id: 2}],
+    routes: [
+      {
+        id: 1,
+        path: '/cctv',
+        pid: 0
+      },
+      {
+        id: 2,
+        path: "users",
+        pid: 1
+      },
+      {
+        id: 3,
+        path: 'users:save',
+        pid: 2
+      }
+    ]
+  },*/
   {
     "userId": 669,
     "username": "user16",
     "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-    "freePwd": null,
     "status": 1,
-    "createUserId": null,
-    "createTime": "2019-09-01T01:15:16.000+0000",
     "departmentId": 0,
     "department": {
       "departmentId": 1,

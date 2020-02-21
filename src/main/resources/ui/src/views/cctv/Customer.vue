@@ -12,8 +12,13 @@
 
       <!--状态-->
       <el-form-item :label="$t('cctv.status')">
-        <el-radio v-model="q.status" :label="0" border>{{$t('cctv.disable')}}</el-radio>
-        <el-radio v-model="q.status" :label="1" border>{{$t('cctv.normal')}}</el-radio>
+        <el-switch
+          v-model="q.status"
+          :active-value="0"
+          :inactive-value="1"
+          :active-text="$t('cctv.disable')"
+          :inactive-text="$t('cctv.normal')">
+        </el-switch>
       </el-form-item>
 
     </el-form>
@@ -66,8 +71,8 @@
           <el-input v-model="d.cardNumber" :placeholder="$t('cctv.pe_cardNumber')" />
         </el-form-item>
         <!--位置-->
-        <el-form-item :label="$t('cctv.localtion')" prop="location">
-          <el-input v-model="d.location" :placeholder="$t('cctv.pe_localtion')" />
+        <el-form-item :label="$t('cctv.location')" prop="location">
+          <el-input v-model="d.location" :placeholder="$t('cctv.pe_location')" />
         </el-form-item>
         <!--平均下注-->
         <el-form-item :label="$t('cctv.avgBetting')" prop="avgBetting">

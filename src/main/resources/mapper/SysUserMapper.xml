@@ -14,10 +14,8 @@
         <result column="description" property="description" />
         <result column="no" property="no"/>
         <result column="nick_name" property="nickName"/>
-        <result column="work_no" property="workNo"/>
         <result column="nationality" property="nationality"/>
         <result column="avatar" property="avatar"/>
-        <result column="position" property="position"/>
         <result column="hire_date" property="hireDate"/>
     </resultMap>
 
@@ -29,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, username, password, status, create_user_id, create_time, department_id, description, no ,nick_name,work_no,nationality,avatar,position,hire_date
+        user_id, username, password, status, create_user_id, create_time, department_id, description, no ,nick_name,nationality,avatar,hire_date
     </sql>
 
     <select id="queryByUserName" resultMap="allInfo">

@@ -2,21 +2,21 @@
   <div>
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
       <!-- 名称 -->
-      <el-table-column align="center" label="Name" width="220">
+      <el-table-column align="center" :label="$t('cctv.name')" width="220">
         <template slot-scope="scope">
           {{ scope.row.username }}
         </template>
       </el-table-column>
 
       <!-- 部门 -->
-      <el-table-column align="header-center" label="Department">
+      <el-table-column align="header-center" :label="$t('cctv.department')">
         <template slot-scope="scope">
           {{ scope.row.department | departmentText }}
         </template>
       </el-table-column>
 
       <!-- 角色列表 -->
-      <el-table-column align="header-center" label="Roles">
+      <el-table-column align="header-center" :label="$t('cctv.position')">
         <template slot-scope="scope">
           {{ scope.row.roles | rolesText}}
         </template>
@@ -30,7 +30,7 @@
       </el-table-column>
 
       <!--状态: 0 禁用 1 正常-->
-      <el-table-column align="header-center" label="Status">
+      <el-table-column align="header-center" :label="$t('cctv.status')">
         <template slot-scope="scope">
           {{ scope.row.status | statusText}}
         </template>
@@ -72,6 +72,7 @@
 
 <script>
   import { getDataPage } from "@/api/user";
+  import i18n from '@/lang'
     export default {
       name: "user-list",
       props: {
@@ -105,8 +106,8 @@
       filters: {
         statusText( status ){
           return {
-            '0': '禁用',
-            '1': '正常'
+            '0': i18n.t('cctv.disable'),
+            '1': i18n.t('cctv.normal')
           }[status]
         }
       },
