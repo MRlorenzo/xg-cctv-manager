@@ -54,4 +54,6 @@ public interface SysUserService extends IService<SysUser>, VoService<SysUserVo> 
     List<SysPermission> selectPermissionsByUserId(Long userId);
 
     Set<String> permissions2set(List<SysPermission> sysPermissions);
+
+    IPage<SysUser> selectAllInfoPage(Page<SysUser> page, Map<String, Object> params);
 }

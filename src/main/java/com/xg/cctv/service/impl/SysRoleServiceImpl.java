@@ -40,6 +40,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private SysRolePermissionService sysRolePermissionService;
 
     @Override
+    public List<SysRole> queryRolesByUserId(Long userId) {
+        return sysRoleMapper.queryRolesByUserId(userId);
+    }
+
+    @Override
     public boolean saveOrUpdate(SysRole entity) {
         boolean isUpdate = entity.getId() != null;
         boolean b = super.saveOrUpdate(entity);

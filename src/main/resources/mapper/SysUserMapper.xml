@@ -25,6 +25,11 @@
         <collection property="routes" column="user_id" select="com.xg.cctv.mybatis.mapper.SysPermissionMapper.queryPermissionByUserId"/>
     </resultMap>
 
+    <resultMap id="infoWithRolesAndDepartment" type="com.xg.cctv.mybatis.po.SysUser" extends="BaseResultMap">
+        <association property="department" column="department_id" select="com.xg.cctv.mybatis.mapper.SysDepartmentMapper.queryDepartmentById"/>
+        <collection property="roles" column="user_id" select="com.xg.cctv.mybatis.mapper.SysRoleMapper.queryRolesByUserId"/>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         user_id, username, password, status, create_user_id, create_time, department_id, description, no ,nick_name,nationality,avatar,hire_date
@@ -37,6 +42,11 @@
     <sql id="VoTable">
         SELECT u.*,d.department_code,d.name,d.department_id FROM sys_user u LEFT JOIN sys_department d on u.department_id = d.department_id
     </sql>
+
+    <select id="selectAllInfoPage" resultMap="infoWithRolesAndDepartment">
+        SELECT <include refid="Base_Column_List"/> FROM sys_user
+        ${ew.customSqlSegment}
+    </select>
 
     <!--如果自定义的方法还希望能够使用MP提供的Wrapper条件构造器，则需要如下写法-->
     <select id="selectVoPage" resultType="com.xg.cctv.common.dto.SysUserVo">

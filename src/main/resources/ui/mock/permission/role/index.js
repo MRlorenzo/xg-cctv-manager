@@ -26,6 +26,16 @@ export default [
       }
     }
   },
+  {
+    url: '/sysRole/find/userId/[A-Za-z0-9]',
+    type: 'get',
+    response: _=>{
+      return {
+        code: 0,
+        data: db_roles
+      }
+    }
+  },
 
   // mock get all roles form server
   {

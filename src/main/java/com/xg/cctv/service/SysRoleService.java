@@ -29,4 +29,11 @@ public interface SysRoleService extends IService<SysRole> {
      * @param sysRole
      */
     List<SysRole> selectList(SysRole sysRole);
+
+    /**
+     * 根据用户id查询角色名单
+     * @param userId
+     * @return
+     */
+    List<SysRole> queryRolesByUserId(Long userId);
 }

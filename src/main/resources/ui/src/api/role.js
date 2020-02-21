@@ -14,6 +14,13 @@ export function getRoutesByRoleId( roleId ) {
   })
 }
 
+export function queryRolesByUserId( userId ) {
+  return request({
+    url: '/sysRole/find/userId/' + userId,
+    method: 'get'
+  })
+}
+
 export function getRoles() {
   return request({
     url: '/sysRole/list',

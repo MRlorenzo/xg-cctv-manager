@@ -30,6 +30,13 @@ public class SysRoleController {
     @Autowired
     public SysRoleService iSysRoleService;
 
+    @GetMapping("/find/userId/{userId}")
+    @ApiOperation(value = "根据用户id查询角色列表" , notes = "查询角色列表接口" , httpMethod = "GET")
+    public R queryRolesByUserId(@PathVariable("userId") Long userId){
+
+        return R.ok().put("data" , iSysRoleService.queryRolesByUserId(userId));
+    }
+
     /**
      * 获取角色列表
      * @return

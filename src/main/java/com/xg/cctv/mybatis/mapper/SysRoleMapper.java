@@ -4,6 +4,8 @@ import com.xg.cctv.mybatis.po.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 角色 Mapper 接口
@@ -19,6 +21,6 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param userId
      * @return
      */
-    SysRole queryRolesByUserId(@Param("userId") Long userId);
+    List<SysRole> queryRolesByUserId(@Param("userId") Long userId);
 
 }

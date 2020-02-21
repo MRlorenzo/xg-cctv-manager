@@ -109,11 +109,6 @@ public class SysUserController {
      * @param page  分页信息
      * @return
      */
-    /*@GetMapping("/page")
-    public R getSysUserList(Page<SysUserVo> page, SysUser sysUser){
-        return R.ok().put("data" , iSysUserService.selectPage(page, sysUser));
-    }*/
-
     @GetMapping("/page")
     @RequiresPermissions("sysuser:list")
     @ApiImplicitParams({
@@ -121,8 +116,8 @@ public class SysUserController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取用户信息分页", notes="用户信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getSysUserList(Page<SysUserVo> page , Map<String , Object> params){
-        return R.ok().put("data" , iSysUserService.selectVoPage(page , params ));
+    public R getSysUserAllInfoPage(Page<SysUser> page , Map<String , Object> params){
+        return R.ok().put("data" , iSysUserService.selectAllInfoPage(page , params ));
     }
 
     /**

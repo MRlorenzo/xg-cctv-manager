@@ -30,10 +30,10 @@
         SELECT
             p.*
         FROM
-        sys_user_role ur
-        LEFT JOIN sys_role r ON ur.role_id = r.id
-        LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
-        LEFT JOIN sys_permission p ON p.id = rp.permission_id
-WHERE ur.user_id = #{userId}
+            sys_user_role ur
+            LEFT JOIN sys_role r ON ur.role_id = r.id
+            LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
+            LEFT JOIN sys_permission p ON p.id = rp.permission_id
+        WHERE ur.user_id = #{userId}
     </select>
 </mapper>

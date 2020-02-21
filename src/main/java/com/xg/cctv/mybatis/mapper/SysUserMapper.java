@@ -10,6 +10,7 @@ import com.xg.cctv.mybatis.po.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,5 +29,7 @@ public interface SysUserMapper extends BaseMapper<SysUser>, VoMapper<SysUserVo> 
      * @return
      */
     SysUser queryByUserName(@Param("username") String username);
+
+    IPage<SysUser> selectAllInfoPage(Page<SysUser> page, @Param(Constants.WRAPPER) Wrapper<SysUser> queryWrapper);
 
 }
