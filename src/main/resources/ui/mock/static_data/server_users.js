@@ -1,4 +1,5 @@
 import { asyncRoutes } from './routes.js'
+asyncRoutes.push(null)
 export default [
   /*{
     username: 'testhr',
