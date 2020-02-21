@@ -41,6 +41,6 @@ export function updateDepartment( data ) {
 export function delDepartment( id ) {
   return request({
     url: `/sysDepartment/delete/${id}`,
-    method: 'get'
+    method: 'post'
   })
 }
