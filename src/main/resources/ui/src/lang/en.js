@@ -176,7 +176,7 @@ export default {
     pe_content: 'Please enter content',
     createTime: 'Create Time',
     clickToUpload: 'Click upload',
-    uploadTip: 'Only upload jpg / png files, and no more than 1024kb',
+    uploadTip: 'Only upload image files, and no more than 1024kb',
     workNo: 'Work No.',
     position: 'position',
     hireDate: 'Hire Date'

@@ -5,6 +5,7 @@
     :on-remove="handleRemove"
     :file-list="fileList"
     list-type="picture"
+    accept="image/*"
     :http-request="uploadFileupload"
   >
 

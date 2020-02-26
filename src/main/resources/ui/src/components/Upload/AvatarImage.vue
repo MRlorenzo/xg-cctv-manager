@@ -6,6 +6,7 @@
     :multiple="false"
     :on-success="handleAvatarSuccess"
     :http-request="uploadFileupload"
+    accept="image/*"
   >
     <img v-if="url" :src="preViewUrl" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon" />
