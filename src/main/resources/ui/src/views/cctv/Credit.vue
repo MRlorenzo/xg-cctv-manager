@@ -159,8 +159,9 @@ import CreditPage from './components/CredItPage'
 import {saveFillAndCredit , deleteFillAndCreditById , updateFillAndCredit , exportFillAndCreditExcel} from '@/api/fill-and-credit'
 import { downloadExcelByKey, deepClone } from "@/utils"
 import coinList from './common/coin-list'
+import OPT_TYPE from './common/opt-type'
 const data = {
-  type: 2, // 1.加彩 2.缴码
+  type: OPT_TYPE.CREDIT, // 1.加彩 2.缴码
   no: null,
   date: '',
   time: '',
@@ -169,6 +170,12 @@ const data = {
   coinCode: null,
   alerterName: null,
   monitor: null
+}
+const queryData = {
+  type: OPT_TYPE.CREDIT,
+  no: null,
+  tableCode: null,
+  coinCode: null
 }
 export default {
   name: 'Credit',
@@ -203,15 +210,15 @@ export default {
       let [startDate , endDate] = times
       if ( startDate && endDate){
         Object.assign(this.q , {
-          startTime: startDate,
-          endTime: endDate
+          startDate,
+          endDate
         })
       }
     }
   },
   methods: {
     resetQueryData() {
-      this.q = { type: 2}
+      this.q = deepClone(queryData)
     },
     reset(){
       if (this.$refs[this.formName] != null){

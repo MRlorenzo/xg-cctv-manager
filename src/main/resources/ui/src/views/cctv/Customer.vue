@@ -122,12 +122,17 @@ const data = {
   imageUrl: '',
   status: 0
 }
+const queryData = {
+  cardNumber: null,
+  location: null,
+  status: null
+}
 export default {
   name: 'Customer',
   components: { CustomerPage , AvatarImage},
   data() {
     return {
-      q: {},
+      q: deepClone(queryData),
       d: deepClone(data),
       doSearch: true,
       showMark: false,
@@ -145,7 +150,7 @@ export default {
   },
   methods: {
     resetQueryData() {
-      this.q = {}
+      this.q = deepClone(queryData)
     },
     reset(){
       if (this.$refs[this.formName] != null){

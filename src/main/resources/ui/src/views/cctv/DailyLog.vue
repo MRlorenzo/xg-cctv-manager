@@ -26,7 +26,7 @@
 
       <!--部门-->
       <el-form-item :label="$t('cctv.department')">
-        <el-input v-model="q.departmentId" :placeholder="$t('cctv.pe_department')" />
+        <el-input v-model="q.departmentName" :placeholder="$t('cctv.pe_department')" />
       </el-form-item>
       <!--监控部-->
       <el-form-item :label="$t('cctv.monitor')">
@@ -181,12 +181,19 @@ const data = {
   conclusion: null,
   urls: ''
 }
+const queryData = {
+  needImg: true,
+  tableCode: null,
+  subject: null,
+  departmentName: null,
+  monitor: null
+}
 export default {
   name: 'DailyLog',
   components: { DailyLogPage, MultipleImages },
   data() {
     return {
-      q: {},
+      q: deepClone(queryData),
       d: deepClone(data),
       departmentList: [],
       searchTime: [],
@@ -219,15 +226,15 @@ export default {
       let [startDate , endDate] = times
       if ( startDate && endDate){
         Object.assign(this.q , {
-          startTime: startDate,
-          endTime: endDate
+          startDate,
+          endDate
         })
       }
     }
   },
   methods: {
     resetQueryData() {
-      this.q = {}
+      this.q = deepClone(queryData)
     },
     reset(){
       if (this.$refs[this.formName] != null){

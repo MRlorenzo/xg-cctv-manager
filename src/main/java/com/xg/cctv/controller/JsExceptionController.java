@@ -43,7 +43,7 @@ public class JsExceptionController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getJsExceptionList(Page<JsException> page,Map<String , Object> jsException){
+    public R getJsExceptionList(Page<JsException> page,@RequestParam Map<String , Object> jsException){
         return R.ok().put("data" , iJsExceptionService.selectPage(page, jsException));
     }
 

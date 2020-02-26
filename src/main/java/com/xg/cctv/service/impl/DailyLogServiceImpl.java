@@ -8,11 +8,13 @@ import com.xg.cctv.mybatis.po.DailyLog;
 import com.xg.cctv.mybatis.mapper.DailyLogMapper;
 import com.xg.cctv.service.DailyLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,29 +85,29 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
      * @param queryWrapper
      * @return
      */
-    public QueryWrapper<DailyLog> getQueryWrapper(QueryWrapper<DailyLog> queryWrapper,DailyLog dailyLog){
+    public QueryWrapper<DailyLog> getQueryWrapper(QueryWrapper<DailyLog> queryWrapper, DailyLog dailyLog){
         //条件拼接
         if (dailyLog == null){
             return queryWrapper;
         }
-
+        Map<String , Object> params = new HashMap<>();
         if (dailyLog.getTableCode() != null){
-            queryWrapper.like("table_code" , dailyLog.getTableCode());
+            params.put("tableCode" , dailyLog.getTableCode());
         }
 
         if (dailyLog.getSubject() != null){
-            queryWrapper.eq("subject" , dailyLog.getSubject());
+            params.put("subject" , dailyLog.getSubject());
         }
 
         if (dailyLog.getDepartmentId() != null){
-            queryWrapper.eq("department_id" , dailyLog.getDepartmentId());
+            params.put("departmentId" , dailyLog.getDepartmentId());
         }
 
         if (dailyLog.getMonitor() != null){
-            queryWrapper.eq("monitor" , dailyLog.getMonitor());
+            params.put("monitor" , dailyLog.getMonitor());
         }
     
-        return queryWrapper;
+        return getWrapper(queryWrapper , params);
     }
 
     public QueryWrapper<DailyLog> getQueryWrapper(QueryWrapper<DailyLog> queryWrapper, Map<String , Object> params){
@@ -123,23 +125,32 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
         }
 
         if (params.get("subject") != null){
-            queryWrapper.eq("subject" , params.get("subject"));
+            queryWrapper.like("subject" , params.get("subject"));
         }
 
         if (params.get("departmentId") != null){
-            queryWrapper.eq("department_id" , params.get("departmentId"));
+            queryWrapper.eq("d.department_id" , params.get("departmentId"));
+        }
+
+        if (params.get("departmentName") != null && StringUtils.isNotEmpty(params.get("departmentName").toString())){
+            queryWrapper.inSql("d.department_id" ,
+                    "SELECT department_id FROM sys_department WHERE department_code LIKE '%"
+                    + params.get("departmentName").toString()
+                    +"%'");
         }
 
         if (params.get("monitor") != null){
-            queryWrapper.eq("monitor" , params.get("monitor"));
+            queryWrapper.like("monitor" , params.get("monitor"));
         }
 
         if (params.get("startDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
+            queryWrapper.ge(true , "create_time" , params.get("startDate"));
+            // queryWrapper.apply(true ,"UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
         }
 
         if (params.get("endDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
+            queryWrapper.le(true , "create_time" , params.get("endDate"));
+            // queryWrapper.apply(true ,"UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
         }
 
         return queryWrapper;

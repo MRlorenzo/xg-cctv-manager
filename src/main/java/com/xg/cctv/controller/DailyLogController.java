@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.DailyLogVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.excel.impl.DailyLogExcelService;
+import com.xg.cctv.exception.RRException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -45,8 +46,7 @@ public class DailyLogController {
     /**
      * 分页查询数据
      *
-     * @param page  分页信息
-     * @param dailyLog 查询条件
+     * @param params 查询条件
      * @return
      */
     @GetMapping("/page")
@@ -56,20 +56,28 @@ public class DailyLogController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getDailyLogList(Page<DailyLogVo> page, Map<String , Object> dailyLog){
-        return R.ok().put("data" , iDailyLogService.selectVoPage(page, dailyLog));
+    public R getDailyLogList(Page<DailyLogVo> page ,@RequestParam Map<String, Object> params){
+        return R.ok().put("data" , iDailyLogService.selectVoPage(page, params));
     }
 
     @GetMapping("/excel")
     @RequiresPermissions("dailyLog:excel")
     @ApiOperation(value="导出EXCEL", notes="导出EXCEL接口" , httpMethod = "GET" , response = R.class)
-    public R getDailyLogExcel(Map<String , Object> dailyLog) throws IOException {
+    public R getDailyLogExcel(@RequestParam Map<String , Object> dailyLog) {
         List<DailyLogVo> dailyLogs = iDailyLogService.selectVoList(dailyLog);
-        for (DailyLogVo d: dailyLogs) {
-            d.initImages(basePath);
+        String key ;
+        if (dailyLog.get("needImg") != null && Boolean.valueOf(dailyLog.get("needImg").toString())){
+            try {
+                key = new DailyLogExcelService().exportExcel(basePath ,dailyLogs);
+            } catch (IOException e) {
+                throw new RRException("图片地址错误");
+            }
+        }else {
+            key = new DailyLogExcelService().exportExcel(dailyLogs);
         }
+
         return R.ok()
-                .put("key", new DailyLogExcelService().exportExcel(dailyLogs));
+                .put("key", key);
     }
 
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,23 +71,25 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
             return queryWrapper;
         }
 
+        Map<String , Object> params = new HashMap<>();
+
         if (highAction.getTableCode() != null){
-            queryWrapper.like("table_code" , highAction.getTableCode());
+            params.put("tableCode" , highAction.getTableCode());
         }
 
         if (highAction.getCoinCode() != null){
-            queryWrapper.eq("coin_code" , highAction.getCoinCode());
+            params.put("coinCode" , highAction.getCoinCode());
         }
 
         if (highAction.getInvolveUid() != null){
-            queryWrapper.eq("involve_uid" , highAction.getInvolveUid());
+            params.put("involveUid" , highAction.getInvolveUid());
         }
 
         if (highAction.getMonitor() != null){
-            queryWrapper.eq("monitor" , highAction.getMonitor());
+            params.put("monitor" , highAction.getMonitor());
         }
     
-        return queryWrapper;
+        return getWrapper(queryWrapper , params);
     }
 
     public QueryWrapper<HighAction> getQueryWrapper(QueryWrapper<HighAction> queryWrapper, Map<String , Object> params){

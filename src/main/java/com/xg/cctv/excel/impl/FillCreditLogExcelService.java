@@ -5,6 +5,7 @@ import com.xg.cctv.excel.ExportExcelService;
 import com.xg.cctv.exception.RRException;
 import com.xg.cctv.mybatis.po.FillCreditLog;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -25,5 +26,10 @@ public class FillCreditLogExcelService implements ExportExcelService<FillCreditL
 
         String uuid = JxlsMap.xlsx(REPORT_TEMPLATE_PATH , model);
         return uuid;
+    }
+
+    @Override
+    public String exportExcel(String serverBaseFilePath, List<FillCreditLog> list) throws IOException {
+        return exportExcel(list);
     }
 }

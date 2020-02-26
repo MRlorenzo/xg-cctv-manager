@@ -116,7 +116,7 @@ public class SysUserController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取用户信息分页", notes="用户信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getSysUserAllInfoPage(Page<SysUser> page , Map<String , Object> params){
+    public R getSysUserAllInfoPage(Page<SysUser> page ,@RequestParam Map<String , Object> params){
         return R.ok().put("data" , iSysUserService.selectAllInfoPage(page , params ));
     }
 

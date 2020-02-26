@@ -6,6 +6,7 @@ import com.xg.cctv.excel.ExportExcelService;
 import com.xg.cctv.exception.RRException;
 import com.xg.cctv.mybatis.po.HighAction;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -26,5 +27,13 @@ public class HighActionExcelService implements ExportExcelService<HighActionVo>{
 
         String uuid = JxlsMap.xlsx(REPORT_TEMPLATE_PATH , model);
         return uuid;
+    }
+
+    @Override
+    public String exportExcel(String serverBaseFilePath, List<HighActionVo> list) throws IOException {
+        for (HighActionVo d: list) {
+            d.initImages(serverBaseFilePath);
+        }
+        return exportExcel(list);
     }
 }

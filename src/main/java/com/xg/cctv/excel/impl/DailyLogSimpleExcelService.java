@@ -4,6 +4,7 @@ import com.xg.cctv.excel.ReportDataItem;
 import com.xg.cctv.excel.SimpleExportExcelService;
 import com.xg.cctv.mybatis.po.DailyLog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,5 +30,10 @@ public class DailyLogSimpleExcelService extends SimpleExportExcelService<DailyLo
                 "监控部",
                 "图片"
         );
+    }
+
+    @Override
+    public String exportExcel(String serverBaseFilePath, List<DailyLog> list) throws IOException{
+        return exportExcel(list);
     }
 }

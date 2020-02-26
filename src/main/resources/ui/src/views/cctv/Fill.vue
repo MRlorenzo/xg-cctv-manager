@@ -160,8 +160,9 @@ import FillPage from './components/FillPage'
 import {saveFillAndCredit , deleteFillAndCreditById , updateFillAndCredit , exportFillAndCreditExcel} from '@/api/fill-and-credit'
 import { downloadExcelByKey, deepClone } from "@/utils"
 import coinList from './common/coin-list'
+import OPT_TYPE from './common/opt-type'
 const data = {
-  type: 1, // 1.加彩 2.缴码
+  type: OPT_TYPE.FILL, // 1.加彩 2.缴码
   no: null,
   date: '',
   time: '',
@@ -171,12 +172,18 @@ const data = {
   alerterName: null,
   monitor: null
 }
+const queryData = {
+  type: OPT_TYPE.FILL,
+  no: null,
+  tableCode: null,
+  coinCode: null
+}
 export default {
   name: 'Fill',
   components: { FillPage },
   data() {
     return {
-      q: { type: 1},
+      q: deepClone(queryData),
       d: deepClone(data),
       searchTime: [],
       coinList: deepClone(coinList), // 币种列表
@@ -204,15 +211,15 @@ export default {
       let [startDate , endDate] = times
       if ( startDate && endDate){
         Object.assign(this.q , {
-          startTime: startDate,
-          endTime: endDate
+          startDate,
+          endDate
         })
       }
     }
   },
   methods: {
     resetQueryData() {
-      this.q = { type: 1}
+      this.q = deepClone(queryData)
     },
     reset(){
       if (this.$refs[this.formName] != null){

@@ -246,12 +246,21 @@ const data = {
   remarks: null,
   urls: ''
 }
+const queryData = {
+  needImg: true,
+  tableCode: null,
+  coinCode: null,
+  code: null,
+  involveUid: null,
+  monitor: null,
+  remarks: null
+}
 export default {
   name: 'HighAction',
   components: { HighActionPage , MultipleImages},
   data() {
     return {
-      q: {},
+      q: deepClone(queryData),
       searchTime: [],
       d: deepClone(data),
       titleSubjectList: [], // 事件列表
@@ -288,15 +297,15 @@ export default {
       let [startDate , endDate] = times
       if ( startDate && endDate){
         Object.assign(this.q , {
-          startTime: startDate,
-          endTime: endDate
+          startDate,
+          endDate
         })
       }
     }
   },
   methods: {
     resetQueryData() {
-      this.q = {}
+      this.q = deepClone(queryData)
     },
     reset(){
       if (this.$refs[this.formName] != null){

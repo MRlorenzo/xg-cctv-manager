@@ -6,6 +6,7 @@ import com.xg.cctv.excel.ExportExcelService;
 import com.xg.cctv.exception.RRException;
 import com.xg.cctv.mybatis.po.DailyLog;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -29,5 +30,13 @@ public class DailyLogExcelService implements ExportExcelService<DailyLogVo>{
 
         String uuid = JxlsMap.xlsx(REPORT_TEMPLATE_PATH , model);
         return uuid;
+    }
+
+    @Override
+    public String exportExcel(String serverBaseFilePath, List<DailyLogVo> list) throws IOException {
+        for (DailyLogVo d: list) {
+            d.initImages(serverBaseFilePath);
+        }
+        return exportExcel(list);
     }
 }

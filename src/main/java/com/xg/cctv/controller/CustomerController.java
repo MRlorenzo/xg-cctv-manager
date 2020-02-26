@@ -50,14 +50,14 @@ public class CustomerController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getCustomerList(Page<Customer> page,Map<String , Object> customer){
+    public R getCustomerList(Page<Customer> page,@RequestParam Map<String , Object> customer){
         return R.ok().put("data" , iCustomerService.selectPage(page, customer));
     }
 
     @GetMapping("/excel")
     @RequiresPermissions("customer:excel")
     @ApiOperation(value="导出EXCEL", notes="导出EXCEL接口" , httpMethod = "GET" , response = R.class)
-    public R getCustomerExcel(Map<String , Object> customer){
+    public R getCustomerExcel(@RequestParam Map<String , Object> customer){
         List<Customer> customers = iCustomerService.selectList(customer);
         return R.ok()
                 .put("key" , new CustomerExcelService().exportExcel(customers));

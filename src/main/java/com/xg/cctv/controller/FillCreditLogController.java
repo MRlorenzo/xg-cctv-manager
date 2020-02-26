@@ -50,14 +50,14 @@ public class FillCreditLogController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getFillCreditLogList(Page<FillCreditLog> page,Map<String , Object> fillCreditLog){
+    public R getFillCreditLogList(Page<FillCreditLog> page,@RequestParam Map<String , Object> fillCreditLog){
         return R.ok().put("data" , iFillCreditLogService.selectPage(page, fillCreditLog));
     }
 
     @GetMapping("/excel")
     @RequiresPermissions("fillCreditLog:excel")
     @ApiOperation(value="导出EXCEL", notes="导出EXCEL接口" , httpMethod = "GET" , response = R.class)
-    public R getFillCreditLogExcel(Map<String , Object> fillCreditLog){
+    public R getFillCreditLogExcel(@RequestParam Map<String , Object> fillCreditLog){
         List<FillCreditLog> fillCreditLogs = iFillCreditLogService.selectList(fillCreditLog);
         return R.ok()
                 .put("key" , new FillCreditLogExcelService().exportExcel(fillCreditLogs));

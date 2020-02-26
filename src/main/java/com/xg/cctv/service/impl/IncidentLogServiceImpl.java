@@ -8,11 +8,13 @@ import com.xg.cctv.mybatis.po.IncidentLog;
 import com.xg.cctv.mybatis.mapper.IncidentLogMapper;
 import com.xg.cctv.service.IncidentLogService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,31 +91,33 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
             return queryWrapper;
         }
 
+        Map<String , Object> params = new HashMap<>();
+
         if (incidentLog.getTableCode() != null){
-            queryWrapper.like("table_code" , incidentLog.getTableCode());
+            params.put("tableCode" , incidentLog.getTableCode());
         }
 
         if (incidentLog.getCode() != null){
-            queryWrapper.like("code" , incidentLog.getCode());
+            params.put("code" , incidentLog.getCode());
         }
 
         if (incidentLog.getCoinCode() != null){
-            queryWrapper.eq("coin_code" , incidentLog.getCoinCode());
+            params.put("coinCode" , incidentLog.getCoinCode());
         }
 
         if (incidentLog.getInvolveUid() != null){
-            queryWrapper.eq("involve_uid", incidentLog.getInvolveUid());
+            params.put("involveUid" , incidentLog.getInvolveUid());
         }
 
         if (incidentLog.getDepartmentId() != null){
-            queryWrapper.eq("department_id" , incidentLog.getDepartmentId());
+            params.put("departmentId" , incidentLog.getDepartmentId());
         }
 
         if (incidentLog.getMonitor() != null){
-            queryWrapper.eq("monitor" , incidentLog.getMonitor());
+            params.put("monitor" , incidentLog.getMonitor());
         }
 
-        return queryWrapper;
+        return getWrapper(queryWrapper , params);
     }
 
     public QueryWrapper<IncidentLog> getQueryWrapper(QueryWrapper<IncidentLog> queryWrapper, Map<String , Object> params){
@@ -126,11 +130,13 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
         }
 
         if (params.get("startDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
+            queryWrapper.ge(true , "create_time" , params.get("startDate"));
+            // queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
         }
 
         if (params.get("endDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
+            queryWrapper.le(true , "create_time" , params.get("endDate"));
+            // queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
         }
 
         if (params.get("tableCode") != null){
@@ -150,7 +156,14 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
         }
 
         if (params.get("departmentId") != null){
-            queryWrapper.eq("department_id" , params.get("departmentId"));
+            queryWrapper.eq("i.department_id" , params.get("departmentId"));
+        }
+
+        if (params.get("departmentName") != null && StringUtils.isNotEmpty(params.get("departmentName").toString())){
+            queryWrapper.inSql("i.department_id" ,
+                    "SELECT department_id FROM sys_department WHERE department_code LIKE '%"
+                            + params.get("departmentName").toString()
+                            +"%'");
         }
 
         if (params.get("monitor") != null){

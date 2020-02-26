@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.HighActionVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.excel.impl.HighActionExcelService;
+import com.xg.cctv.exception.RRException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -56,22 +57,30 @@ public class HighActionController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getHighActionList(Page<HighActionVo> page,Map<String , Object> highAction){
+    public R getHighActionList(Page<HighActionVo> page,@RequestParam Map<String , Object> highAction){
         return R.ok().put("data" , iHighActionService.selectVoPage(page, highAction));
     }
 
     @GetMapping("/excel")
     @RequiresPermissions("highAction:excel")
     @ApiOperation(value="导出EXCEL", notes="导出EXCEL接口" , httpMethod = "GET" , response = R.class)
-    public R getHighActionExcel(Map<String , Object> highAction) throws IOException {
+    public R getHighActionExcel(@RequestParam Map<String , Object> highAction) {
         List<HighActionVo> highActions = iHighActionService.selectVoList(highAction);
 
-        for (HighActionVo d: highActions) {
-            d.initImages(basePath);
+        String key;
+
+        if (highAction.get("needImg") != null && Boolean.valueOf(highAction.get("needImg").toString())){
+            try {
+                key = new HighActionExcelService().exportExcel(basePath , highActions);
+            } catch (IOException e) {
+                throw new RRException("图片地址错误");
+            }
+        }else {
+            key = new HighActionExcelService().exportExcel(highActions);
         }
 
         return R.ok()
-                .put("key" , new HighActionExcelService().exportExcel(highActions));
+                .put("key" , key);
     }
 
     /**

@@ -5,6 +5,7 @@ import com.xg.cctv.excel.ExportExcelService;
 import com.xg.cctv.exception.RRException;
 import com.xg.cctv.mybatis.po.Customer;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,5 +23,10 @@ public class CustomerExcelService implements ExportExcelService<Customer>{
 
         String uuid = JxlsMap.xlsx(REPORT_TEMPLATE_PATH , model);
         return uuid;
+    }
+
+    @Override
+    public String exportExcel(String serverBaseFilePath, List<Customer> list) throws IOException {
+        return exportExcel(list);
     }
 }

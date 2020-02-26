@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,15 +70,17 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
             return queryWrapper;
         }
 
+        Map<String , Object> params = new HashMap<>();
+
         if (fillCreditLog.getTableCode() != null){
-            queryWrapper.like("table_code" , fillCreditLog.getTableCode());
+            params.put("tableCode" , fillCreditLog.getTableCode());
         }
 
         if (fillCreditLog.getCoinCode() != null){
-            queryWrapper.eq("coin_code" , fillCreditLog.getCoinCode());
+            params.put("coinCode" , fillCreditLog.getCoinCode());
         }
     
-        return queryWrapper;
+        return getQueryWrapper(queryWrapper , params);
     }
 
     public QueryWrapper<FillCreditLog> getQueryWrapper(QueryWrapper<FillCreditLog> queryWrapper, Map<String , Object> params){
@@ -87,11 +90,13 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
         }
 
         if (params.get("startDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
+            queryWrapper.ge(true , "create_time" , params.get("startDate"));
+            // queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
         }
 
         if (params.get("endDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
+            queryWrapper.le(true , "create_time" , params.get("endDate"));
+            // queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
         }
 
         if (params.get("tableCode") != null){

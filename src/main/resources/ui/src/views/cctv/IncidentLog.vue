@@ -67,9 +67,9 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <!--部门id--><!--TODO-->
+      <!--部门id-->
       <el-form-item :label="$t('cctv.department')">
-        <el-input v-model="q.departmentId" :placeholder="$t('cctv.pe_department')" />
+        <el-input v-model="q.departmentName" :placeholder="$t('cctv.pe_department')" />
       </el-form-item>
       <!--监控部-->
       <el-form-item :label="$t('cctv.monitor')">
@@ -264,19 +264,30 @@ const data = {
   remarks: null,
   urls: null
 }
+const queryData = {
+  needImg: true,
+  tableCode: null,
+  code: null,
+  coinCode: null,
+  report: null,
+  involveUid: null,
+  departmentName: null,
+  monitor: null,
+  remarks: null
+}
 export default {
   name: 'IncidentLog',
   components: { IncidentLogPage, MultipleImages },
   data() {
     return {
-      q: {},
+      q: deepClone(queryData),
       searchTime: [],
       departmentList: [],
       titleSubjectList: [], // 事件列表
       coinList: deepClone(coinList), // 币种列表
       empList: [], // 员工列表
       loading: false,
-      d: { urls: ''},
+      d: deepClone(data),
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
@@ -307,15 +318,15 @@ export default {
       let [startDate , endDate] = times
       if ( startDate && endDate){
         Object.assign(this.q , {
-          startTime: startDate,
-          endTime: endDate
+          startDate,
+          endDate
         })
       }
     }
   },
   methods: {
     resetQueryData() {
-      this.q = {}
+      this.q = deepClone(queryData)
     },
     reset(){
       if (this.$refs[this.formName] != null){

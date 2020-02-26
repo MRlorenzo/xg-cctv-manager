@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xg.cctv.common.dto.IncidentLogVo;
 import com.xg.cctv.common.util.ShiroUtils;
 import com.xg.cctv.excel.impl.IncidentLogExcelService;
+import com.xg.cctv.exception.RRException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -56,22 +57,27 @@ public class IncidentLogController {
             @ApiImplicitParam(name = "size", value = "每页显示条数，默认 10", required = false )
     })
     @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
-    public R getIncidentLogList(Page<IncidentLogVo> page, Map<String , Object> incidentLog){
+    public R getIncidentLogList(Page<IncidentLogVo> page,@RequestParam Map<String , Object> incidentLog){
         return R.ok().put("data" , iIncidentLogService.selectVoPage(page, incidentLog));
     }
 
     @GetMapping("/excel")
     @RequiresPermissions("incidentLog:excel")
     @ApiOperation(value="导出EXCEL", notes="导出EXCEL接口" , httpMethod = "GET" , response = R.class)
-    public R getIncidentLogExcel(Map<String , Object> incidentLog) throws IOException {
+    public R getIncidentLogExcel(@RequestParam Map<String , Object> incidentLog) {
         List<IncidentLogVo> incidentLogs = iIncidentLogService.selectVoList(incidentLog);
-
-        for (IncidentLogVo d: incidentLogs) {
-            d.initImages(basePath);
+        String key ;
+        if (incidentLog.get("needImg") != null && Boolean.valueOf(incidentLog.get("needImg").toString())){
+            try {
+                key = new IncidentLogExcelService().exportExcel(basePath , incidentLogs);
+            } catch (IOException e) {
+                throw new RRException("图片地址错误");
+            }
+        }else {
+            key = new IncidentLogExcelService().exportExcel(incidentLogs);
         }
-
         return R.ok()
-                .put("key" , new IncidentLogExcelService().exportExcel(incidentLogs));
+                .put("key" , key);
     }
 
     /**
