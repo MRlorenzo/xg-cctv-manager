@@ -105,7 +105,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: 'cctv-emp',
         password: '123456'
       },
       loginRules: {
