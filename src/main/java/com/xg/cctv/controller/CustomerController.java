@@ -36,7 +36,6 @@ public class CustomerController {
     @Autowired
     public CustomerService iCustomerService;
 
-
     /**
      * 分页查询数据
      *
