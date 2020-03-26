@@ -30,13 +30,6 @@ public class DailyLog extends Model<DailyLog> {
     private Long id;
 
     /**
-     * 序号
-     */
-    @NotBlank
-    @ApiModelProperty( value = "序号" , required=true)
-    private String no;
-
-    /**
      * 日期
      */
     @NotNull
@@ -119,14 +112,6 @@ public class DailyLog extends Model<DailyLog> {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
     }
 
     public Date getDate() {
@@ -234,7 +219,6 @@ public class DailyLog extends Model<DailyLog> {
     public String toString() {
         return "DailyLog{" +
         "id=" + id +
-        ", no=" + no +
         ", date=" + date +
         ", time=" + time +
         ", tableCode=" + tableCode +

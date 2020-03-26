@@ -12,8 +12,6 @@
         <result column="create_time" property="createTime" />
         <result column="department_id" property="departmentId" />
         <result column="description" property="description" />
-        <result column="no" property="no"/>
-        <result column="nick_name" property="nickName"/>
         <result column="nationality" property="nationality"/>
         <result column="avatar" property="avatar"/>
         <result column="hire_date" property="hireDate"/>
@@ -32,7 +30,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, username, password, status, create_user_id, create_time, department_id, description, no ,nick_name,nationality,avatar,hire_date
+        user_id, username, password, status, create_user_id, create_time, department_id, description,nationality,avatar,hire_date
     </sql>
 
     <select id="queryByUserName" resultMap="allInfo">

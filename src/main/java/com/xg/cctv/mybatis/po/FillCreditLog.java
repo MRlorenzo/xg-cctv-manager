@@ -37,12 +37,6 @@ public class FillCreditLog extends Model<FillCreditLog> {
     @ApiModelProperty( value = "1 加彩 2 缴码" , required=true)
     private Integer type;
 
-    /**
-     * 序列号
-     */
-    @NotBlank
-    @ApiModelProperty( value = "序列号" , required=true)
-    private String no;
 
     /**
      * 日期
@@ -115,14 +109,6 @@ public class FillCreditLog extends Model<FillCreditLog> {
 
     public void setType(Integer type) {
         this.type = type;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
     }
 
     public Date getDate() {
@@ -207,7 +193,6 @@ public class FillCreditLog extends Model<FillCreditLog> {
         return "FillCreditLog{" +
         "id=" + id +
         ", type=" + type +
-        ", no=" + no +
         ", date=" + date +
         ", tableCode=" + tableCode +
         ", total=" + total +

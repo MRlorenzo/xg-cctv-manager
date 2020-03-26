@@ -11,13 +11,7 @@
           :start-placeholder="$t('cctv.startDate')"
           :end-placeholder="$t('cctv.endDate')"
           value-format="yyyy-MM-dd"
-        >
-        </el-date-picker>
-      </el-form-item>
-
-      <!--序号-->
-      <el-form-item :label="$t('cctv.no')">
-        <el-input v-model="q.no" :placeholder="$t('cctv.pe_no')" />
+        />
       </el-form-item>
 
       <!--台号-->
@@ -33,8 +27,7 @@
             :key="c.id"
             :label="c.label"
             :value="c.code"
-          >
-          </el-option>
+          />
         </el-select>
       </el-form-item>
 
@@ -44,28 +37,28 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          {{$t('cctv.search')}}
+          {{ $t('cctv.search') }}
         </el-button>
       </el-form-item>
 
       <!-- 导出按钮 -->
       <el-form-item>
         <el-button type="info" @click="handleExcel">
-          {{$t('cctv.exportExcel')}}
+          {{ $t('cctv.exportExcel') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          {{$t('cctv.new')}}
+          {{ $t('cctv.new') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -78,11 +71,7 @@
     />
 
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
-        <!--序号-->
-        <el-form-item :label="$t('cctv.no')" prop="no">
-          <el-input v-model="d.no" :placeholder="$t('cctv.pe_no')" />
-        </el-form-item>
+      <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
         <!--日期-->
         <el-form-item :label="$t('cctv.date')">
 
@@ -101,10 +90,11 @@
           <el-col :span="11">
             <el-form-item prop="time">
               <el-time-picker
+                v-model="d.time"
                 :placeholder="$t('cctv.ps_time')"
                 value-format="HH:mm:ss"
-                v-model="d.time"
-                style="width: 100%;"/>
+                style="width: 100%;"
+              />
             </el-form-item>
           </el-col>
 
@@ -126,8 +116,7 @@
               :key="c.id"
               :label="c.label"
               :value="c.code"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
         <!--通知人-->
@@ -144,7 +133,7 @@
           {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
         <el-button type="primary" @click="confirm">
           {{ $t('cctv.confirm') }}
@@ -157,13 +146,12 @@
 
 <script>
 import FillPage from './components/FillPage'
-import {saveFillAndCredit , deleteFillAndCreditById , updateFillAndCredit , exportFillAndCreditExcel} from '@/api/fill-and-credit'
-import { downloadExcelByKey, deepClone } from "@/utils"
+import { saveFillAndCredit, deleteFillAndCreditById, updateFillAndCredit, exportFillAndCreditExcel } from '@/api/fill-and-credit'
+import { downloadExcelByKey, deepClone } from '@/utils'
 import coinList from './common/coin-list'
 import OPT_TYPE from './common/opt-type'
 const data = {
   type: OPT_TYPE.FILL, // 1.加彩 2.缴码
-  no: null,
   date: '',
   time: '',
   tableCode: null,
@@ -174,7 +162,6 @@ const data = {
 }
 const queryData = {
   type: OPT_TYPE.FILL,
-  no: null,
   tableCode: null,
   coinCode: null
 }
@@ -192,25 +179,24 @@ export default {
       dialogType: 'edit', // 'edit' or 'new'
       formName: 'form',
       rules: {
-        no: [{ required: true, trigger: 'blur' , message:'not null'}],
         date: [{ required: true, message: 'not null', trigger: 'blur' }],
-        time: [{ required: true, trigger: 'blur' , message:'not null'}],
-        tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
-        total: [{ required: true, trigger: 'blur' , message:'not null'}],
-        coinCode: [{ required: true, trigger: 'blur' , message:'not null'}],
-        alerterName: [{ required: true, trigger: 'blur' , message:'not null'}],
-        monitor: [{ required: true, trigger: 'blur' , message:'not null'}]
+        time: [{ required: true, trigger: 'blur', message: 'not null' }],
+        tableCode: [{ required: true, trigger: 'blur', message: 'not null' }],
+        total: [{ required: true, trigger: 'blur', message: 'not null' }],
+        coinCode: [{ required: true, trigger: 'blur', message: 'not null' }],
+        alerterName: [{ required: true, trigger: 'blur', message: 'not null' }],
+        monitor: [{ required: true, trigger: 'blur', message: 'not null' }]
       }
     }
   },
-  watch:{
-    searchTime( times ){
-      if (times == null){
+  watch: {
+    searchTime(times) {
+      if (times == null) {
         return
       }
-      let [startDate , endDate] = times
-      if ( startDate && endDate){
-        Object.assign(this.q , {
+      const [startDate, endDate] = times
+      if (startDate && endDate) {
+        Object.assign(this.q, {
           startDate,
           endDate
         })
@@ -221,8 +207,8 @@ export default {
     resetQueryData() {
       this.q = deepClone(queryData)
     },
-    reset(){
-      if (this.$refs[this.formName] != null){
+    reset() {
+      if (this.$refs[this.formName] != null) {
         this.$refs[this.formName].resetFields()
       }
       this.d = deepClone(data)
@@ -232,14 +218,14 @@ export default {
       this.showMark = true
       this.dialogType = 'new'
     },
-    async handleExcel(){
+    async handleExcel() {
       const res = await exportFillAndCreditExcel(this.q)
-      if (res.code === 0){
+      if (res.code === 0) {
         downloadExcelByKey(res.key)
       }
     },
     handleEdit(scope) {
-      let clone = deepClone(scope.row)
+      const clone = deepClone(scope.row)
       this.d = clone
       this.showMark = true
       this.dialogType = 'edit'
@@ -252,7 +238,7 @@ export default {
       })
         .then(async() => {
           const res = await deleteFillAndCreditById(row.id)
-          if (res.code === 0){
+          if (res.code === 0) {
             this.doSearch = true
             this.$message({
               type: 'success',
@@ -262,14 +248,14 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    async submit(){
+    async submit() {
       let res
-      if (this.d.id){
+      if (this.d.id) {
         res = await updateFillAndCredit(this.d)
-      }else {
+      } else {
         res = await saveFillAndCredit(this.d)
       }
-      if (res.code === 0){
+      if (res.code === 0) {
         this.showMark = false
         this.doSearch = true
         this.$message.success('提交成功')
@@ -278,11 +264,11 @@ export default {
     confirm() {
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          this.submit();
-        }else {
-          return false;
+          this.submit()
+        } else {
+          return false
         }
-      });
+      })
     }
   }
 }

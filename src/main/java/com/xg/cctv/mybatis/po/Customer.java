@@ -182,7 +182,7 @@ public class Customer extends Model<Customer> {
         ", cardNumber=" + cardNumber +
         ", location=" + location +
         ", avgBetting=" + avgBetting +
-        ", nationality:=" + nationality +
+        ", nationality=" + nationality +
         ", photo=" + photo +
         ", status=" + status +
         ", createUid=" + createUid +

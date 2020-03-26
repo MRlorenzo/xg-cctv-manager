@@ -5,7 +5,6 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.HighAction">
                 <id column="id" property="id" />
-                <result column="no" property="no" />
                 <result column="date" property="date" />
                 <result column="time" property="time"/>
                 <result column="table_code" property="tableCode" />
@@ -23,7 +22,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, no, date,time, table_code, code, coin_code, total, report, involve_uid, monitor, remarks, create_uid, create_time, urls
+        id, date,time, table_code, code, coin_code, total, report, involve_uid, monitor, remarks, create_uid, create_time, urls
     </sql>
 
     <sql id="VoTable">

@@ -31,13 +31,6 @@ public class HighAction extends Model<HighAction> {
     private Long id;
 
     /**
-     * 序号
-     */
-    @NotBlank
-    @ApiModelProperty( value = "序号" , required=true)
-    private String no;
-
-    /**
      * 日期
      */
     @NotNull
@@ -127,14 +120,6 @@ public class HighAction extends Model<HighAction> {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
     }
 
     public Date getDate() {
@@ -250,7 +235,6 @@ public class HighAction extends Model<HighAction> {
     public String toString() {
         return "HighAction{" +
         "id=" + id +
-        ", no=" + no +
         ", date=" + date +
         ", tableCode=" + tableCode +
         ", code=" + code +

@@ -39,7 +39,6 @@ CREATE TABLE `customer` (
 DROP TABLE IF EXISTS `daily_log`;
 CREATE TABLE `daily_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `no` varchar(64) DEFAULT NULL COMMENT '序号',
   `date` date DEFAULT NULL COMMENT '日期',
   `time` varchar(64) DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',
@@ -62,7 +61,6 @@ DROP TABLE IF EXISTS `fill_credit_log`;
 CREATE TABLE `fill_credit_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` int(11) DEFAULT '1' COMMENT '1 加彩 2 缴码',
-  `no` varchar(64) DEFAULT NULL COMMENT '序列号',
   `date` date DEFAULT NULL COMMENT '日期',
   `time` varchar(64) DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',
@@ -81,7 +79,6 @@ CREATE TABLE `fill_credit_log` (
 DROP TABLE IF EXISTS `high_action`;
 CREATE TABLE `high_action` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `no` varchar(64) DEFAULT NULL COMMENT '序号',
   `date` date DEFAULT NULL COMMENT '日期',
   `time` varchar(64) DEFAULT NULL COMMENT '时间',
   `table_code` varchar(32) DEFAULT NULL COMMENT '台号',

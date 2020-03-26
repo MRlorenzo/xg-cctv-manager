@@ -11,8 +11,7 @@
           :start-placeholder="$t('cctv.startDate')"
           :end-placeholder="$t('cctv.endDate')"
           value-format="yyyy-MM-dd"
-        >
-        </el-date-picker>
+        />
       </el-form-item>
 
       <!--台号-->
@@ -73,11 +72,7 @@
     />
 
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
-        <!--序号-->
-        <el-form-item :label="$t('cctv.no')" prop="no">
-          <el-input v-model="d.no" :placeholder="$t('cctv.pe_no')" />
-        </el-form-item>
+      <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
         <!--日期-->
         <el-form-item :label="$t('cctv.date')">
 
@@ -96,10 +91,11 @@
           <el-col :span="11">
             <el-form-item prop="time">
               <el-time-picker
+                v-model="d.time"
                 value-format="HH:mm:ss"
                 :placeholder="$t('cctv.ps_time')"
-                v-model="d.time"
-                style="width: 100%;"/>
+                style="width: 100%;"
+              />
             </el-form-item>
           </el-col>
 
@@ -128,8 +124,8 @@
               v-for="item in departmentList"
               :key="item.departmentId"
               :label="item.departmentCode"
-              :value="item.departmentId">
-            </el-option>
+              :value="item.departmentId"
+            />
           </el-select>
         </el-form-item>
         <!--监控部-->
@@ -143,7 +139,7 @@
 
         <!--图片-->
         <el-form-item :label="$t('cctv.image')">
-          <multiple-images :urls.sync="d.urls"/>
+          <multiple-images :urls.sync="d.urls" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -151,7 +147,7 @@
           {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
         <el-button type="primary" @click="confirm">
           {{ $t('cctv.confirm') }}
@@ -165,11 +161,10 @@
 <script>
 import DailyLogPage from './components/DailyLogPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
-import { saveDailyLog, exportDailyLogExcel, updateDailyLog ,deleteFormDailyLogById} from '@/api/daily-log'
-import { downloadExcelByKey, deepClone } from "@/utils"
+import { saveDailyLog, exportDailyLogExcel, updateDailyLog, deleteFormDailyLogById } from '@/api/daily-log'
+import { downloadExcelByKey, deepClone } from '@/utils'
 import { getDepartments } from '@/api/department'
 const data = {
-  no: null,
   date: '',
   time: '',
   tableCode: '',
@@ -202,42 +197,44 @@ export default {
       dialogType: 'edit', // 'edit' or 'new'
       formName: 'form',
       rules: {
-        no: [{ required: true, trigger: 'blur' , message:'not null'}],
         date: [{ required: true, message: 'not null', trigger: 'blur' }],
-        time: [{ required: true, trigger: 'blur' , message:'not null'}],
-        tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
-        subject: [{ required: true, trigger: 'blur' , message:'not null'}],
-        details: [{ required: true, trigger: 'blur' , message:'not null'}],
-        alerterName: [{ required: true, trigger: 'blur' , message:'not null'}],
+        time: [{ required: true, trigger: 'blur', message: 'not null' }],
+        tableCode: [{ required: true, trigger: 'blur', message: 'not null' }],
+        subject: [{ required: true, trigger: 'blur', message: 'not null' }],
+        details: [{ required: true, trigger: 'blur', message: 'not null' }],
+        alerterName: [{ required: true, trigger: 'blur', message: 'not null' }],
         departmentId: [
-          { required: true, trigger: 'blur' , message:'not null'},
-          { type: 'number', trigger: 'blur' , message:'必须是数字'}
+          { required: true, trigger: 'blur', message: 'not null' },
+          { type: 'number', trigger: 'blur', message: '必须是数字' }
         ],
-        monitor: [{ required: true, trigger: 'blur' , message:'not null'}],
-        conclusion: [{ required: true, trigger: 'blur' , message:'not null'}]
+        monitor: [{ required: true, trigger: 'blur', message: 'not null' }],
+        conclusion: [{ required: true, trigger: 'blur', message: 'not null' }]
       }
     }
   },
-  watch:{
-    searchTime( times ){
-      if (times == null){
+  watch: {
+    searchTime(times) {
+      if (times == null) {
         return
       }
-      let [startDate , endDate] = times
-      if ( startDate && endDate){
-        Object.assign(this.q , {
+      const [startDate, endDate] = times
+      if (startDate && endDate) {
+        Object.assign(this.q, {
           startDate,
           endDate
         })
       }
     }
   },
+  created() {
+    this.initDepartmentList()
+  },
   methods: {
     resetQueryData() {
       this.q = deepClone(queryData)
     },
-    reset(){
-      if (this.$refs[this.formName] != null){
+    reset() {
+      if (this.$refs[this.formName] != null) {
         this.$refs[this.formName].resetFields()
       }
       this.d = deepClone(data)
@@ -247,15 +244,15 @@ export default {
       this.showMark = true
       this.dialogType = 'new'
     },
-    async handleExcel(){
+    async handleExcel() {
       const res = await exportDailyLogExcel(this.q)
-      if (res.code === 0){
+      if (res.code === 0) {
         downloadExcelByKey(res.key)
       }
     },
     handleEdit(scope) {
-      let clone = deepClone(scope.row)
-      this.$set(this , 'd' , clone)
+      const clone = deepClone(scope.row)
+      this.$set(this, 'd', clone)
       this.showMark = true
       this.dialogType = 'edit'
     },
@@ -267,7 +264,7 @@ export default {
       })
         .then(async() => {
           const res = await deleteFormDailyLogById(row.id)
-          if (res.code === 0){
+          if (res.code === 0) {
             this.doSearch = true
             this.$message({
               type: 'success',
@@ -277,14 +274,14 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    async submit(){
+    async submit() {
       let res
-      if (this.d.id){
+      if (this.d.id) {
         res = await updateDailyLog(this.d)
-      }else {
+      } else {
         res = await saveDailyLog(this.d)
       }
-      if (res.code === 0){
+      if (res.code === 0) {
         this.showMark = false
         this.doSearch = true
         this.$message.success('提交成功')
@@ -293,21 +290,18 @@ export default {
     confirm() {
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          this.submit();
-        }else {
-          return false;
+          this.submit()
+        } else {
+          return false
         }
-      });
+      })
     },
-    async initDepartmentList(){
+    async initDepartmentList() {
       const res = await getDepartments()
-      if (res.code === 0){
+      if (res.code === 0) {
         this.departmentList = res.data
       }
     }
-  },
-  created(){
-    this.initDepartmentList()
   }
 }
 </script>

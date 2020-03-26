@@ -11,8 +11,7 @@
           :start-placeholder="$t('cctv.startDate')"
           :end-placeholder="$t('cctv.endDate')"
           value-format="yyyy-MM-dd"
-        >
-        </el-date-picker>
+        />
       </el-form-item>
 
       <!--台号-->
@@ -27,8 +26,7 @@
             :key="c.id"
             :label="c.label"
             :value="c.code"
-          >
-          </el-option>
+          />
         </el-select>
       </el-form-item>
       <!--编码-->
@@ -39,8 +37,7 @@
             :key="t.id"
             :label="t.code"
             :value="t.code"
-          >
-          </el-option>
+          />
         </el-select>
       </el-form-item>
 
@@ -53,13 +50,14 @@
           reserve-keyword
           :placeholder="$t('cctv.pe_key')"
           :remote-method="remoteMethod"
-          :loading="loading">
+          :loading="loading"
+        >
           <el-option
             v-for="emp in empList"
             :key="emp.userId"
             :label="emp.username"
-            :value="emp.userId">
-          </el-option>
+            :value="emp.userId"
+          />
         </el-select>
       </el-form-item>
       <!--监控部-->
@@ -77,28 +75,28 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          {{$t('cctv.search')}}
+          {{ $t('cctv.search') }}
         </el-button>
       </el-form-item>
 
       <!-- 导出按钮 -->
       <el-form-item>
         <el-button type="info" @click="handleExcel">
-          {{$t('cctv.exportExcel')}}
+          {{ $t('cctv.exportExcel') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          {{$t('cctv.new')}}
+          {{ $t('cctv.new') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -111,11 +109,11 @@
     />
 
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
-        <!--序号-->
-        <el-form-item :label="$t('cctv.no')" prop="no">
-          <el-input v-model="d.no" :placeholder="$t('cctv.pe_no')" />
-        </el-form-item>
+      <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
+        <!--&lt;!&ndash;序号&ndash;&gt;-->
+        <!--<el-form-item :label="$t('cctv.no')" prop="no">-->
+        <!--<el-input v-model="d.no" :placeholder="$t('cctv.pe_no')" />-->
+        <!--</el-form-item>-->
         <!--日期-->
         <el-form-item :label="$t('cctv.date')">
 
@@ -134,10 +132,11 @@
           <el-col :span="11">
             <el-form-item prop="time">
               <el-time-picker
+                v-model="d.time"
                 :placeholder="$t('cctv.ps_time')"
                 value-format="HH:mm:ss"
-                v-model="d.time"
-                style="width: 100%;"/>
+                style="width: 100%;"
+              />
             </el-form-item>
           </el-col>
 
@@ -154,8 +153,7 @@
               :key="t.id"
               :label="t.code"
               :value="t.code"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
         <!--币种-->
@@ -166,13 +164,12 @@
               :key="c.id"
               :label="c.label"
               :value="c.code"
-            >
-            </el-option>
+            />
           </el-select>
         </el-form-item>
         <!--金额-->
         <el-form-item :label="$t('cctv.total')" prop="total">
-          <el-input type="number" v-model="d.total" :placeholder="$t('cctv.pe_total')" />
+          <el-input v-model="d.total" type="number" :placeholder="$t('cctv.pe_total')" />
         </el-form-item>
         <!--上下水报告-->
         <el-form-item :label="$t('cctv.report')" prop="total">
@@ -187,13 +184,14 @@
             reserve-keyword
             :placeholder="$t('cctv.pe_key')"
             :remote-method="remoteMethod"
-            :loading="loading">
+            :loading="loading"
+          >
             <el-option
               v-for="emp in empList"
               :key="emp.userId"
               :label="emp.username"
-              :value="emp.userId">
-            </el-option>
+              :value="emp.userId"
+            />
           </el-select>
         </el-form-item>
         <!--监控部-->
@@ -206,7 +204,7 @@
         </el-form-item>
         <!--图片-->
         <el-form-item :label="$t('cctv.image')">
-          <multiple-images :urls.sync="d.urls"/>
+          <multiple-images :urls.sync="d.urls" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -214,7 +212,7 @@
           {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
         <el-button type="primary" @click="confirm">
           {{ $t('cctv.confirm') }}
@@ -227,13 +225,12 @@
 <script>
 import HighActionPage from './components/HighActionPage'
 import MultipleImages from '@/components/Upload/MultipleImages'
-import {saveHighAction , deleteHighAction , updateHighAction , exportHighActionExcel} from '@/api/high-action'
-import { downloadExcelByKey, deepClone } from "@/utils"
+import { saveHighAction, deleteHighAction, updateHighAction, exportHighActionExcel } from '@/api/high-action'
+import { downloadExcelByKey, deepClone } from '@/utils'
 import { getTtitleListItemList } from '@/api/title-liist-item'
 import coinList from './common/coin-list'
 import { findUserLikeName } from '@/api/user'
 const data = {
-  no: null,
   date: null,
   time: '',
   tableCode: null,
@@ -257,7 +254,7 @@ const queryData = {
 }
 export default {
   name: 'HighAction',
-  components: { HighActionPage , MultipleImages},
+  components: { HighActionPage, MultipleImages },
   data() {
     return {
       q: deepClone(queryData),
@@ -272,43 +269,46 @@ export default {
       dialogType: 'edit', // 'edit' or 'new'
       formName: 'form',
       rules: {
-        no: [{ required: true, trigger: 'blur' , message:'not null'}],
+        // no: [{ required: true, trigger: 'blur' , message:'not null'}],
         date: [{ required: true, message: 'not null', trigger: 'blur' }],
-        time: [{ required: true, trigger: 'blur' , message:'not null'}],
-        tableCode: [{ required: true, trigger: 'blur' , message:'not null'}],
-        code: [{ required: true, trigger: 'blur' , message:'not null'}],
-        coinCode: [{ required: true, trigger: 'blur' , message:'not null'}],
-        total: [{ required: true, trigger: 'blur' , message:'not null'}],
-        report: [{ required: true, trigger: 'blur' , message:'not null'}],
+        time: [{ required: true, trigger: 'blur', message: 'not null' }],
+        tableCode: [{ required: true, trigger: 'blur', message: 'not null' }],
+        code: [{ required: true, trigger: 'blur', message: 'not null' }],
+        coinCode: [{ required: true, trigger: 'blur', message: 'not null' }],
+        total: [{ required: true, trigger: 'blur', message: 'not null' }],
+        report: [{ required: true, trigger: 'blur', message: 'not null' }],
         involveUid: [
-          { required: true, trigger: 'blur' , message:'not null'},
-          { type: 'number', trigger: 'blur' , message:'必须是数字'}
+          { required: true, trigger: 'blur', message: 'not null' },
+          { type: 'number', trigger: 'blur', message: '必须是数字' }
         ],
-        monitor: [{ required: true, trigger: 'blur' , message:'not null'}],
-        remarks: [{ required: true, trigger: 'blur' , message:'not null'}],
+        monitor: [{ required: true, trigger: 'blur', message: 'not null' }],
+        remarks: [{ required: true, trigger: 'blur', message: 'not null' }]
       }
     }
   },
-  watch:{
-    searchTime( times ){
-      if (times == null){
+  watch: {
+    searchTime(times) {
+      if (times == null) {
         return
       }
-      let [startDate , endDate] = times
-      if ( startDate && endDate){
-        Object.assign(this.q , {
+      const [startDate, endDate] = times
+      if (startDate && endDate) {
+        Object.assign(this.q, {
           startDate,
           endDate
         })
       }
     }
   },
+  created() {
+    this.initTitleSubjectList()
+  },
   methods: {
     resetQueryData() {
       this.q = deepClone(queryData)
     },
-    reset(){
-      if (this.$refs[this.formName] != null){
+    reset() {
+      if (this.$refs[this.formName] != null) {
         this.$refs[this.formName].resetFields()
       }
       this.d = deepClone(data)
@@ -318,14 +318,14 @@ export default {
       this.showMark = true
       this.dialogType = 'new'
     },
-    async handleExcel(){
+    async handleExcel() {
       const res = await exportHighActionExcel(this.q)
-      if (res.code === 0){
+      if (res.code === 0) {
         downloadExcelByKey(res.key)
       }
     },
     handleEdit(scope) {
-      let clone = deepClone(scope.row)
+      const clone = deepClone(scope.row)
       this.d = clone
       this.showMark = true
       this.dialogType = 'edit'
@@ -338,7 +338,7 @@ export default {
       })
         .then(async() => {
           const res = await deleteHighAction(row.id)
-          if (res.code === 0){
+          if (res.code === 0) {
             this.doSearch = true
             this.$message({
               type: 'success',
@@ -348,14 +348,14 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    async submit(){
+    async submit() {
       let res
-      if (this.d.id){
+      if (this.d.id) {
         res = await updateHighAction(this.d)
-      }else {
+      } else {
         res = await saveHighAction(this.d)
       }
-      if (res.code === 0){
+      if (res.code === 0) {
         this.showMark = false
         this.doSearch = true
         this.$message.success('提交成功')
@@ -364,29 +364,26 @@ export default {
     confirm() {
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          this.submit();
-        }else {
-          return false;
+          this.submit()
+        } else {
+          return false
         }
-      });
+      })
     },
-    async initTitleSubjectList(){
+    async initTitleSubjectList() {
       const res = await getTtitleListItemList()
-      if (res.code === 0){
+      if (res.code === 0) {
         this.titleSubjectList = res.data
       }
     },
-    async remoteMethod( name ){
+    async remoteMethod(name) {
       this.loading = true
       const res = await findUserLikeName(name)
-      if (res.code === 0){
+      if (res.code === 0) {
         this.loading = false
         this.empList = res.data
       }
     }
-  },
-  created(){
-    this.initTitleSubjectList()
   }
 }
 </script>

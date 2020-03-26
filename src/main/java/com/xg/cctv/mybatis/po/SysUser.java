@@ -74,18 +74,6 @@ public class SysUser extends Model<SysUser> {
     private String description;
 
     /**
-     * 序号
-     */
-    @ApiModelProperty( value = "序号" )
-    private String no;
-
-    /**
-     * 姓名
-     */
-    @ApiModelProperty( value = "姓名" )
-    private String nickName;
-
-    /**
      * 国籍
      */
     @ApiModelProperty( value = "国籍" )
@@ -215,22 +203,6 @@ public class SysUser extends Model<SysUser> {
     @Override
     protected Serializable pkVal() {
         return this.userId;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
     }
 
     public String getNationality() {

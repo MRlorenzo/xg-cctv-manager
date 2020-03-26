@@ -3,7 +3,7 @@
 
     <el-form :inline="true">
 
-      <el-form-item >
+      <el-form-item>
         <el-input v-model="q.username" placeholder="User Name" />
       </el-form-item>
 
@@ -16,8 +16,7 @@
           :start-placeholder="$t('cctv.startDate')"
           :end-placeholder="$t('cctv.endDate')"
           value-format="yyyy-MM-dd"
-        >
-        </el-date-picker>
+        />
       </el-form-item>
 
       <el-form-item label="Status">
@@ -26,8 +25,8 @@
           :active-value="0"
           :inactive-value="1"
           :active-text="$t('cctv.disable')"
-          :inactive-text="$t('cctv.normal')">
-        </el-switch>
+          :inactive-text="$t('cctv.normal')"
+        />
       </el-form-item>
 
       <!--部门-->
@@ -37,26 +36,26 @@
             v-for="dep in departmentList"
             :key="dep.departmentId"
             :label="dep.departmentCode"
-            :value="dep.departmentId">
-          </el-option>
+            :value="dep.departmentId"
+          />
         </el-select>
       </el-form-item>
 
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          {{$t('cctv.search')}}
+          {{ $t('cctv.search') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
-        <el-button @click="resetQueryData" >
-          {{$t('cctv.reset')}}
+        <el-button @click="resetQueryData">
+          {{ $t('cctv.reset') }}
         </el-button>
       </el-form-item>
 
-      <el-form-item >
+      <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
           {{ $t('cctv.new') }}
@@ -69,24 +68,15 @@
       :query="q"
       :do-search.sync="doSearch"
       :handle-edit="handleEdit"
-      :handle-delete="handleDelete"/>
+      :handle-delete="handleDelete"
+    />
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit User':'New User'">
-      <el-form :model="user" :ref="formName" :rules="rules" label-width="80px" label-position="left">
-
-        <!--序号-->
-        <el-form-item :label="$t('cctv.no')" prop="no">
-          <el-input v-model="user.no" />
-        </el-form-item>
-
-        <!--姓名-->
-        <el-form-item :label="$t('cctv.name')" prop="nickName">
-          <el-input v-model="user.nickName" />
-        </el-form-item>
+      <el-form :ref="formName" :model="user" :rules="rules" label-width="80px" label-position="left">
 
         <!--工号||用户名-->
         <el-form-item :label="$t('cctv.workNo')" prop="username">
-          <el-input v-model="user.username"/>
+          <el-input v-model="user.username" />
         </el-form-item>
 
         <!--职位 || 角色-->
@@ -95,13 +85,14 @@
             v-model="user.roleIds"
             :multiple="true"
             value-key="id"
-            :placeholder="$t('cctv.position')">
+            :placeholder="$t('cctv.position')"
+          >
             <el-option
               v-for="role in rolesList"
               :key="role.id"
               :label="role.name"
-              :value="role.id">
-            </el-option>
+              :value="role.id"
+            />
           </el-select>
         </el-form-item>
 
@@ -112,8 +103,8 @@
               v-for="dep in departmentList"
               :key="dep.departmentId"
               :label="dep.departmentCode"
-              :value="dep.departmentId">
-            </el-option>
+              :value="dep.departmentId"
+            />
           </el-select>
         </el-form-item>
 
@@ -133,12 +124,12 @@
 
         <!--照片-->
         <el-form-item :label="$t('cctv.image')">
-          <avatar-image :url.sync="user.avatar"/>
+          <avatar-image :url.sync="user.avatar" />
         </el-form-item>
 
         <!--密码-->
         <el-form-item :label="$t('login.password')" prop="password">
-          <el-input type="password" v-model="user.password" placeholder="Password" />
+          <el-input v-model="user.password" type="password" placeholder="Password" />
         </el-form-item>
 
         <!--状态  0：禁用   1：正常-->
@@ -148,8 +139,8 @@
             :active-value="0"
             :inactive-value="1"
             :active-text="$t('cctv.disable')"
-            :inactive-text="$t('cctv.normal')">
-          </el-switch>
+            :inactive-text="$t('cctv.normal')"
+          />
         </el-form-item>
 
         <!-- 描述-->
@@ -168,7 +159,7 @@
           {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
         <el-button type="primary" @click="confirm">
           {{ $t('cctv.confirm') }}
@@ -184,176 +175,172 @@
 </template>
 
 <script>
-  import { deepClone } from '@/utils'
-  import { delUser, updateUser , addUser} from "@/api/user";
-  import { getRoles } from '@/api/role'
-  import { getDepartments } from '@/api/department'
-  import BackToTop from '@/components/BackToTop'
-  import UserPage from './components/UserPage'
-  import AvatarImage from '@/components/Upload/AvatarImage'
+import { deepClone } from '@/utils'
+import { delUser, updateUser, addUser } from '@/api/user'
+import { getRoles } from '@/api/role'
+import { getDepartments } from '@/api/department'
+import BackToTop from '@/components/BackToTop'
+import UserPage from './components/UserPage'
+import AvatarImage from '@/components/Upload/AvatarImage'
 
-  const defaultUser = {
-    no: null,
-    nickName: null,
-    username: '',
-    password: '',
-    hireDate: null,
-    status: 1,
-    nationality: null,
-    description: '',
-    departmentId: 1,
-    roles: []
-  }
+const defaultUser = {
+  username: '',
+  password: '',
+  hireDate: null,
+  status: 1,
+  nationality: null,
+  description: '',
+  departmentId: 1,
+  roles: []
+}
 
-  const defaultQueryData = {
-    username: null,
-    startTime: null,
-    endTime: null,
-    status: 1,
-    departmentId: null
-  }
+const defaultQueryData = {
+  username: null,
+  startTime: null,
+  endTime: null,
+  status: 1,
+  departmentId: null
+}
 
-  export default {
-    name: "users",
-    components: { BackToTop , UserPage, AvatarImage},
-    data(){
-      return {
-        user: Object.assign({} ,defaultUser),
-        doSearch: true,
-        dialogVisible: false,
-        dialogType: 'new',
-        queryText: '',
-        departmentList: [],
-        rolesList: [],
-        roleIds: [],
-        // 查询参数
-        q: Object.assign({} , defaultQueryData),
-        searchTime: [],
-        formName: 'form',
-        rules: {
-          no: [{ required: true, trigger: 'blur' , message:'not null'}],
-          nickName: [{ required: true, trigger: 'blur' , message:'not null'}],
-          username: [{ required: true, trigger: 'blur' , message:'not null'}],
-          password: [{ required: true, trigger: 'blur' , message:'not null'}],
-          hireDate: [{ required: true, trigger: 'blur' , message:'not null'}],
-          status: [{ required: true, trigger: 'blur' , message:'not null'}],
-          nationality: [{ required: true, trigger: 'blur' , message:'not null'}],
-          departmentId: [{ required: true, trigger: 'blur' , message:'not null'}],
-          roleIds: [{ required: true, trigger: 'blur' , message:'not null'}]
-        },
-        // customizable button style, show/hide critical point, return position
-        myBackToTopStyle: {
-          right: '50px',
-          bottom: '50px',
-          width: '40px',
-          height: '40px',
-          'border-radius': '4px',
-          'line-height': '45px', // 请保持与高度一致以垂直居中 Please keep consistent with height to center vertically
-          background: '#e7eaf1'// 按钮的背景颜色 The background color of the button
-        }
-      }
-    },
-
-    watch:{
-      searchTime( times ){
-        if (times == null){
-          return
-        }
-        let [startDate , endDate] = times
-        if ( startDate && endDate){
-          Object.assign(this.q , {
-            startTime: startDate,
-            endTime: endDate
-          })
-        }
-      }
-    },
-    created(){
-      this.getRoles()
-      this.getDepartments()
-    },
-    methods: {
-      reset(){
-        if (this.$refs[this.formName] != null){
-          this.$refs[this.formName].resetFields()
-        }
-        this.user = deepClone(defaultUser)
+export default {
+  name: 'Users',
+  components: { BackToTop, UserPage, AvatarImage },
+  data() {
+    return {
+      user: Object.assign({}, defaultUser),
+      doSearch: true,
+      dialogVisible: false,
+      dialogType: 'new',
+      queryText: '',
+      departmentList: [],
+      rolesList: [],
+      roleIds: [],
+      // 查询参数
+      q: Object.assign({}, defaultQueryData),
+      searchTime: [],
+      formName: 'form',
+      rules: {
+        username: [{ required: true, trigger: 'blur', message: 'not null' }],
+        password: [{ required: true, trigger: 'blur', message: 'not null' }],
+        hireDate: [{ required: true, trigger: 'blur', message: 'not null' }],
+        status: [{ required: true, trigger: 'blur', message: 'not null' }],
+        nationality: [{ required: true, trigger: 'blur', message: 'not null' }],
+        departmentId: [{ required: true, trigger: 'blur', message: 'not null' }],
+        roleIds: [{ required: true, trigger: 'blur', message: 'not null' }]
       },
-      async getRoles() {
-        const res = await getRoles()
-        this.rolesList = res.data
-      },
-      async getDepartments(){
-        const res = await getDepartments()
-        this.departmentList = res.data
-      },
-      handleAdd(){
-        this.user.roleIds = [];
-        this.user = Object.assign({}, defaultUser)
-        this.dialogType = 'new'
-        this.dialogVisible = true
-      },
-      handleEdit( scope ){
-        this.dialogType = 'edit'
-        this.dialogVisible = true
-        let cloneUser = deepClone(scope.row)
-        // 此处不需要传routes,department
-        cloneUser.routes = null
-        cloneUser.department = null
-        cloneUser.password = ''
-        cloneUser.freePwd = ''
-        if (Array.isArray(cloneUser.roles)){
-          cloneUser.roleIds = cloneUser.roles.map(role=>role.id)
-        }
-        this.user = cloneUser
-      },
-      handleDelete({ $index, row }){
-        this.$confirm('Confirm to remove the User?', 'Warning', {
-          confirmButtonText: 'Confirm',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        })
-          .then(async() => {
-            const res = await delUser(row.userId)
-            if (res.code === 0){
-              this.doSearch = true
-              this.$message({
-                type: 'success',
-                message: 'Delete succed!'
-              })
-            }
-          })
-          .catch(err => { console.error(err) })
-      },
-      async submit(){
-        let res
-        this.user.roles = this.user.roleIds.map(id=>({id}))
-        if (this.user.id){
-          res = await updateUser(this.user)
-        }else {
-          res = await addUser(this.user)
-        }
-        if (res.code === 0){
-          this.dialogVisible = false
-          this.doSearch = true
-          this.$message.success('提交成功')
-        }
-      },
-      confirm() {
-        this.$refs[this.formName].validate((valid) => {
-          if (valid) {
-            this.submit();
-          }else {
-            return false;
-          }
-        });
-      },
-      resetQueryData(){
-        this.q = Object.assign({} , defaultQueryData)
-        this.searchTime = []
+      // customizable button style, show/hide critical point, return position
+      myBackToTopStyle: {
+        right: '50px',
+        bottom: '50px',
+        width: '40px',
+        height: '40px',
+        'border-radius': '4px',
+        'line-height': '45px', // 请保持与高度一致以垂直居中 Please keep consistent with height to center vertically
+        background: '#e7eaf1'// 按钮的背景颜色 The background color of the button
       }
     }
+  },
+
+  watch: {
+    searchTime(times) {
+      if (times == null) {
+        return
+      }
+      const [startDate, endDate] = times
+      if (startDate && endDate) {
+        Object.assign(this.q, {
+          startTime: startDate,
+          endTime: endDate
+        })
+      }
+    }
+  },
+  created() {
+    this.getRoles()
+    this.getDepartments()
+  },
+  methods: {
+    reset() {
+      if (this.$refs[this.formName] != null) {
+        this.$refs[this.formName].resetFields()
+      }
+      this.user = deepClone(defaultUser)
+    },
+    async getRoles() {
+      const res = await getRoles()
+      this.rolesList = res.data
+    },
+    async getDepartments() {
+      const res = await getDepartments()
+      this.departmentList = res.data
+    },
+    handleAdd() {
+      this.user.roleIds = []
+      this.user = Object.assign({}, defaultUser)
+      this.dialogType = 'new'
+      this.dialogVisible = true
+    },
+    handleEdit(scope) {
+      this.dialogType = 'edit'
+      this.dialogVisible = true
+      const cloneUser = deepClone(scope.row)
+      // 此处不需要传routes,department
+      cloneUser.routes = null
+      cloneUser.department = null
+      cloneUser.password = ''
+      cloneUser.freePwd = ''
+      if (Array.isArray(cloneUser.roles)) {
+        cloneUser.roleIds = cloneUser.roles.map(role => role.id)
+      }
+      this.user = cloneUser
+    },
+    handleDelete({ $index, row }) {
+      this.$confirm('Confirm to remove the User?', 'Warning', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      })
+        .then(async() => {
+          const res = await delUser(row.userId)
+          if (res.code === 0) {
+            this.doSearch = true
+            this.$message({
+              type: 'success',
+              message: 'Delete succed!'
+            })
+          }
+        })
+        .catch(err => { console.error(err) })
+    },
+    async submit() {
+      let res
+      this.user.roles = this.user.roleIds.map(id => ({ id }))
+      if (this.user.id) {
+        res = await updateUser(this.user)
+      } else {
+        res = await addUser(this.user)
+      }
+      if (res.code === 0) {
+        this.dialogVisible = false
+        this.doSearch = true
+        this.$message.success('提交成功')
+      }
+    },
+    confirm() {
+      this.$refs[this.formName].validate((valid) => {
+        if (valid) {
+          this.submit()
+        } else {
+          return false
+        }
+      })
+    },
+    resetQueryData() {
+      this.q = Object.assign({}, defaultQueryData)
+      this.searchTime = []
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

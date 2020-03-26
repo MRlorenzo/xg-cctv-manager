@@ -6,7 +6,6 @@
     <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.FillCreditLog">
                 <id column="id" property="id" />
                 <result column="type" property="type" />
-                <result column="no" property="no" />
                 <result column="date" property="date" />
                 <result column="time" property="time"/>
                 <result column="table_code" property="tableCode" />
@@ -20,6 +19,6 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, type, no, date,time, table_code, total, coin_code, alerter_name, monitor, create_uid, create_time
+        id, type, date,time, table_code, total, coin_code, alerter_name, monitor, create_uid, create_time
     </sql>
 </mapper>
