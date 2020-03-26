@@ -189,6 +189,7 @@ const defaultUser = {
   hireDate: null,
   status: 1,
   nationality: null,
+  avatar: '',
   description: '',
   departmentId: 1,
   roles: []

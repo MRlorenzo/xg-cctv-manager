@@ -17,8 +17,8 @@
           :active-value="0"
           :inactive-value="1"
           :active-text="$t('cctv.disable')"
-          :inactive-text="$t('cctv.normal')">
-        </el-switch>
+          :inactive-text="$t('cctv.normal')"
+        />
       </el-form-item>
 
     </el-form>
@@ -27,28 +27,28 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          {{$t('cctv.search')}}
+          {{ $t('cctv.search') }}
         </el-button>
       </el-form-item>
 
       <!-- 导出按钮 -->
       <el-form-item>
         <el-button type="info" @click="handleExcel">
-          {{$t('cctv.exportExcel')}}
+          {{ $t('cctv.exportExcel') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          {{$t('cctv.new')}}
+          {{ $t('cctv.new') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -61,7 +61,7 @@
     />
 
     <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
+      <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
         <!--名称-->
         <el-form-item :label="$t('cctv.name')" prop="name">
           <el-input v-model="d.name" :placeholder="$t('cctv.pe_name')" />
@@ -84,12 +84,12 @@
         </el-form-item>
         <!--照片-->
         <el-form-item :label="$t('cctv.image')">
-          <avatar-image :url.sync="d.imageUrl"/>
+          <avatar-image :url.sync="d.photo" />
         </el-form-item>
         <!--状态-->
         <el-form-item :label="$t('cctv.status')">
-          <el-radio v-model="d.status" :label="0" border>{{$t('cctv.disable')}}</el-radio>
-          <el-radio v-model="d.status" :label="1" border>{{$t('cctv.normal')}}</el-radio>
+          <el-radio v-model="d.status" :label="0" border>{{ $t('cctv.disable') }}</el-radio>
+          <el-radio v-model="d.status" :label="1" border>{{ $t('cctv.normal') }}</el-radio>
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
@@ -97,7 +97,7 @@
           {{ $t('cctv.cancel') }}
         </el-button>
         <el-button type="info" @click="reset">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
         <el-button type="primary" @click="confirm">
           {{ $t('cctv.confirm') }}
@@ -111,15 +111,15 @@
 <script>
 import CustomerPage from './components/CustomerPage'
 import AvatarImage from '@/components/Upload/AvatarImage'
-import {saveCustomer , deleteCustomerById , updateCustomer , exportCustomerExcel} from '@/api/customer'
-import { downloadExcelByKey, deepClone } from "@/utils"
+import { saveCustomer, deleteCustomerById, updateCustomer, exportCustomerExcel } from '@/api/customer'
+import { downloadExcelByKey, deepClone } from '@/utils'
 const data = {
   name: null,
   cardNumber: null,
   location: null,
   avgBetting: null,
   nationality: null,
-  imageUrl: '',
+  photo: '',
   status: 0
 }
 const queryData = {
@@ -129,7 +129,7 @@ const queryData = {
 }
 export default {
   name: 'Customer',
-  components: { CustomerPage , AvatarImage},
+  components: { CustomerPage, AvatarImage },
   data() {
     return {
       q: deepClone(queryData),
@@ -139,12 +139,12 @@ export default {
       dialogType: 'edit', // 'edit' or 'new'
       formName: 'form',
       rules: {
-        name: [{ required: true, trigger: 'blur' , message:'not null'}],
-        cardNumber: [{ required: true, trigger: 'blur' , message:'not null'}],
-        location: [{ required: true, trigger: 'blur' , message:'not null'}],
-        avgBetting: [{ required: true, trigger: 'blur' , message:'not null'}],
-        nationality: [{ required: true, trigger: 'blur' , message:'not null'}],
-        status: [{ required: true, trigger: 'blur' , message:'not null'}]
+        name: [{ required: true, trigger: 'blur', message: 'not null' }],
+        cardNumber: [{ required: true, trigger: 'blur', message: 'not null' }],
+        location: [{ required: true, trigger: 'blur', message: 'not null' }],
+        avgBetting: [{ required: true, trigger: 'blur', message: 'not null' }],
+        nationality: [{ required: true, trigger: 'blur', message: 'not null' }],
+        status: [{ required: true, trigger: 'blur', message: 'not null' }]
       }
     }
   },
@@ -152,8 +152,8 @@ export default {
     resetQueryData() {
       this.q = deepClone(queryData)
     },
-    reset(){
-      if (this.$refs[this.formName] != null){
+    reset() {
+      if (this.$refs[this.formName] != null) {
         this.$refs[this.formName].resetFields()
       }
       this.d = deepClone(data)
@@ -163,14 +163,14 @@ export default {
       this.showMark = true
       this.dialogType = 'new'
     },
-    async handleExcel(){
+    async handleExcel() {
       const res = await exportCustomerExcel(this.q)
-      if (res.code === 0){
+      if (res.code === 0) {
         downloadExcelByKey(res.key)
       }
     },
     handleEdit(scope) {
-      let clone = deepClone(scope.row)
+      const clone = deepClone(scope.row)
       this.d = clone
       this.showMark = true
       this.dialogType = 'edit'
@@ -183,7 +183,7 @@ export default {
       })
         .then(async() => {
           const res = await deleteCustomerById(row.id)
-          if (res.code === 0){
+          if (res.code === 0) {
             this.doSearch = true
             this.$message({
               type: 'success',
@@ -193,14 +193,14 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    async submit(){
+    async submit() {
       let res
-      if (this.d.id){
+      if (this.d.id) {
         res = await updateCustomer(this.d)
-      }else {
+      } else {
         res = await saveCustomer(this.d)
       }
-      if (res.code === 0){
+      if (res.code === 0) {
         this.showMark = false
         this.doSearch = true
         this.$message.success('提交成功')
@@ -209,11 +209,11 @@ export default {
     confirm() {
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
-          this.submit();
-        }else {
-          return false;
+          this.submit()
+        } else {
+          return false
         }
-      });
+      })
     }
   }
 }

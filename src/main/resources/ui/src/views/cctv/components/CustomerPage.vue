@@ -34,7 +34,11 @@
       <!--照片-->
       <el-table-column align="center" :label="$t('cctv.image')">
         <template slot-scope="scope">
-          {{ scope.row.photo }}
+          <el-image
+            style="width: 100px; height: 100px"
+            :src="getUrls(scope.row.photo )[0]"
+            :preview-src-list="getUrls(scope.row.urls)"
+          />
         </template>
       </el-table-column>
       <!--状态-->
@@ -148,6 +152,14 @@ export default {
     },
     handleCurrentChange(val) {
       this.currPage = val
+    },
+    getUrls(urlsText) {
+      if (typeof urlsText !== 'string') {
+        return []
+      }
+      return urlsText.split(',').map(url => {
+        return 'file' + url
+      })
     }
   }
 }
