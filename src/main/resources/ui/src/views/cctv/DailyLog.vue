@@ -111,7 +111,7 @@
         </el-form-item>
         <!--细节-->
         <el-form-item :label="$t('cctv.details')" prop="details">
-          <el-input v-model="d.details" :placeholder="$t('cctv.pe_details')" />
+          <el-input v-model="d.details" type="textarea" :placeholder="$t('cctv.pe_details')" />
         </el-form-item>
         <!--通知人-->
         <el-form-item :label="$t('cctv.alerterName')" prop="alerterName">

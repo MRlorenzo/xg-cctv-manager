@@ -24,7 +24,7 @@ import java.util.*;
 public class MybatisPlusGenerator {
 
     // 项目根目录
-    private static final String PROJECT_PATH = "D:\\docs\\works\\idea\\xg-cctv-manager";
+    private static final String PROJECT_PATH = "/Users/mac/work/IdeaProjects/Start/cctv";
     // 包名
     private static final String PROJECT_ROOT_PACKAGE = "com.xg.cctv";
     // ModuleName

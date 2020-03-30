@@ -15,10 +15,11 @@
                 <result column="monitor" property="monitor" />
                 <result column="create_uid" property="createUid" />
                 <result column="create_time" property="createTime" />
+                <result column="cage_number" property="cageNumber" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, type, date,time, table_code, total, coin_code, alerter_name, monitor, create_uid, create_time
+        id, type, date,time, table_code, total, coin_code, alerter_name, monitor, create_uid, create_time, cage_number
     </sql>
 </mapper>

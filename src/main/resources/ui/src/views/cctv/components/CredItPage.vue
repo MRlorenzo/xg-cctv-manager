@@ -1,6 +1,12 @@
 <template>
   <div>
     <el-table :data="dataList" height="500" border>
+      <!--序号-->
+      <el-table-column align="center" :label="$t('cctv.no')">
+        <template slot-scope="scope">
+          {{ scope.row.id }}
+        </template>
+      </el-table-column>
       <!--日期-->
       <el-table-column align="center" :label="$t('cctv.date')">
         <template slot-scope="scope">
@@ -41,6 +47,12 @@
       <el-table-column align="center" :label="$t('cctv.monitor')">
         <template slot-scope="scope">
           {{ scope.row.monitor }}
+        </template>
+      </el-table-column>
+      <!--账房编号-->
+      <el-table-column align="center" :label="$t('cctv.cageNumber')">
+        <template slot-scope="scope">
+          {{ scope.row.cageNumber }}
         </template>
       </el-table-column>
 

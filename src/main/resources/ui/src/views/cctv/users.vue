@@ -83,7 +83,6 @@
         <el-form-item :label="$t('cctv.position')" prop="roleIds">
           <el-select
             v-model="user.roleIds"
-            :multiple="true"
             value-key="id"
             :placeholder="$t('cctv.position')"
           >

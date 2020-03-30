@@ -1,6 +1,12 @@
 <template>
   <div>
     <el-table :data="dataList" height="500" border>
+      <!--序号-->
+      <el-table-column align="center" :label="$t('cctv.no')">
+        <template slot-scope="scope">
+          {{ scope.row.id }}
+        </template>
+      </el-table-column>
       <!--日期-->
       <el-table-column align="center" :label="$t('cctv.date')">
         <template slot-scope="scope">

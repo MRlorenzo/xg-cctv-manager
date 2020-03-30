@@ -126,6 +126,10 @@
         <el-form-item :label="$t('cctv.monitor')" prop="monitor">
           <el-input v-model="d.monitor" :placeholder="$t('cctv.pe_monitor')" />
         </el-form-item>
+        <!--账房编号-->
+        <el-form-item :label="$t('cctv.cageNumber')" prop="cageNumber">
+          <el-input v-model="d.cageNumber" :placeholder="$t('cctv.pe_cageNumber')" />
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="showMark=false">
@@ -157,7 +161,8 @@ const data = {
   total: null,
   coinCode: null,
   alerterName: null,
-  monitor: null
+  monitor: null,
+  cageNumber: null
 }
 const queryData = {
   type: OPT_TYPE.CREDIT,
@@ -184,7 +189,8 @@ export default {
         total: [{ required: true, trigger: 'blur', message: 'not null' }],
         coinCode: [{ required: true, trigger: 'blur', message: 'not null' }],
         alerterName: [{ required: true, trigger: 'blur', message: 'not null' }],
-        monitor: [{ required: true, trigger: 'blur', message: 'not null' }]
+        monitor: [{ required: true, trigger: 'blur', message: 'not null' }],
+        cageNumber: [{ required: true, trigger: 'blur', message: 'not null' }]
       }
     }
   },

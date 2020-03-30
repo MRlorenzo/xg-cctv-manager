@@ -147,7 +147,7 @@
         </el-form-item>
         <!--编码-->
         <el-form-item :label="$t('cctv.eventCode')" prop="code">
-          <el-select v-model="d.code" filterable :placeholder="$t('cctv.ps_eventCode')">
+          <el-select v-model="d.code" filterable :placeholder="$t('cctv.ps_eventCode')" @change="selectGet">
             <el-option
               v-for="t in titleSubjectList"
               :key="t.id"
@@ -155,6 +155,10 @@
               :value="t.code"
             />
           </el-select>
+        </el-form-item>
+        <!--事件主题-->
+        <el-form-item :label="$t('cctv.subject')">
+          <el-input v-model="d._subjectTitle" readonly />
         </el-form-item>
         <!--币种-->
         <el-form-item :label="$t('cctv.coinType')" prop="coinCode">
@@ -173,7 +177,7 @@
         </el-form-item>
         <!--上下水报告-->
         <el-form-item :label="$t('cctv.report')" prop="total">
-          <el-input v-model="d.report" :placeholder="$t('cctv.pe_report')" />
+          <el-input v-model="d.report" type="textarea" :placeholder="$t('cctv.pe_report')" />
         </el-form-item>
         <!--涉及员工-->
         <el-form-item :label="$t('cctv.involveEmp')" prop="involveUid">
@@ -241,7 +245,8 @@ const data = {
   involveUid: null,
   monitor: null,
   remarks: null,
-  urls: ''
+  urls: '',
+  _subjectTitle: null
 }
 const queryData = {
   needImg: true,
@@ -383,6 +388,14 @@ export default {
         this.loading = false
         this.empList = res.data
       }
+    },
+    // 下拉框选中事件
+    selectGet(vlaue) {
+      let obj = {}
+      obj = this.titleSubjectList.find((item) => {
+        return item.code === vlaue// 筛选出匹配数据
+      })
+      this.d._subjectTitle = obj.text
     }
   }
 }

@@ -94,6 +94,12 @@ public class FillCreditLog extends Model<FillCreditLog> {
      */
     private Date createTime;
 
+    /**
+     * 账房编号
+     */
+    @ApiModelProperty( value = "账房编号" , required=true)
+    private String cageNumber;
+
 
     public Long getId() {
         return id;
@@ -183,6 +189,14 @@ public class FillCreditLog extends Model<FillCreditLog> {
         this.createTime = createTime;
     }
 
+    public String getCageNumber() {
+        return cageNumber;
+    }
+
+    public void setCageNumber(String cageNumber) {
+        this.cageNumber = cageNumber;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -201,6 +215,7 @@ public class FillCreditLog extends Model<FillCreditLog> {
         ", monitor=" + monitor +
         ", createUid=" + createUid +
         ", createTime=" + createTime +
+        ", cageNumber=" + cageNumber +
         "}";
     }
 }

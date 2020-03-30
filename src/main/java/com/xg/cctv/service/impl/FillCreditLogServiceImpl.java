@@ -106,6 +106,10 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
         if (params.get("coinCode") != null){
             queryWrapper.eq("coin_code" , params.get("coinCode"));
         }
+
+        if (params.get("type") != null){
+            queryWrapper.eq("type" , params.get("type"));
+        }
         return queryWrapper;
     }
 }
