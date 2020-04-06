@@ -30,6 +30,13 @@ public interface IncidentLogService extends IService<IncidentLog> ,VoService<Inc
     IPage<IncidentLog> selectPage(Page<IncidentLog> page,Map<String , Object> params);
 
     /**
+     * 分页查询
+     * @param page
+     * @param params
+     * @return
+     */
+    IPage<IncidentLogVo> selectAllPage(Page<IncidentLogVo> page,Map<String , Object> params);
+    /**
      * 查询所有
      * @param incidentLog
      */

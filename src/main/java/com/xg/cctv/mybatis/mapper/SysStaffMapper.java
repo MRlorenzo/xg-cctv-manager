@@ -4,21 +4,23 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xg.cctv.common.dto.IncidentLogVo;
-import com.xg.cctv.common.dto.VoMapper;
-import com.xg.cctv.mybatis.po.IncidentLog;
+import com.xg.cctv.mybatis.po.SysStaff;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xg.cctv.mybatis.po.SysUser;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
- * 西港监控部事件报告表 Mapper 接口
+ * 员工表 Mapper 接口
  * </p>
  *
  * @author lorenzo
- * @since 2020-02-05
+ * @since 2020-04-04
  */
-public interface IncidentLogMapper extends BaseMapper<IncidentLog>,VoMapper<IncidentLogVo> {
+public interface SysStaffMapper extends BaseMapper<SysStaff> {
 
     /**
      * 分页查询
@@ -26,6 +28,12 @@ public interface IncidentLogMapper extends BaseMapper<IncidentLog>,VoMapper<Inci
      * @param queryWrapper
      * @return
      */
-    IPage<IncidentLogVo> selectAllPage(Page<IncidentLogVo> page, @Param(Constants.WRAPPER) Wrapper<IncidentLogVo> queryWrapper);
+    IPage<SysStaff> selectAllInfoPage(Page<SysStaff> page, @Param(Constants.WRAPPER) Wrapper<SysStaff> queryWrapper);
 
+    /**
+     * 根据用户id查询角色列表
+     * @param params
+     * @return
+     */
+    List<SysStaff> queryStaffsById( Map<String, Object> params);
 }

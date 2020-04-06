@@ -5,21 +5,21 @@
       <el-form-item>
         <!-- 搜索按钮 -->
         <el-button type="primary" @click="doSearch = true">
-          {{$t('cctv.search')}}
+          {{ $t('cctv.search') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 重置按钮 -->
         <el-button @click="resetQueryData">
-          {{$t('cctv.reset')}}
+          {{ $t('cctv.reset') }}
         </el-button>
       </el-form-item>
 
       <el-form-item>
         <!-- 新增用户按钮 -->
         <el-button type="info" @click="handleAdd">
-          {{$t('cctv.new')}}
+          {{ $t('cctv.new') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -31,8 +31,8 @@
       :handle-delete="handleDelete"
     />
 
-    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
-      <el-form :model="d" :ref="formName" :rules="rules" label-width="80px" label-position="left">
+    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit Title List':'New Title List'">
+      <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
 
         <!--主题id-->
         <el-form-item :label="$t('cctv.subject')" prop="subjectId">
@@ -41,8 +41,8 @@
               v-for="item in mainList"
               :key="item.id"
               :label="item.subject"
-              :value="item.id">
-            </el-option>
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
 
@@ -71,8 +71,8 @@
 <script>
 import TitleListPage from './components/TitleListPage'
 import { getTtitleMainList } from '@/api/title-main'
-import {saveTitleListItem , deleteTtitleListItemById , updateTtitleListItem} from '@/api/title-liist-item'
-import {deepClone} from "@/utils";
+import { saveTitleListItem, deleteTtitleListItemById, updateTtitleListItem } from '@/api/title-liist-item'
+import { deepClone } from '@/utils'
 
 export default {
   name: 'TitleList',
@@ -88,13 +88,16 @@ export default {
       formName: 'form',
       rules: {
         subjectId: [
-          { required: true, trigger: 'blur' , message: 'not null'},
-          { type: 'number', trigger: 'blur' , message: '必须是数字'}
+          { required: true, trigger: 'blur', message: 'not null' },
+          { type: 'number', trigger: 'blur', message: '必须是数字' }
         ],
-        text: [{ required: true, trigger: 'blur' , message:'not null'}],
-        code: [{ required: true, trigger: 'blur' , message:'not null'}]
+        text: [{ required: true, trigger: 'blur', message: 'not null' }],
+        code: [{ required: true, trigger: 'blur', message: 'not null' }]
       }
     }
+  },
+  created() {
+    this.initMainList()
   },
   methods: {
     resetQueryData() {},
@@ -104,7 +107,7 @@ export default {
       this.dialogType = 'new'
     },
     handleEdit(scope) {
-      let clone = deepClone(scope.row)
+      const clone = deepClone(scope.row)
       this.d = clone
       this.showMark = true
       this.dialogType = 'edit'
@@ -117,7 +120,7 @@ export default {
       })
         .then(async() => {
           const res = await deleteTtitleListItemById(row.id)
-          if (res.code === 0){
+          if (res.code === 0) {
             this.doSearch = true
             this.$message({
               type: 'success',
@@ -127,14 +130,14 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    async submit(){
+    async submit() {
       let res
-      if (this.d.id){
+      if (this.d.id) {
         res = await updateTtitleListItem(this.d)
-      }else {
+      } else {
         res = await saveTitleListItem(this.d)
       }
-      if (res.code === 0){
+      if (res.code === 0) {
         this.showMark = false
         this.doSearch = true
         this.$message.success('提交成功')
@@ -144,20 +147,17 @@ export default {
       this.$refs[this.formName].validate((valid) => {
         if (valid) {
           this.submit()
-        }else {
+        } else {
           return false
         }
-      });
+      })
     },
-    async initMainList(){
+    async initMainList() {
       const res = await getTtitleMainList()
-      if (res.code === 0){
+      if (res.code === 0) {
         this.mainList = res.data
       }
     }
-  },
-  created(){
-    this.initMainList()
   }
 }
 </script>

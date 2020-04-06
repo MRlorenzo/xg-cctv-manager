@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test2?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/cctv?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: 654321
+    password: root
   redis:
     host: localhost
 server:
@@ -10,7 +10,7 @@ server:
 
 local:
   fileserver:
-    dir:  "D:\\TEMP"
+    dir:  "/Users/mac/work/IdeaProjects/Start/xg-cctv-manager/TEMP"
     path: file
 
 

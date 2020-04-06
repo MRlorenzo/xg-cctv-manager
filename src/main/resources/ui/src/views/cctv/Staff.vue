@@ -4,7 +4,7 @@
     <el-form :inline="true">
 
       <el-form-item>
-        <el-input v-model="q.username" placeholder="User Name" />
+        <el-input v-model="q.staffName" placeholder="Staff Name" />
       </el-form-item>
 
       <el-form-item>
@@ -21,7 +21,7 @@
 
       <el-form-item label="Status">
         <el-switch
-          v-model="user.status"
+          v-model="q.status"
           :active-value="0"
           :inactive-value="1"
           :active-text="$t('cctv.disable')"
@@ -63,41 +63,46 @@
       </el-form-item>
     </el-form>
 
-    <!-- 用户列表 -->
-    <user-page
+    <!-- 员工列表 -->
+    <staff-page
       :query="q"
       :do-search.sync="doSearch"
       :handle-edit="handleEdit"
       :handle-delete="handleDelete"
     />
 
-    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit User':'New User'">
-      <el-form :ref="formName" :model="user" :rules="rules" label-width="80px" label-position="left">
+    <el-dialog :visible.sync="dialogVisible" :title="dialogType==='edit'?'Edit Staff':'New Staff'">
+      <el-form :ref="formName" :model="staff" :rules="rules" label-width="80px" label-position="left">
 
-        <!--工号||用户名-->
-        <el-form-item :label="$t('cctv.workNo')" prop="username">
-          <el-input v-model="user.username" />
+        <!--姓名-->
+        <el-form-item :label="$t('cctv.name')" prop="staffName">
+          <el-input v-model="staff.staffName" />
+        </el-form-item>
+
+        <!--工号-->
+        <el-form-item :label="$t('cctv.workNo')" prop="workNo">
+          <el-input v-model="staff.workNo" />
         </el-form-item>
 
         <!--职位 || 角色-->
-        <el-form-item :label="$t('cctv.position')" prop="_roleIds">
+        <el-form-item :label="$t('cctv.position')" prop="positionId">
           <el-select
-            v-model="user._roleIds"
-            value-key="id"
+            v-model="staff.positionId"
+            value-key="positionId"
             :placeholder="$t('cctv.position')"
           >
             <el-option
-              v-for="role in rolesList"
-              :key="role.id"
-              :label="role.name"
-              :value="role.id"
+              v-for="item in positionList"
+              :key="item.positionId"
+              :label="item.name"
+              :value="item.positionId"
             />
           </el-select>
         </el-form-item>
 
         <!--部门-->
         <el-form-item :label="$t('cctv.department')" prop="departmentId">
-          <el-select v-model="user.departmentId" :placeholder="$t('cctv.pe_department')">
+          <el-select v-model="staff.departmentId" :placeholder="$t('cctv.pe_department')">
             <el-option
               v-for="dep in departmentList"
               :key="dep.departmentId"
@@ -108,9 +113,9 @@
         </el-form-item>
 
         <!--聘用日期-->
-        <el-form-item :label="$t('cctv.search')" prop="hireDate">
+        <el-form-item :label="$t('cctv.hireDate')" prop="hireDate">
           <el-date-picker
-            v-model="user.hireDate"
+            v-model="staff.hireDate"
             type="date"
             :placeholder="$t('cctv.ps_date')"
           />
@@ -118,37 +123,22 @@
 
         <!--国籍-->
         <el-form-item :label="$t('cctv.nationality')" prop="nationality">
-          <el-input v-model="user.nationality" />
+          <el-input v-model="staff.nationality" />
         </el-form-item>
 
         <!--照片-->
         <el-form-item :label="$t('cctv.image')">
-          <avatar-image :url.sync="user.avatar" />
-        </el-form-item>
-
-        <!--密码-->
-        <el-form-item :label="$t('login.password')" prop="password">
-          <el-input v-model="user.password" type="password" placeholder="Password" />
+          <avatar-image :url.sync="staff.avatar" />
         </el-form-item>
 
         <!--状态  0：禁用   1：正常-->
         <el-form-item :label="$t('cctv.status')" prop="status">
           <el-switch
-            v-model="user.status"
+            v-model="staff.status"
             :active-value="0"
             :inactive-value="1"
             :active-text="$t('cctv.disable')"
             :inactive-text="$t('cctv.normal')"
-          />
-        </el-form-item>
-
-        <!-- 描述-->
-        <el-form-item label="Desc" prop="description">
-          <el-input
-            v-model="user.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="User Description"
           />
         </el-form-item>
 
@@ -175,28 +165,27 @@
 
 <script>
 import { deepClone } from '@/utils'
-import { delUser, updateUser, addUser } from '@/api/user'
-import { getRoles } from '@/api/role'
+import { delStaff, updateStaff, addStaff } from '@/api/staff'
+// import { getRoles } from '@/api/role'
 import { getDepartments } from '@/api/department'
+import { getPositions } from '@/api/position'
 import BackToTop from '@/components/BackToTop'
-import UserPage from './components/UserPage'
+import StaffPage from './components/StaffPage'
 import AvatarImage from '@/components/Upload/AvatarImage'
 
-const defaultUser = {
-  username: '',
-  password: '',
+const defaultStaff = {
+  staffName: '',
   hireDate: null,
+  workNo: null,
   status: 1,
   nationality: null,
   avatar: '',
-  description: '',
   departmentId: 1,
-  _roleIds: [],
-  roles: []
+  positionId: null
 }
 
 const defaultQueryData = {
-  username: null,
+  staffName: null,
   startTime: null,
   endTime: null,
   status: 1,
@@ -204,29 +193,30 @@ const defaultQueryData = {
 }
 
 export default {
-  name: 'Users',
-  components: { BackToTop, UserPage, AvatarImage },
+  name: 'Staff',
+  components: { BackToTop, StaffPage, AvatarImage },
   data() {
     return {
-      user: Object.assign({}, defaultUser),
+      staff: Object.assign({}, defaultStaff),
       doSearch: true,
       dialogVisible: false,
       dialogType: 'new',
       queryText: '',
       departmentList: [],
-      rolesList: [],
+      positionList: [],
+      // roleIds: [],
       // 查询参数
       q: Object.assign({}, defaultQueryData),
       searchTime: [],
       formName: 'form',
       rules: {
-        username: [{ required: true, trigger: 'blur', message: 'not null' }],
-        password: [{ required: true, trigger: 'blur', message: 'not null' }],
+        staffName: [{ required: true, trigger: 'blur', message: 'not null' }],
+        workNo: [{ required: true, trigger: 'blur', message: 'not null' }],
         hireDate: [{ required: true, trigger: 'blur', message: 'not null' }],
         status: [{ required: true, trigger: 'blur', message: 'not null' }],
         nationality: [{ required: true, trigger: 'blur', message: 'not null' }],
         departmentId: [{ required: true, trigger: 'blur', message: 'not null' }],
-        _roleIds: [{ required: true, trigger: 'blur', message: 'not null' }]
+        positionId: [{ required: true, trigger: 'blur', message: 'not null' }]
       },
       // customizable button style, show/hide critical point, return position
       myBackToTopStyle: {
@@ -256,7 +246,7 @@ export default {
     }
   },
   created() {
-    this.getRoles()
+    this.getPositions()
     this.getDepartments()
   },
   methods: {
@@ -264,44 +254,43 @@ export default {
       if (this.$refs[this.formName] != null) {
         this.$refs[this.formName].resetFields()
       }
-      this.user = deepClone(defaultUser)
+      this.staff = deepClone(defaultStaff)
     },
-    async getRoles() {
-      const res = await getRoles()
-      this.rolesList = res.data
+    async getPositions() {
+      const res = await getPositions()
+      this.positionList = res.data
     },
     async getDepartments() {
       const res = await getDepartments()
       this.departmentList = res.data
     },
     handleAdd() {
-      this.user._roleIds = []
-      this.user = Object.assign({}, defaultUser)
+      // this.staff.roleIds = []
+      this.staff = Object.assign({}, defaultStaff)
       this.dialogType = 'new'
       this.dialogVisible = true
     },
     handleEdit(scope) {
       this.dialogType = 'edit'
       this.dialogVisible = true
-      const cloneUser = deepClone(scope.row)
+      const cloneStaff = deepClone(scope.row)
       // 此处不需要传routes,department
-      cloneUser.routes = null
-      cloneUser.department = null
-      cloneUser.password = ''
-      cloneUser.freePwd = ''
-      if (Array.isArray(cloneUser.roles)) {
-        cloneUser._roleIds = cloneUser.roles.map(role => role.id)
-      }
-      this.user = cloneUser
+      cloneStaff.department = null
+      cloneStaff.position = null
+      // cloneStaff.freePwd = ''
+      // if (Array.isArray(cloneStaff.roles)) {
+      //   cloneStaff.roleIds = cloneStaff.roles.map(role => role.id)
+      // }
+      this.staff = cloneStaff
     },
     handleDelete({ $index, row }) {
-      this.$confirm('Confirm to remove the User?', 'Warning', {
+      this.$confirm('Confirm to remove the Staff?', 'Warning', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         type: 'warning'
       })
         .then(async() => {
-          const res = await delUser(row.userId)
+          const res = await delStaff(row.staffId)
           if (res.code === 0) {
             this.doSearch = true
             this.$message({
@@ -314,11 +303,11 @@ export default {
     },
     async submit() {
       let res
-      this.user.roles = this.user._roleIds.map(id => ({ id }))
-      if (this.user.id) {
-        res = await updateUser(this.user)
+      // this.staff.roles = this.staff.positionId.map(id => ({ id }))
+      if (this.staff.id) {
+        res = await updateStaff(this.staff)
       } else {
-        res = await addUser(this.user)
+        res = await addStaff(this.staff)
       }
       if (res.code === 0) {
         this.dialogVisible = false

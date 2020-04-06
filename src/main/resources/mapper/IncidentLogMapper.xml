@@ -12,7 +12,7 @@
                 <result column="coin_code" property="coinCode" />
                 <result column="total" property="total" />
                 <result column="report" property="report" />
-                <result column="involve_uid" property="involveUid" />
+                <!--<result column="involve_uid" property="involveUid" />-->
                 <result column="department_id" property="departmentId" />
                 <result column="monitor" property="monitor" />
                 <result column="remarks" property="remarks" />
@@ -21,14 +21,23 @@
                 <result column="urls" property="urls" />
     </resultMap>
 
+    <resultMap id="allInfo" type="com.xg.cctv.common.dto.IncidentLogVo" extends="BaseResultMap">
+        <association property="staffs" column="{id=id,type=type}" select="com.xg.cctv.mybatis.mapper.SysStaffMapper.queryStaffsById"/>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, date, time, table_code, code, coin_code, total, report, involve_uid, department_id, monitor, remarks, create_uid, create_time, urls
+        id, date, time, table_code, code, coin_code, total, report, department_id, monitor, remarks, create_uid, create_time, urls
     </sql>
 
     <sql id="VoTable">
-        SELECT i.*,dp.department_code,dp.`name`,u.username FROM incident_log i LEFT JOIN sys_department dp ON i.department_id = dp.department_id JOIN sys_user u ON u.user_id = i.involve_uid
+        SELECT i.*,dp.department_code,dp.`name`,1 as type FROM incident_log i LEFT JOIN sys_department dp ON i.department_id = dp.department_id
     </sql>
+
+    <select id="selectAllPage" resultMap="allInfo" >
+        <include refid="VoTable"/>
+        ${ew.customSqlSegment}
+    </select>
 
     <!--如果自定义的方法还希望能够使用MP提供的Wrapper条件构造器，则需要如下写法-->
     <select id="selectVoPage" resultType="com.xg.cctv.common.dto.IncidentLogVo">

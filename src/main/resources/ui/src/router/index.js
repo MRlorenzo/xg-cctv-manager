@@ -83,7 +83,7 @@ export const constantRoutes = [
     ]
   },
   // 引导页
-  /*{
+  /* {
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
@@ -140,12 +140,12 @@ export const asyncRoutes = [
         }
       },
       {
-        path: 'department',
-        component: () => import('@/views/permission/department'),
-        name: 'Department',
+        path: 'users',
+        component: () => import('@/views/cctv/users'),
+        name: 'Users',
         meta: {
-          title: 'department',
-          icon: 'peoples'
+          title: 'users',
+          icon: 'user'
         }
       },
       {
@@ -164,64 +164,79 @@ export const asyncRoutes = [
     path: '/cctv',
     component: Layout,
     name: 'CCTV',
-    meta: { title: 'cctv' , icon: 'tree-table'},
+    meta: { title: 'cctv', icon: 'tree-table' },
     children: [
       {
         path: 'daily-log',
-        component: ()=> import('@/views/cctv/DailyLog'),
+        component: () => import('@/views/cctv/DailyLog'),
         name: 'DailyLog',
-        meta: { title: 'dailyLog' , icon: 'clipboard'},
+        meta: { title: 'dailyLog', icon: 'clipboard' }
       },
       {
         path: 'incident-log',
-        component: ()=> import('@/views/cctv/IncidentLog'),
+        component: () => import('@/views/cctv/IncidentLog'),
         name: 'IncidentLog',
-        meta: { title: 'incidentLog' , icon: 'education'},
+        meta: { title: 'incidentLog', icon: 'education' }
       },
       {
         path: 'high-action',
-        component: ()=> import('@/views/cctv/HighAction'),
+        component: () => import('@/views/cctv/HighAction'),
         name: 'HighAction',
-        meta: { title: 'highAction' , icon: 'form'},
+        meta: { title: 'highAction', icon: 'form' }
       },
       {
         path: 'fill',
-        component: ()=> import('@/views/cctv/Fill'),
+        component: () => import('@/views/cctv/Fill'),
         name: 'Fill',
-        meta: { title: 'fill' , icon: 'skill'},
+        meta: { title: 'fill', icon: 'skill' }
       },
       {
         path: 'credit',
-        component: ()=> import('@/views/cctv/Credit'),
+        component: () => import('@/views/cctv/Credit'),
         name: 'Credit',
-        meta: { title: 'credit' , icon: 'documentation'},
+        meta: { title: 'credit', icon: 'documentation' }
       },
       {
         path: 'title-list',
-        component: ()=> import('@/views/cctv/TitleList'),
+        component: () => import('@/views/cctv/TitleList'),
         name: 'TitleList',
-        meta: { title: 'titleList' , icon: 'list'},
+        meta: { title: 'titleList', icon: 'list' }
       },
       {
         path: 'title-subject',
-        component: ()=> import('@/views/cctv/TitleSubject'),
+        component: () => import('@/views/cctv/TitleSubject'),
         name: 'TitleSubject',
-        meta: { title: 'titleSubject' , icon: 'guide'},
+        meta: { title: 'titleSubject', icon: 'guide' }
       },
       {
-        path: 'users',
-        component: () => import('@/views/cctv/users'),
-        name: 'Users',
+        path: 'department',
+        component: () => import('@/views/permission/department'),
+        name: 'Department',
         meta: {
-          title: 'users',
-          icon: 'user'
+          title: 'department',
+          icon: 'peoples'
         }
       },
       {
+        path: 'position',
+        component: () => import('@/views/cctv/Position'),
+        name: 'Position',
+        meta: {
+          title: 'position',
+          icon: 'peoples'
+        }
+      },
+      {
+        path: 'staff',
+        component: () => import('@/views/cctv/Staff'),
+        name: 'Staff',
+        meta: { title: 'staff', icon: 'theme' }
+      },
+      {
         path: 'customer',
-        component: ()=> import('@/views/cctv/Customer'),
+        component: () => import('@/views/cctv/Customer'),
         name: 'Customer',
-        meta: { title: 'customer' , icon: 'theme'},
+        meta: { title: 'customer', icon: 'theme' }
       }
     ]
   },
@@ -229,7 +244,7 @@ export const asyncRoutes = [
   {
     path: '/icon',
     component: Layout,
-    alwaysShow:true,
+    alwaysShow: true,
     name: 'Icons$',
     meta: { title: 'icons', icon: 'icon', noCache: true },
     children: [
@@ -378,7 +393,7 @@ export const asyncRoutes = [
     ]
   },
 
-  /*{
+  /* {
     path: '/clipboard',
     component: Layout,
     alwaysShow: true,
@@ -410,7 +425,7 @@ export const asyncRoutes = [
     ]
   },
 
-  /*{
+  /* {
     path: 'external-link',
     component: Layout,
     children: [

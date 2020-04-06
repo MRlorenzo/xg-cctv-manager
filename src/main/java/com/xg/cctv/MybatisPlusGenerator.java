@@ -43,11 +43,11 @@ public class MybatisPlusGenerator {
     // DriverName
     private static final String DB_DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     // url
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/test2?useSSL=false&useUnicode=true&characterEncoding=UTF-8&useTimezone=true&serverTimezone=GMT%2B8";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/cctv?useSSL=false&useUnicode=true&characterEncoding=UTF-8&useTimezone=true&serverTimezone=GMT%2B8";
     // username
     private static final String DB_USERNAME = "root";
     // password
-    private static final String DB_PASSWORD = "654321";
+    private static final String DB_PASSWORD = "root";
 
     // mapper.xml输出目录
     private static final String MAPPER_XML_OUT_PUT_DIR = PROJECT_PATH

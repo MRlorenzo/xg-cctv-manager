@@ -58,7 +58,7 @@ public class IncidentLogController {
     })
     @ApiOperation(value="获取信息分页", notes="信息分页接口" , httpMethod = "GET" , response = R.class)
     public R getIncidentLogList(Page<IncidentLogVo> page,@RequestParam Map<String , Object> incidentLog){
-        return R.ok().put("data" , iIncidentLogService.selectVoPage(page, incidentLog));
+        return R.ok().put("data" , iIncidentLogService.selectAllPage(page, incidentLog));
     }
 
     @GetMapping("/excel")
@@ -89,10 +89,6 @@ public class IncidentLogController {
     @RequiresPermissions("incidentLog:save")
     @ApiOperation(value="保存", notes="保存信息接口" , httpMethod = "POST" , response = R.class)
     public R incidentLogSave(@RequestBody @Valid IncidentLog incidentLog){
-        if (incidentLog.getId() == null){
-            incidentLog.setCreateUid(ShiroUtils.getUserId());
-            incidentLog.setCreateTime(new Date());
-        }
         boolean rs = iIncidentLogService.saveOrUpdate(incidentLog);
         if (rs){
             return R.ok();

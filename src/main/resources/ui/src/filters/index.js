@@ -72,11 +72,24 @@ export function uppercaseFirst(string) {
  * @param department
  * @returns {*}
  */
-export function departmentText( department ){
-  if( department ){
+export function departmentText(department) {
+  if (department) {
     return department.departmentCode
-  }else{
+  } else {
     return department
+  }
+}
+
+/**
+ * 將角职位段解析成可識別的值
+ * @param position
+ * @returns {*}
+ */
+export function positionText(position) {
+  if (position) {
+    return position.name
+  } else {
+    return position
   }
 }
 
@@ -85,14 +98,27 @@ export function departmentText( department ){
  * @param roles
  * @returns {*}
  */
-export function rolesText( roles ){
-  if (Array.isArray(roles)){
-    return Object.values(roles).map(role=>role.name).join(',')
+export function rolesText(roles) {
+  if (Array.isArray(roles)) {
+    return Object.values(roles).map(role => role.name).join(',')
   } else {
     return roles
   }
 }
 
-export function dateTimeFilter( string ) {
+/**
+ * 將职位集合字段解析成可識別的值
+ * @param staffs
+ * @returns {*}
+ */
+export function staffsText(staffs) {
+  if (Array.isArray(staffs)) {
+    return Object.values(staffs).map(staff => staff.staffName).join(',')
+  } else {
+    return staffs
+  }
+}
+
+export function dateTimeFilter(string) {
   return moment(string).format('YYYY-MM-DD')
 }

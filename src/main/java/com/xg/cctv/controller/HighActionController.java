@@ -92,10 +92,6 @@ public class HighActionController {
     @RequiresPermissions("highAction:save")
     @ApiOperation(value="保存", notes="保存信息接口" , httpMethod = "POST" , response = R.class)
     public R highActionSave(@RequestBody @Valid HighAction highAction){
-        if (highAction.getId() == null){
-            highAction.setCreateUid(ShiroUtils.getUserId());
-            highAction.setCreateTime(new Date());
-        }
         boolean rs = iHighActionService.saveOrUpdate(highAction);
         if (rs){
             return R.ok();

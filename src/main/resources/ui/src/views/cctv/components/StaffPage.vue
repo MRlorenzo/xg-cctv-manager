@@ -1,84 +1,79 @@
 <template>
   <div>
-    <el-table :data="dataList" height="500" border>
-      <!--序号-->
-      <el-table-column align="center" :label="$t('cctv.no')">
+    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
+      <!-- 序号 -->
+      <el-table-column align="center" :label="$t('cctv.no')" width="100">
         <template slot-scope="scope">
-          {{ scope.row.id }}
-        </template>
-      </el-table-column>
-      <!--日期-->
-      <el-table-column align="center" :label="$t('cctv.date')">
-        <template slot-scope="scope">
-          {{ scope.row.date | dateTimeFilter }}
+          {{ scope.row.staffId }}
         </template>
       </el-table-column>
 
-      <!--台号-->
-      <el-table-column align="center" :label="$t('cctv.tableCode')">
+      <!-- 名称 -->
+      <el-table-column align="center" :label="$t('cctv.name')" width="100">
         <template slot-scope="scope">
-          {{ scope.row.tableCode }}
+          {{ scope.row.staffName }}
         </template>
       </el-table-column>
 
-      <!--事件-->
-      <el-table-column align="center" :label="$t('cctv.eventCode')">
+      <!-- 工号 -->
+      <el-table-column align="center" :label="$t('cctv.workNo')" width="100">
         <template slot-scope="scope">
-          {{ scope.row.code }}
+          {{ scope.row.workNo }}
         </template>
       </el-table-column>
-      <!--币种-->
-      <el-table-column align="center" :label="$t('cctv.coinType')">
+
+      <!-- 职位 -->
+      <el-table-column align="center" :label="$t('cctv.position')" width="150">
         <template slot-scope="scope">
-          {{ scope.row.coinCode }}
+          {{ scope.row.position | positionText }}
         </template>
       </el-table-column>
-      <!--金额-->
-      <el-table-column align="center" :label="$t('cctv.total')">
+
+      <!-- 部门 -->
+      <el-table-column align="center" :label="$t('cctv.department')" width="150">
         <template slot-scope="scope">
-          {{ scope.row.total }}
+          {{ scope.row.department | departmentText }}
         </template>
       </el-table-column>
-      <!--报告-->
-      <el-table-column align="center" :label="$t('cctv.report')">
+
+      <!-- 聘用时间 -->
+      <el-table-column align="center" label="hireDate" width="200">
         <template slot-scope="scope">
-          {{ scope.row.report }}
+          {{ scope.row.hireDate | dateTimeFilter }}
         </template>
       </el-table-column>
-      <!--涉事员工-->
-      <el-table-column align="center" :label="$t('cctv.involveEmp')">
+      <!--聘用时间-->
+      <!--<el-table-column align="header-center" :label="$t{'cctv.hireDate'}" width="220">-->
+      <!--<template slot-scope="scope">-->
+      <!--{{ scope.row.hireDate }}-->
+      <!--</template>-->
+      <!--</el-table-column>-->
+
+      <!--国籍-->
+      <el-table-column align="center" label="nationality" width="100">
         <template slot-scope="scope">
-          {{ scope.row.staffs | staffsText }}
+          {{ scope.row.nationality }}
         </template>
       </el-table-column>
-      <!--部门-->
-      <el-table-column align="center" :label="$t('cctv.department')">
-        <template slot-scope="scope">
-          {{ scope.row.departmentCode }}
-        </template>
-      </el-table-column>
-      <!--监控部-->
-      <el-table-column align="center" :label="$t('cctv.monitor')">
-        <template slot-scope="scope">
-          {{ scope.row.monitor }}
-        </template>
-      </el-table-column>
-      <!--备注-->
-      <el-table-column align="center" :label="$t('cctv.remarks')">
-        <template slot-scope="scope">
-          {{ scope.row.remarks }}
-        </template>
-      </el-table-column>
+
       <!--图片-->
       <el-table-column align="center" :label="$t('cctv.image')">
         <template slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
-            :src="getUrls(scope.row.urls)[0]"
-            :preview-src-list="getUrls(scope.row.urls)"
+            :src="getUrls(scope.row.avatar)[0]"
+            :preview-src-list="getUrls(scope.row.avatar)"
           />
         </template>
       </el-table-column>
+
+      <!--状态: 0 禁用 1 正常-->
+      <el-table-column align="header-center" :label="$t('cctv.status')">
+        <template slot-scope="scope">
+          {{ scope.row.status | statusText }}
+        </template>
+      </el-table-column>
+
       <!--操作-->
       <el-table-column align="center" label="Operations">
         <template slot-scope="scope">
@@ -107,9 +102,18 @@
 </template>
 
 <script>
-import { getIncidentLogForPage } from '@/api/incident-log'
+import { getDataPage } from '@/api/staff'
+import i18n from '@/lang'
 export default {
-  name: 'IncidentLogPage',
+  name: 'StaffPage',
+  filters: {
+    statusText(status) {
+      return {
+        '0': i18n.t('cctv.disable'),
+        '1': i18n.t('cctv.normal')
+      }[status]
+    }
+  },
   props: {
     query: {
       type: Object,
@@ -170,7 +174,7 @@ export default {
     },
     async loadData() {
       this.toBeChangeSearch(false)
-      const res = await getIncidentLogForPage(Object.assign({
+      const res = await getDataPage(Object.assign({
         current: this.currPage,
         size: this.pageLimit
       },

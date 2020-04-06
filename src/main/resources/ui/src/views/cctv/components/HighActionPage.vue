@@ -46,11 +46,17 @@
         </template>
       </el-table-column>
       <!--涉及员工-->
+      <!--涉事员工-->
       <el-table-column align="center" :label="$t('cctv.involveEmp')">
         <template slot-scope="scope">
-          {{ scope.row.username }}
+          {{ scope.row.staffs | staffsText }}
         </template>
       </el-table-column>
+      <!--<el-table-column align="center" :label="$t('cctv.involveEmp')">-->
+      <!--<template slot-scope="scope">-->
+      <!--{{ scope.row.username }}-->
+      <!--</template>-->
+      <!--</el-table-column>-->
       <!--监控部-->
       <el-table-column align="center" :label="$t('cctv.monitor')">
         <template slot-scope="scope">

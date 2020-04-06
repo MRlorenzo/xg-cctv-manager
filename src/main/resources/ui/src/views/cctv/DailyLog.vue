@@ -71,7 +71,7 @@
       :handle-delete="handleDelete"
     />
 
-    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
+    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit Daily Log':'New Daily Log'">
       <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
         <!--日期-->
         <el-form-item :label="$t('cctv.date')">

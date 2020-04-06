@@ -12,7 +12,7 @@
                 <result column="coin_code" property="coinCode" />
                 <result column="total" property="total" />
                 <result column="report" property="report" />
-                <result column="involve_uid" property="involveUid" />
+                <!--<result column="involve_uid" property="involveUid" />-->
                 <result column="monitor" property="monitor" />
                 <result column="remarks" property="remarks" />
                 <result column="create_uid" property="createUid" />
@@ -20,17 +20,21 @@
                 <result column="urls" property="urls" />
     </resultMap>
 
+    <resultMap id="allInfo" type="com.xg.cctv.common.dto.IncidentLogVo" extends="BaseResultMap">
+        <association property="staffs" column="{id=id,type=type}" select="com.xg.cctv.mybatis.mapper.SysStaffMapper.queryStaffsById"/>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, date,time, table_code, code, coin_code, total, report, involve_uid, monitor, remarks, create_uid, create_time, urls
+        id, date,time, table_code, code, coin_code, total, report, monitor, remarks, create_uid, create_time, urls
     </sql>
 
     <sql id="VoTable">
-        SELECT h.*,u.username FROM high_action h LEFT JOIN sys_user u ON h.involve_uid = u.user_id
+        SELECT h.*, 2 as type FROM high_action h
     </sql>
 
     <!--如果自定义的方法还希望能够使用MP提供的Wrapper条件构造器，则需要如下写法-->
-    <select id="selectVoPage" resultType="com.xg.cctv.common.dto.HighActionVo">
+    <select id="selectVoPage" resultMap="allInfo">
         <include refid="VoTable"/>
         ${ew.customSqlSegment}
     </select>

@@ -60,7 +60,7 @@
       :handle-delete="handleDelete"
     />
 
-    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
+    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit Customer':'New Customer'">
       <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
         <!--名称-->
         <el-form-item :label="$t('cctv.name')" prop="name">

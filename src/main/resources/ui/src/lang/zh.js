@@ -74,7 +74,9 @@ export default {
     titleSubject: '事件主题',
     fill: '加彩日志',
     credit: '缴码日志',
-    customer: '玩家清单'
+    customer: '玩家清单',
+    staff: '员工清单',
+    position: '职位管理'
   },
   navbar: {
     dashboard: '首页',

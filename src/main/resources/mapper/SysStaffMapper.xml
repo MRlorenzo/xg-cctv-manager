@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xg.cctv.mybatis.mapper.SysStaffMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xg.cctv.mybatis.po.SysStaff">
+        <id column="staff_id" property="staffId" />
+        <result column="staff_name" property="staffName" />
+        <result column="position_id" property="positionId" />
+        <result column="work_no" property="workNo"/>
+        <result column="status" property="status" />
+        <result column="department_id" property="departmentId" />
+        <result column="nationality" property="nationality"/>
+        <result column="avatar" property="avatar"/>
+        <result column="hire_date" property="hireDate"/>
+    </resultMap>
+
+    <resultMap id="allInfo" type="com.xg.cctv.mybatis.po.SysStaff" extends="BaseResultMap">
+        <association property="department" column="department_id" select="com.xg.cctv.mybatis.mapper.SysDepartmentMapper.queryDepartmentById"/>
+        <collection property="position" column="position_id" select="com.xg.cctv.mybatis.mapper.SysPositionMapper.queryPositionById"/>
+    </resultMap>
+
+    <select id="queryStaffsById" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT st.* FROM sys_staff st
+        right JOIN staff_log sl ON st.staff_id = sl.staff_id
+        WHERE sl.log_id =  #{id}
+        and sl.type = #{type}
+    </select>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        staff_id, staff_name, work_no, status, department_id, position_id,nationality,avatar,hire_date
+    </sql>
+
+    <select id="selectAllInfoPage" resultMap="allInfo">
+        SELECT <include refid="Base_Column_List"/> FROM sys_staff
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

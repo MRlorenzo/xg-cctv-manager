@@ -1,10 +1,10 @@
 package com.xg.cctv.mybatis.po;
 
 import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.IdType;
+
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.util.Date;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -76,11 +77,11 @@ public class IncidentLog extends Model<IncidentLog> {
     private String report;
 
     /**
-     * 涉及员工
+     * 职位列表（关联sysPosition）
      */
-    @NotNull
-    @ApiModelProperty( value = "涉及员工" , required=true)
-    private Long involveUid;
+    @TableField(exist=false)
+    @ApiModelProperty( value = "职位列表（关联sysPosition）" )
+    private List<SysStaff> staffs;
 
     /**
      * 部门id
@@ -182,12 +183,12 @@ public class IncidentLog extends Model<IncidentLog> {
         this.report = report;
     }
 
-    public Long getInvolveUid() {
-        return involveUid;
+    public List<SysStaff> getStaffs() {
+        return staffs;
     }
 
-    public void setInvolveUid(Long involveUid) {
-        this.involveUid = involveUid;
+    public void setStaffs(List<SysStaff> staffs) {
+        this.staffs = staffs;
     }
 
     public Long getDepartmentId() {
@@ -253,7 +254,6 @@ public class IncidentLog extends Model<IncidentLog> {
         ", coinCode=" + coinCode +
         ", total=" + total +
         ", report=" + report +
-        ", involveUid=" + involveUid +
         ", departmentId=" + departmentId +
         ", monitor=" + monitor +
         ", remarks=" + remarks +

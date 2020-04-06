@@ -6,7 +6,7 @@ export default {
     permission: 'Permission',
     pagePermission: 'Page Permission',
     department: 'Department',
-    users: 'Staff details',
+    users: 'Users',
     menus: 'Menus',
     rolePermission: 'Role Permission',
     directivePermission: 'Directive Permission',
@@ -74,7 +74,9 @@ export default {
     titleSubject: 'Title Subject',
     fill: 'Fills',
     credit: 'Credits',
-    customer: 'Customers detail'
+    customer: 'Customers detail',
+    staff: 'Staff detail',
+    position: 'Position'
   },
   navbar: {
     dashboard: 'Dashboard',

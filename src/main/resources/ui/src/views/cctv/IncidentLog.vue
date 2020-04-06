@@ -49,19 +49,19 @@
       <!--涉及员工-->
       <el-form-item :label="$t('cctv.involveEmp')">
         <el-select
-          v-model="q.involveUid"
+          v-model="q.staffId"
           filterable
-          remote
-          reserve-keyword
           :placeholder="$t('cctv.pe_key')"
-          :remote-method="remoteMethod"
           :loading="loading"
+          remote
+          :remote-method="remoteMethod"
+          reserve-keyword
         >
           <el-option
-            v-for="emp in empList"
-            :key="emp.userId"
-            :label="emp.username"
-            :value="emp.userId"
+            v-for="emp in staffList"
+            :key="emp.staffId"
+            :label="emp.staffName"
+            :value="emp.staffId"
           />
         </el-select>
       </el-form-item>
@@ -117,7 +117,7 @@
       :handle-delete="handleDelete"
     />
 
-    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit':'New'">
+    <el-dialog :visible.sync="showMark" :title="dialogType==='edit'?'Edit Incident Log':'New Incident Log'">
       <el-form :ref="formName" :model="d" :rules="rules" label-width="80px" label-position="left">
         <!--日期-->
         <el-form-item :label="$t('cctv.date')">
@@ -185,21 +185,24 @@
           <el-input v-model="d.report" type="textarea" :placeholder="$t('cctv.report')" />
         </el-form-item>
         <!--涉及员工-->
-        <el-form-item :label="$t('cctv.involveEmp')" prop="involveUid">
+        <!--:remote-method="remoteMethod"-->
+        <el-form-item :label="$t('cctv.involveEmp')" prop="staffs">
           <el-select
-            v-model="d.involveUid"
+            v-model="staffIds"
             filterable
+            :multiple="true"
             remote
             reserve-keyword
+            value-key="staffId"
             :placeholder="$t('cctv.pe_key')"
-            :remote-method="remoteMethod"
             :loading="loading"
+            :remote-method="remoteMethod"
           >
             <el-option
-              v-for="emp in empList"
-              :key="emp.userId"
-              :label="emp.username"
-              :value="emp.userId"
+              v-for="emp in staffList"
+              :key="emp.staffId"
+              :label="emp.staffName"
+              :value="emp.staffId"
             />
           </el-select>
         </el-form-item>
@@ -249,9 +252,10 @@ import MultipleImages from '@/components/Upload/MultipleImages'
 import { saveIncidentLog, deleteIncidentLogById, updateIncidentLog, exportIncidentLogExcel } from '@/api/incident-log'
 import { downloadExcelByKey, deepClone } from '@/utils'
 import { getDepartments } from '@/api/department'
+import { findStaffLikeName } from '@/api/staff'
 import { getTtitleListItemList } from '@/api/title-liist-item'
 import coinList from './common/coin-list'
-import { findUserLikeName } from '@/api/user'
+
 const data = {
   date: null,
   time: '',
@@ -260,7 +264,8 @@ const data = {
   coinCode: null,
   total: null,
   report: null,
-  involveUid: null,
+  // involveUid: null,
+  staffs: null,
   departmentId: null,
   monitor: null,
   remarks: null,
@@ -273,7 +278,8 @@ const queryData = {
   code: null,
   coinCode: null,
   report: null,
-  involveUid: null,
+  staffId: null,
+  // involveUid: null,
   departmentName: null,
   monitor: null,
   remarks: null
@@ -288,7 +294,8 @@ export default {
       departmentList: [],
       titleSubjectList: [], // 事件列表
       coinList: deepClone(coinList), // 币种列表
-      empList: [], // 员工列表
+      staffList: [], // 员工列表
+      staffIds: [], // select职位
       loading: false,
       d: deepClone(data),
       doSearch: true,
@@ -303,10 +310,6 @@ export default {
         coinCode: [{ required: true, trigger: 'blur', message: 'not null' }],
         total: [{ required: true, trigger: 'blur', message: 'not null' }],
         report: [{ required: true, trigger: 'blur', message: 'not null' }],
-        involveUid: [
-          { required: true, trigger: 'blur', message: 'not null' },
-          { type: 'number', trigger: 'blur', message: '必须是数字' }
-        ],
         departmentId: [{ required: true, trigger: 'blur', message: 'not null' }],
         monitor: [{ required: true, trigger: 'blur', message: 'not null' }],
         remarks: [{ required: true, trigger: 'blur', message: 'not null' }]
@@ -354,6 +357,9 @@ export default {
     },
     handleEdit(scope) {
       const clone = deepClone(scope.row)
+      if (Array.isArray(clone.staffs)) {
+        this.staffIds = clone.staffs.map(staff => staff.staffId)
+      }
       this.d = clone
       this.showMark = true
       this.dialogType = 'edit'
@@ -377,6 +383,7 @@ export default {
         .catch(err => { console.error(err) })
     },
     async submit() {
+      this.d.staffs = this.staffIds.map(staffId => ({ staffId }))
       let res
       if (this.d.id) {
         res = await updateIncidentLog(this.d)
@@ -404,18 +411,26 @@ export default {
         this.departmentList = res.data
       }
     },
+    // async remoteMethod(name) {
+    //   this.loading = true
+    //   const res = await findUserLikeName(name)
+    //   if (res.code === 0) {
+    //     this.loading = false
+    //     this.empList = res.data
+    //   }
+    // },
+    async remoteMethod(name) {
+      this.loading = true
+      const res = await findStaffLikeName(name)
+      if (res.code === 0) {
+        this.loading = false
+        this.staffList = res.data
+      }
+    },
     async initTitleSubjectList() {
       const res = await getTtitleListItemList()
       if (res.code === 0) {
         this.titleSubjectList = res.data
-      }
-    },
-    async remoteMethod(name) {
-      this.loading = true
-      const res = await findUserLikeName(name)
-      if (res.code === 0) {
-        this.loading = false
-        this.empList = res.data
       }
     },
     // 下拉框选中事件
