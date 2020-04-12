@@ -70,7 +70,7 @@ public class StaffLogServiceImpl extends ServiceImpl<StaffLogMapper, StaffLog> i
     }
 
     public QueryWrapper<StaffLog> getQueryWrapper(QueryWrapper<StaffLog> queryWrapper,Map<String , Object> params){
-    //条件拼接
-    return queryWrapper;
+        //条件拼接
+        return queryWrapper;
     }
 }

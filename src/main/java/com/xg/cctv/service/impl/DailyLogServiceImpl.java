@@ -152,6 +152,7 @@ public class DailyLogServiceImpl extends ServiceImpl<DailyLogMapper, DailyLog> i
             queryWrapper.le(true , "create_time" , params.get("endDate"));
             // queryWrapper.apply(true ,"UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
         }
+        queryWrapper.orderByDesc("id");
 
         return queryWrapper;
     }

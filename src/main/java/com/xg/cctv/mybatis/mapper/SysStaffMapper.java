@@ -36,4 +36,11 @@ public interface SysStaffMapper extends BaseMapper<SysStaff> {
      * @return
      */
     List<SysStaff> queryStaffsById( Map<String, Object> params);
+
+    /**
+     * 根据工号查询角色列表
+     * @param queryWrapper
+     * @return
+     */
+    List<SysStaff> selectListAll(@Param(Constants.WRAPPER) Wrapper<SysStaff> queryWrapper);
 }

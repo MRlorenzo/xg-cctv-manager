@@ -14,6 +14,13 @@
         </template>
       </el-table-column>
 
+      <!--时间-->
+      <el-table-column align="center" :label="$t('cctv.time')">
+        <template slot-scope="scope">
+          {{ scope.row.time }}
+        </template>
+      </el-table-column>
+
       <!--台号-->
       <el-table-column align="center" :label="$t('cctv.tableCode')">
         <template slot-scope="scope">
@@ -24,6 +31,13 @@
       <el-table-column align="center" :label="$t('cctv.code')">
         <template slot-scope="scope">
           {{ scope.row.code }}
+        </template>
+      </el-table-column>
+
+      <!--事件主题-->
+      <el-table-column align="center" :label="$t('cctv.subject')">
+        <template slot-scope="scope">
+          {{ scope.row.codeTitle }}
         </template>
       </el-table-column>
 
@@ -40,7 +54,7 @@
         </template>
       </el-table-column>
       <!--上下水报告-->
-      <el-table-column align="center" :label="$t('cctv.report')">
+      <el-table-column align="center" :label="$t('cctv.report')" width="150">
         <template slot-scope="scope">
           {{ scope.row.report }}
         </template>

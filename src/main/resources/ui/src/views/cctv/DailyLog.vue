@@ -81,6 +81,7 @@
               <el-date-picker
                 v-model="d.date"
                 type="date"
+                value-format="yyyy-MM-dd"
                 :placeholder="$t('cctv.ps_date')"
               />
             </el-form-item>
@@ -164,6 +165,8 @@ import MultipleImages from '@/components/Upload/MultipleImages'
 import { saveDailyLog, exportDailyLogExcel, updateDailyLog, deleteFormDailyLogById } from '@/api/daily-log'
 import { downloadExcelByKey, deepClone } from '@/utils'
 import { getDepartments } from '@/api/department'
+import { getCurrentTime, getCurrentDay } from './common/common'
+
 const data = {
   date: '',
   time: '',
@@ -238,6 +241,8 @@ export default {
         this.$refs[this.formName].resetFields()
       }
       this.d = deepClone(data)
+      this.d.date = getCurrentDay()
+      this.d.time = getCurrentTime()
     },
     handleAdd() {
       this.reset()

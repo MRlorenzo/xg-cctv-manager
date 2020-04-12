@@ -177,6 +177,7 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
                             +params.get("staffId").toString()
             );
         }
+        queryWrapper.orderByDesc("id");
         return queryWrapper;
     }
 

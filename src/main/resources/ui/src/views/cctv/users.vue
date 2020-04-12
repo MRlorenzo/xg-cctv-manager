@@ -84,6 +84,7 @@
           <el-select
             v-model="user._roleIds"
             value-key="id"
+            :multiple="true"
             :placeholder="$t('cctv.position')"
           >
             <el-option
@@ -112,6 +113,7 @@
           <el-date-picker
             v-model="user.hireDate"
             type="date"
+            value-format="yyyy-MM-dd"
             :placeholder="$t('cctv.ps_date')"
           />
         </el-form-item>

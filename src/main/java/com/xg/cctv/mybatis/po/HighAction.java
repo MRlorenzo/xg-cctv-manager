@@ -60,6 +60,13 @@ public class HighAction extends Model<HighAction> {
     private String code;
 
     /**
+     * 事件编码标题
+     */
+    @NotBlank
+    @ApiModelProperty( value = "事件编码标题" , required=true)
+    private String codeTitle;
+
+    /**
      * 币种
      */
     @ApiModelProperty( value = "币种" , required=true)
@@ -227,6 +234,13 @@ public class HighAction extends Model<HighAction> {
         this.urls = urls;
     }
 
+    public String getCodeTitle() {
+        return codeTitle;
+    }
+
+    public void setCodeTitle(String codeTitle) {
+        this.codeTitle = codeTitle;
+    }
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -239,6 +253,7 @@ public class HighAction extends Model<HighAction> {
         ", date=" + date +
         ", tableCode=" + tableCode +
         ", code=" + code +
+        ", codeTitle"+ codeTitle +
         ", coinCode=" + coinCode +
         ", total=" + total +
         ", report=" + report +

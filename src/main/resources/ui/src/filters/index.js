@@ -113,7 +113,7 @@ export function rolesText(roles) {
  */
 export function staffsText(staffs) {
   if (Array.isArray(staffs)) {
-    return Object.values(staffs).map(staff => staff.staffName).join(',')
+    return Object.values(staffs).map(staff => staff.department.name + ': ' + staff.staffName + ' ' + staff.workNo).join(', ')
   } else {
     return staffs
   }

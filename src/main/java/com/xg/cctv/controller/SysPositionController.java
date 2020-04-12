@@ -61,6 +61,7 @@ public class SysPositionController {
      */
     @ApiOperation(value = "保存和修改")
     @PostMapping("/save")
+    @RequiresPermissions("sysPosition:save")
     public R sysPositionSave(@RequestBody SysPosition sysPosition){
         boolean rs = iSysPositionService.saveOrUpdate(sysPosition);
         if (rs){
@@ -76,6 +77,7 @@ public class SysPositionController {
      */
     @ApiOperation(value = "根据id删除对象")
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("sysPosition:delete")
     public R sysPositionDelete(@PathVariable String id){
         boolean rs = iSysPositionService.removeById(id);
         if (rs) {
@@ -91,6 +93,7 @@ public class SysPositionController {
      */
     @ApiOperation(value = "批量删除对象")
     @PostMapping("/batchDelete")
+    @RequiresPermissions("sysPosition:delete")
     public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
         List<String> ids = requestMap.get("ids");
         boolean rs = iSysPositionService.removeByIds(ids);

@@ -38,5 +38,7 @@ public interface SysStaffService extends IService<SysStaff> {
 
     IPage<SysStaff> selectAllInfoPage(Page<SysStaff> page, Map<String, Object> params);
 
-    List<SysStaff> selectListByLikeName(String name);
+    List<SysStaff> selectListByLikeNo(String name);
+
+    List<SysStaff> selectListByWorkNo(String no);
 }

@@ -110,6 +110,7 @@ public class FillCreditLogServiceImpl extends ServiceImpl<FillCreditLogMapper, F
         if (params.get("type") != null){
             queryWrapper.eq("type" , params.get("type"));
         }
+        queryWrapper.orderByDesc("id");
         return queryWrapper;
     }
 }

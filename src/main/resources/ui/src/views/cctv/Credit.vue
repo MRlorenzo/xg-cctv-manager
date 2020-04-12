@@ -80,6 +80,7 @@
               <el-date-picker
                 v-model="d.date"
                 type="date"
+                value-format="yyyy-MM-dd"
                 :placeholder="$t('cctv.ps_date')"
               />
             </el-form-item>
@@ -153,6 +154,8 @@ import { saveFillAndCredit, deleteFillAndCreditById, updateFillAndCredit, export
 import { downloadExcelByKey, deepClone } from '@/utils'
 import coinList from './common/coin-list'
 import OPT_TYPE from './common/opt-type'
+import { getCurrentTime, getCurrentDay } from './common/common'
+
 const data = {
   type: OPT_TYPE.CREDIT, // 1.加彩 2.缴码
   date: '',
@@ -217,6 +220,8 @@ export default {
         this.$refs[this.formName].resetFields()
       }
       this.d = deepClone(data)
+      this.d.date = getCurrentDay()
+      this.d.time = getCurrentTime()
     },
     handleAdd() {
       this.reset()

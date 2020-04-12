@@ -222,6 +222,7 @@ public class IncidentLogServiceImpl extends ServiceImpl<IncidentLogMapper, Incid
         if (params.get("monitor") != null){
             queryWrapper.eq("monitor" , params.get("monitor"));
         }
+        queryWrapper.orderByDesc("id");
         return queryWrapper;
     }
 }

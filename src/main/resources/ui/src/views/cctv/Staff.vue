@@ -81,7 +81,7 @@
 
         <!--工号-->
         <el-form-item :label="$t('cctv.workNo')" prop="workNo">
-          <el-input v-model="staff.workNo" />
+          <el-input v-model="staff.workNo" @blur="findWorkNo" />
         </el-form-item>
 
         <!--职位 || 角色-->
@@ -117,6 +117,7 @@
           <el-date-picker
             v-model="staff.hireDate"
             type="date"
+            value-format="yyyy-MM-dd"
             :placeholder="$t('cctv.ps_date')"
           />
         </el-form-item>
@@ -172,6 +173,7 @@ import { getPositions } from '@/api/position'
 import BackToTop from '@/components/BackToTop'
 import StaffPage from './components/StaffPage'
 import AvatarImage from '@/components/Upload/AvatarImage'
+import { findStaffWorkNo } from '@/api/staff'
 
 const defaultStaff = {
   staffName: '',
@@ -327,6 +329,15 @@ export default {
     resetQueryData() {
       this.q = Object.assign({}, defaultQueryData)
       this.searchTime = []
+    },
+    async findWorkNo() {
+      const res = await findStaffWorkNo(this.staff.workNo)
+      if (res.code === 0) {
+        const staffList = res.data
+        if (staffList.length > 0) {
+          this.$message.warning('This workNo already exists')
+        }
+      }
     }
   }
 }

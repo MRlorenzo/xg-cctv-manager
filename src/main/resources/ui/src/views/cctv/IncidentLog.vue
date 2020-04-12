@@ -60,7 +60,7 @@
           <el-option
             v-for="emp in staffList"
             :key="emp.staffId"
-            :label="emp.staffName"
+            :label="staffNameFormat(emp)"
             :value="emp.staffId"
           />
         </el-select>
@@ -126,6 +126,7 @@
             <el-form-item prop="date">
               <el-date-picker
                 v-model="d.date"
+                value-format="yyyy-MM-dd"
                 type="date"
                 :placeholder="$t('cctv.ps_date')"
               />
@@ -163,7 +164,7 @@
         </el-form-item>
         <!--事件主题-->
         <el-form-item :label="$t('cctv.subject')">
-          <el-input v-model="d._subjectTitle" readonly />
+          <el-input v-model="d.codeTitle" readonly />
         </el-form-item>
         <!--币种-->
         <el-form-item :label="$t('cctv.coinType')" prop="coinCode">
@@ -201,7 +202,7 @@
             <el-option
               v-for="emp in staffList"
               :key="emp.staffId"
-              :label="emp.staffName"
+              :label="staffNameFormat(emp)"
               :value="emp.staffId"
             />
           </el-select>
@@ -255,6 +256,7 @@ import { getDepartments } from '@/api/department'
 import { findStaffLikeName } from '@/api/staff'
 import { getTtitleListItemList } from '@/api/title-liist-item'
 import coinList from './common/coin-list'
+import { getCurrentTime, getCurrentDay } from './common/common'
 
 const data = {
   date: null,
@@ -270,7 +272,7 @@ const data = {
   monitor: null,
   remarks: null,
   urls: null,
-  _subjectTitle: null
+  codeTitle: null
 }
 const queryData = {
   needImg: true,
@@ -343,6 +345,9 @@ export default {
         this.$refs[this.formName].resetFields()
       }
       this.d = deepClone(data)
+      this.d.date = getCurrentDay()
+      this.d.time = getCurrentTime()
+      this.staffIds = []
     },
     handleAdd() {
       this.reset()
@@ -439,7 +444,12 @@ export default {
       obj = this.titleSubjectList.find((item) => {
         return item.code === vlaue// 筛选出匹配数据
       })
-      this.d._subjectTitle = obj.text
+      this.d.codeTitle = obj.text
+    },
+    staffNameFormat(item) {
+      if (item) {
+        return item.department.name + ': ' + item.staffName + ' ' + item.workNo
+      }
     }
   }
 }

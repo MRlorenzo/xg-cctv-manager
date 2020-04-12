@@ -20,7 +20,7 @@
         <collection property="position" column="position_id" select="com.xg.cctv.mybatis.mapper.SysPositionMapper.queryPositionById"/>
     </resultMap>
 
-    <select id="queryStaffsById" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="queryStaffsById" parameterType="java.util.Map" resultMap="allInfo">
         SELECT st.* FROM sys_staff st
         right JOIN staff_log sl ON st.staff_id = sl.staff_id
         WHERE sl.log_id =  #{id}
@@ -33,6 +33,11 @@
     </sql>
 
     <select id="selectAllInfoPage" resultMap="allInfo">
+        SELECT <include refid="Base_Column_List"/> FROM sys_staff
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="selectListAll" resultMap="allInfo">
         SELECT <include refid="Base_Column_List"/> FROM sys_staff
         ${ew.customSqlSegment}
     </select>

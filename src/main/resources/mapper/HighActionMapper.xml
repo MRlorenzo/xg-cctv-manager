@@ -12,7 +12,7 @@
                 <result column="coin_code" property="coinCode" />
                 <result column="total" property="total" />
                 <result column="report" property="report" />
-                <!--<result column="involve_uid" property="involveUid" />-->
+                <result column="code_title" property="codeTitle" />
                 <result column="monitor" property="monitor" />
                 <result column="remarks" property="remarks" />
                 <result column="create_uid" property="createUid" />
@@ -26,7 +26,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, date,time, table_code, code, coin_code, total, report, monitor, remarks, create_uid, create_time, urls
+        id, date,time, table_code, code, code_title, coin_code, total, report, monitor, remarks, create_uid, create_time, urls
     </sql>
 
     <sql id="VoTable">

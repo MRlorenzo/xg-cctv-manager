@@ -38,3 +38,10 @@ export function findStaffLikeName(name) {
     method: 'get'
   })
 }
+
+export function findStaffWorkNo(no) {
+  return request({
+    url: '/sysStaff/find/' + no,
+    method: 'get'
+  })
+}

@@ -66,13 +66,23 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
     }
 
     @Override
-    public List<SysStaff> selectListByLikeName(String name) {
+    public List<SysStaff> selectListByLikeNo(String name) {
         QueryWrapper<SysStaff> queryWrapper = new QueryWrapper<SysStaff>();
         if (StringUtils.isNotEmpty(name)){
-            queryWrapper.like("staff_name" , name);
+            queryWrapper.like("work_no" , name);
         }
-        return sysStaffMapper.selectList(queryWrapper);
+        return sysStaffMapper.selectListAll(queryWrapper);
     }
+
+    @Override
+    public List<SysStaff> selectListByWorkNo(String no) {
+        QueryWrapper<SysStaff> queryWrapper = new QueryWrapper<SysStaff>();
+        if (StringUtils.isNotEmpty(no)){
+            queryWrapper.eq("work_no" , no);
+        }
+        return sysStaffMapper.selectListAll(queryWrapper);
+    }
+
     /**
      *  公共查询条件
      * @param queryWrapper

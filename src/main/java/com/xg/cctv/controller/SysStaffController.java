@@ -48,12 +48,30 @@ public class SysStaffController {
         return R.ok().put("data" , iSysStaffService.selectAllInfoPage(page, sysStaff));
     }
 
+    /**
+     * 用工号搜索
+     * @param username
+     * @return
+     */
     @GetMapping("/like/{username}")
     @RequiresPermissions("sysStaff:list")
     @ApiImplicitParam(name = "username", value = "用户名", required = false )
-    @ApiOperation(value="模糊匹配用户信息，根据用户名", notes="模糊匹配用户信息接口" , httpMethod = "GET" , response = R.class)
+    @ApiOperation(value="模糊匹配用户信息，根据工号", notes="模糊匹配用户信息接口" , httpMethod = "GET" , response = R.class)
     public R like(@PathVariable("username") String username){
-        return R.ok().put("data" , iSysStaffService.selectListByLikeName(username));
+        return R.ok().put("data" , iSysStaffService.selectListByLikeNo(username));
+    }
+
+    /**
+     * 用工号搜索
+     * @param workNo
+     * @return
+     */
+    @GetMapping("/find/{workNo}")
+    @RequiresPermissions("sysStaff:list")
+    @ApiImplicitParam(name = "workNo", value = "用户名", required = false )
+    @ApiOperation(value="匹配用户信息，根据工号", notes="匹配用户信息接口" , httpMethod = "GET" , response = R.class)
+    public R find(@PathVariable("workNo") String workNo){
+        return R.ok().put("data" , iSysStaffService.selectListByWorkNo(workNo));
     }
 
     /**
@@ -63,6 +81,7 @@ public class SysStaffController {
      */
     @ApiOperation(value = "保存和修改")
     @PostMapping("/save")
+    @RequiresPermissions("sysStaff:save")
     public R sysStaffSave(@RequestBody SysStaff sysStaff){
         boolean rs = iSysStaffService.saveOrUpdate(sysStaff);
         if (rs){
@@ -78,6 +97,7 @@ public class SysStaffController {
      */
     @ApiOperation(value = "根据id删除对象")
     @PostMapping("/delete/{id}")
+    @RequiresPermissions("sysStaff:delete")
     public R sysStaffDelete(@PathVariable String id){
         boolean rs = iSysStaffService.removeById(id);
         if (rs) {
@@ -93,6 +113,7 @@ public class SysStaffController {
      */
     @ApiOperation(value = "批量删除对象")
     @PostMapping("/batchDelete")
+    @RequiresPermissions("sysStaff:delete")
     public R deleteBatchIds(@RequestBody Map<String,List<String>> requestMap){
         List<String> ids = requestMap.get("ids");
         boolean rs = iSysStaffService.removeByIds(ids);
