@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="dataList" height="500" border>
+    <el-table :data="dataList" border>
       <!--姓名-->
       <el-table-column align="center" :label="$t('cctv.name')">
         <template slot-scope="scope">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
+    <el-table :data="dataList"style="width: 100%;margin-top:30px;" border>
 
       <!--事件标题-->
       <el-table-column align="center" :label="$t('cctv.subject')" >

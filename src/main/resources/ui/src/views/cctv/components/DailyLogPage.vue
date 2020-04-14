@@ -1,11 +1,13 @@
 <template>
   <div>
-    <el-table :data="dataList" height="500" border>
+    <el-table :data="dataList" border>
 
       <!--序号-->
-      <el-table-column align="center" :label="$t('cctv.no')">
+      <el-table-column type="index" align="center" :label="$t('cctv.no')">
         <template slot-scope="scope">
-          {{ scope.row.id }}
+          <!--(当前页 - 1) * 当前显示数据条数 + 当前行数据的索引 + 1-->
+          {{(currPage - 1) * pageLimit + scope.$index + 1}}
+          <!--scope.row.id -->
         </template>
       </el-table-column>
       <!--日期-->

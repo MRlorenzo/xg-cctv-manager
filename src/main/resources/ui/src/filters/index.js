@@ -113,7 +113,7 @@ export function rolesText(roles) {
  */
 export function staffsText(staffs) {
   if (Array.isArray(staffs)) {
-    return Object.values(staffs).map(staff => staff.department.name + ': ' + staff.staffName + ' ' + staff.workNo).join(', ')
+    return Object.values(staffs).map(staff => staff.position.name + ' + ' + staff.staffName + ' + ' + staff.workNo).join(', ')
   } else {
     return staffs
   }
@@ -121,4 +121,23 @@ export function staffsText(staffs) {
 
 export function dateTimeFilter(string) {
   return moment(string).format('YYYY-MM-DD')
+}
+
+/**
+ * num.toFixed(2)    --- 是会转成字符串的，然后再调用.toLocaleString("en-US")就不会有千分位分隔符出现，
+ *
+ * 例如：var num=1234， num.toFixed(2).toLocaleString("en-US") --- num=1234.00
+ *
+ * 需要  参考  formatCurrency
+ */
+export function formatCurrency(num) {
+  num=num||0;
+  if(isNaN(num)){
+    return '';
+  }else if(typeof num === 'string'){
+    num = parseFloat(num);
+  }
+  num = num.toFixed(2);
+  num = parseFloat(num);
+  return num.toLocaleString("en-US");
 }

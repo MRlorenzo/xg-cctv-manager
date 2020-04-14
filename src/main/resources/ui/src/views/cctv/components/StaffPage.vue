@@ -2,9 +2,11 @@
   <div>
     <el-table :data="dataList" style="width: 100%;margin-top:30px;" border>
       <!-- 序号 -->
-      <el-table-column align="center" :label="$t('cctv.no')" width="100">
+      <el-table-column type="index" align="center" :label="$t('cctv.no')" width="100">
         <template slot-scope="scope">
-          {{ scope.row.staffId }}
+          <!--(当前页 - 1) * 当前显示数据条数 + 当前行数据的索引 + 1-->
+          {{(currPage - 1) * pageLimit + scope.$index + 1}}
+          <!--scope.row.id -->
         </template>
       </el-table-column>
 
