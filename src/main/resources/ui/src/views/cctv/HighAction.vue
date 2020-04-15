@@ -413,7 +413,7 @@ export default {
     },
     staffNameFormat(item) {
       if (item) {
-        return item.position.name + ' + ' + item.staffName + ' + ' + item.workNo
+        return item.position.name + ': ' + item.staffName + ' ' + item.workNo
       }
     }
   }

@@ -234,8 +234,8 @@ public class ShiroConfig {
 
         DefaultWebSessionManager mySessionManger = new MySessionManger();
 
-        //超时时间，默认 30分钟，会话超时；方法里面的单位是毫秒
-        //customSessionManager.setGlobalSessionTimeout(20000);
+        //超时时间，默认 60分钟，会话超时；方法里面的单位是毫秒
+        mySessionManger.setGlobalSessionTimeout(1000 * 3600);
 
         //配置session持久化
         mySessionManger.setSessionDAO(redisSessionDAO());

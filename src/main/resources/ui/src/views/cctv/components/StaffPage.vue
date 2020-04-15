@@ -4,8 +4,8 @@
       <!-- 序号 -->
       <el-table-column type="index" align="center" :label="$t('cctv.no')" width="100">
         <template slot-scope="scope">
-          <!--(当前页 - 1) * 当前显示数据条数 + 当前行数据的索引 + 1-->
-          {{(currPage - 1) * pageLimit + scope.$index + 1}}
+          <!-- 总页数-((当前页 - 1) * 当前显示数据条数 + 当前行数据的索引) -->
+          {{ total - ((currPage - 1) * pageLimit + scope.$index) }}
           <!--scope.row.id -->
         </template>
       </el-table-column>
@@ -63,6 +63,7 @@
         <template slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
+            v-if="getUrls(scope.row.avatar).length>0"
             :src="getUrls(scope.row.avatar)[0]"
             :preview-src-list="getUrls(scope.row.avatar)"
           />

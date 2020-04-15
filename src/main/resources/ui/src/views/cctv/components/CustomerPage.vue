@@ -36,8 +36,9 @@
         <template slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
+            v-if="getUrls(scope.row.photo).length>0"
             :src="getUrls(scope.row.photo )[0]"
-            :preview-src-list="getUrls(scope.row.urls)"
+            :preview-src-list="getUrls(scope.row.photo)"
           />
         </template>
       </el-table-column>

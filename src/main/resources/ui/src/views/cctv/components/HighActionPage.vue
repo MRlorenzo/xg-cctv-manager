@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-table :data="dataList" border>
+    <el-table :data="dataList" @cell-dblclick="cellDblClick" border>
       <!--序号-->
       <el-table-column type="index" align="center" :label="$t('cctv.no')">
         <template slot-scope="scope">
-          <!--(当前页 - 1) * 当前显示数据条数 + 当前行数据的索引 + 1-->
-          {{(currPage - 1) * pageLimit + scope.$index + 1}}
+          <!-- 总页数-((当前页 - 1) * 当前显示数据条数 + 当前行数据的索引) -->
+          {{ total - ((currPage - 1) * pageLimit + scope.$index) }}
           <!--scope.row.id -->
         </template>
       </el-table-column>
@@ -37,7 +37,7 @@
       </el-table-column>
 
       <!--事件主题-->
-      <el-table-column align="center" :label="$t('cctv.subject')">
+      <el-table-column align="center" :label="$t('cctv.subject')" width="200">
         <template slot-scope="scope">
           {{ scope.row.codeTitle }}
         </template>
@@ -56,14 +56,20 @@
         </template>
       </el-table-column>
       <!--上下水报告-->
-      <el-table-column align="center" :label="$t('cctv.report')" width="150">
+      <el-table-column align="center"
+                       :show-overflow-tooltip="true"
+                       :label="$t('cctv.report')"
+                       width="200"
+                       height="100%"
+                       prop="report"
+      >
         <template slot-scope="scope">
           {{ scope.row.report }}
         </template>
       </el-table-column>
       <!--涉及员工-->
       <!--涉事员工-->
-      <el-table-column align="center" :label="$t('cctv.involveEmp')">
+      <el-table-column align="center" :label="$t('cctv.involveEmp')" width="200">
         <template slot-scope="scope">
           {{ scope.row.staffs | staffsText }}
         </template>
@@ -90,6 +96,7 @@
         <template slot-scope="scope">
           <el-image
             style="width: 100px; height: 100px"
+            v-if="getUrls(scope.row.urls).length>0"
             :src="getUrls(scope.row.urls)[0]"
             :preview-src-list="getUrls(scope.row.urls)"
           />
@@ -208,6 +215,24 @@ export default {
       return urlsText.split(',').map(url => {
         return 'file' + url
       })
+    },
+    // 双击复制
+    cellDblClick (row, column, cell, event) {
+      // console.log(row, column, cell, event)
+      if (!column.property) return;
+      try{
+        let copyText = row[column.property];
+        let newInput = document.createElement('input');     //创建一个隐藏input（重要！）
+        newInput.value = copyText;    //赋值
+        document.body.appendChild(newInput);
+        newInput.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        newInput.className = 'newInput';
+        newInput.style.display='none';
+        this.$message.success("copy text success")
+      }catch (e) {
+        this.$message.error("copy text fail")
+      }
     }
   }
 }
