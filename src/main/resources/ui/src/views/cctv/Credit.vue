@@ -119,6 +119,10 @@
             />
           </el-select>
         </el-form-item>
+        <!--账房编号-->
+        <el-form-item :label="$t('cctv.cageNumber')" prop="cageNumber">
+          <el-input v-model="d.cageNumber" :placeholder="$t('cctv.pe_cageNumber')" />
+        </el-form-item>
         <!--通知人-->
         <el-form-item :label="$t('cctv.alerterName')" prop="alerterName">
           <el-input v-model="d.alerterName" :placeholder="$t('cctv.pe_alerterName')" />
@@ -126,10 +130,6 @@
         <!--监控部-->
         <el-form-item :label="$t('cctv.monitor')" prop="monitor">
           <el-input v-model="d.monitor" :placeholder="$t('cctv.pe_monitor')" />
-        </el-form-item>
-        <!--账房编号-->
-        <el-form-item :label="$t('cctv.cageNumber')" prop="cageNumber">
-          <el-input v-model="d.cageNumber" :placeholder="$t('cctv.pe_cageNumber')" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
