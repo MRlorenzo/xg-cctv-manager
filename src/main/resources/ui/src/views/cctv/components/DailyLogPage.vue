@@ -19,7 +19,7 @@
       <!--时间-->
       <el-table-column align="center" :label="$t('cctv.time')">
         <template slot-scope="scope">
-          {{ scope.row.time }}
+          {{ scope.row.time | timeFilter}}
         </template>
       </el-table-column>
       <!--台号-->

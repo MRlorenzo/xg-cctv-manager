@@ -19,7 +19,7 @@
       <!--时间-->
       <el-table-column align="center" :label="$t('cctv.time')">
         <template slot-scope="scope">
-          {{ scope.row.time }}
+          {{ scope.row.time | timeFilter}}
         </template>
       </el-table-column>
 
@@ -87,7 +87,12 @@
       <!--备注-->
       <el-table-column align="center" :label="$t('cctv.remarks')">
         <template slot-scope="scope">
-          {{ scope.row.remarks }}
+          <el-tag
+            :type="scope.row.remarks.toLowerCase() === 'solved' ? '' :'danger'"
+            effect="dark"
+          >
+            {{ scope.row.remarks }}
+          </el-tag>
         </template>
       </el-table-column>
       <!--图片-->

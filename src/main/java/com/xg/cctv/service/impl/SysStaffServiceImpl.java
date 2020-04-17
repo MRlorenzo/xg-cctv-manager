@@ -90,7 +90,7 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
      */
     public QueryWrapper<SysStaff> getQueryWrapper(QueryWrapper<SysStaff> queryWrapper,SysStaff sysStaff){
         //条件拼接
-    
+
         return queryWrapper;
     }
 
@@ -115,6 +115,9 @@ public class SysStaffServiceImpl extends ServiceImpl<SysStaffMapper, SysStaff> i
 
         if (params.get("staffName") != null){
             queryWrapper.like("staff_name" , params.get("staffName"));
+        }
+        if (params.get("workNo") != null){
+            queryWrapper.eq("work_no" , params.get("workNo"));
         }
         if (params.get("status") != null){
             queryWrapper.eq("status" , params.get("status"));

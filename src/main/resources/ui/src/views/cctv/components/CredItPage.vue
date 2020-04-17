@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div style="text-align: center">
+      Total amount:  {{calcTotal(dataList) | formatCurrency}}
+    </div>
     <el-table :data="dataList" border>
       <!--序号-->
       <el-table-column type="index" align="center" :label="$t('cctv.no')">
@@ -18,7 +21,7 @@
       <!--时间-->
       <el-table-column align="center" :label="$t('cctv.time')">
         <template slot-scope="scope">
-          {{ scope.row.time }}
+          {{ scope.row.time | timeFilter}}
         </template>
       </el-table-column>
       <!--台号-->
@@ -39,6 +42,12 @@
           {{ scope.row.total | formatCurrency }}
         </template>
       </el-table-column>
+      <!--账房编号-->
+      <el-table-column align="center" :label="$t('cctv.cageNumber')">
+        <template slot-scope="scope">
+          {{ scope.row.cageNumber }}
+        </template>
+      </el-table-column>
       <!--通知人-->
       <el-table-column align="center" :label="$t('cctv.alerterName')">
         <template slot-scope="scope">
@@ -51,12 +60,7 @@
           {{ scope.row.monitor }}
         </template>
       </el-table-column>
-      <!--账房编号-->
-      <el-table-column align="center" :label="$t('cctv.cageNumber')">
-        <template slot-scope="scope">
-          {{ scope.row.cageNumber }}
-        </template>
-      </el-table-column>
+
 
       <!--操作-->
       <el-table-column align="center" label="Operations">
@@ -162,6 +166,13 @@ export default {
     },
     handleCurrentChange(val) {
       this.currPage = val
+    },
+    calcTotal(dataList){
+      let total = 0;
+      dataList.forEach(data=>{
+        total +=parseFloat(data.total || 0);
+      });
+      return total;
     }
   }
 }

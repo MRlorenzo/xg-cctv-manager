@@ -123,6 +123,10 @@ export function dateTimeFilter(string) {
   return moment(string).format('YYYY-MM-DD')
 }
 
+export function timeFilter(string) {
+  return string.substring(0, string.length-3)
+}
+
 /**
  * num.toFixed(2)    --- 是会转成字符串的，然后再调用.toLocaleString("en-US")就不会有千分位分隔符出现，
  *

@@ -4,7 +4,7 @@
     <el-form :inline="true">
 
       <el-form-item>
-        <el-input v-model="q.staffName" placeholder="Staff Name" />
+        <el-input v-model="q.workNo" placeholder="Work No" />
       </el-form-item>
 
       <el-form-item>
@@ -187,7 +187,7 @@ const defaultStaff = {
 }
 
 const defaultQueryData = {
-  staffName: null,
+  workNo: null,
   startTime: null,
   endTime: null,
   status: 1,

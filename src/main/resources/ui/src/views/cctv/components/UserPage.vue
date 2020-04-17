@@ -39,7 +39,7 @@
       <!--创建时间-->
       <el-table-column align="header-center" label="CreateTime">
         <template slot-scope="scope">
-          {{ scope.row.createTime }}
+          {{ scope.row.createTime | dateTimeFilter}}
         </template>
       </el-table-column>
 

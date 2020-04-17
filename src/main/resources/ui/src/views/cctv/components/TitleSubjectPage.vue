@@ -11,7 +11,7 @@
       <!--创建时间-->
       <el-table-column align="center" :label="$t('cctv.createTime')">
         <template slot-scope="scope">
-          {{ scope.row.createTime }}
+          {{ scope.row.createTime | dateTimeFilter}}
         </template>
       </el-table-column>
 
