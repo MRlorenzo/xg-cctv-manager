@@ -88,7 +88,7 @@
       <el-table-column align="center" :label="$t('cctv.remarks')">
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.remarks.toLowerCase() === 'solved' ? '' :'danger'"
+            :type="scope.row.remarks.toLowerCase().trim() === 'solved' ? '' :'danger'"
             effect="dark"
           >
             {{ scope.row.remarks }}

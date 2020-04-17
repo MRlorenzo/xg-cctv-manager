@@ -245,6 +245,11 @@ export default {
           endTime: endDate
         })
       }
+    },
+    'q.workNo':function(val){
+      if (val===''){
+        this.q.workNo = null
+      }
     }
   },
   created() {
