@@ -256,7 +256,7 @@ import { getDepartments } from '@/api/department'
 import { findStaffLikeName } from '@/api/staff'
 import { getTtitleListItemList } from '@/api/title-liist-item'
 import coinList from './common/coin-list'
-import { getCurrentTime, getCurrentDay } from './common/common'
+import { getCurrentTime, getCurrentDay,getTomorrowDay } from './common/common'
 
 const data = {
   date: null,
@@ -284,7 +284,9 @@ const queryData = {
   // involveUid: null,
   departmentName: null,
   monitor: null,
-  remarks: null
+  remarks: null,
+  startDate: getCurrentDay(),
+  endDate: getTomorrowDay()
 }
 export default {
   name: 'IncidentLog',
@@ -292,7 +294,7 @@ export default {
   data() {
     return {
       q: deepClone(queryData),
-      searchTime: [],
+      searchTime: [getCurrentDay(), getTomorrowDay()],
       departmentList: [],
       titleSubjectList: [], // 事件列表
       coinList: deepClone(coinList), // 币种列表
@@ -338,6 +340,7 @@ export default {
   },
   methods: {
     resetQueryData() {
+      this.searchTime = [getCurrentDay(), getTomorrowDay()];
       this.q = deepClone(queryData)
     },
     reset() {

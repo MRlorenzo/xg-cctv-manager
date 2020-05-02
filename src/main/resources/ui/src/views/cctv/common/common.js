@@ -49,3 +49,40 @@ export function getCurrentDay() {
 export function getCurrentTime() {
   return dateFormat('hh:mm:ss')(getDateTimeBySystem())
 }
+window.T = {
+  toNum:function (num) {
+    if(num){
+      let target = parseFloat(num);
+      return isNaN(target)?0:target;
+    }
+
+    return 0;
+
+  },
+}
+
+//昨天
+export function getYesterday() {
+  return beforeDay(1);
+}
+
+//明天
+export function getTomorrowDay() {
+  return afterDay(1);
+}
+
+//几天前
+export function beforeDay(num) {
+  let d = T.toNum(num);
+  let day = getDateTimeBySystem();
+  day.setDate(day.getDate() - d);
+  return dateFormat('yyyy-MM-dd')(day);
+}
+
+//几天后
+export function afterDay(num) {
+  let d = T.toNum(num);
+  let day = getDateTimeBySystem();
+  day.setDate(day.getDate() + d);
+  return dateFormat('yyyy-MM-dd')(day);
+}

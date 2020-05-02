@@ -236,7 +236,7 @@ import { downloadExcelByKey, deepClone } from '@/utils'
 import { getTtitleListItemList } from '@/api/title-liist-item'
 import coinList from './common/coin-list'
 import { findStaffLikeName } from '@/api/staff'
-import { getCurrentTime, getCurrentDay } from './common/common'
+import { getCurrentTime, getCurrentDay, getTomorrowDay} from './common/common'
 
 const data = {
   date: null,
@@ -261,7 +261,9 @@ const queryData = {
   // involveUid: null,
   staffId: null,
   monitor: null,
-  remarks: null
+  remarks: null,
+  startDate: getCurrentDay(),
+  endDate: getTomorrowDay()
 }
 export default {
   name: 'HighAction',
@@ -269,7 +271,7 @@ export default {
   data() {
     return {
       q: deepClone(queryData),
-      searchTime: [],
+      searchTime: [getCurrentDay(), getTomorrowDay()],
       d: deepClone(data),
       titleSubjectList: [], // 事件列表
       coinList: deepClone(coinList), // 币种列表
@@ -317,6 +319,7 @@ export default {
   },
   methods: {
     resetQueryData() {
+      this.searchTime = [getCurrentDay(), getTomorrowDay()];
       this.q = deepClone(queryData)
     },
     reset() {

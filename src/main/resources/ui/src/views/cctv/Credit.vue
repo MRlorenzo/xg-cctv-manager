@@ -154,7 +154,7 @@ import { saveFillAndCredit, deleteFillAndCreditById, updateFillAndCredit, export
 import { downloadExcelByKey, deepClone } from '@/utils'
 import coinList from './common/coin-list'
 import OPT_TYPE from './common/opt-type'
-import { getCurrentTime, getCurrentDay } from './common/common'
+import { getCurrentTime, getCurrentDay, getTomorrowDay} from './common/common'
 
 const data = {
   type: OPT_TYPE.CREDIT, // 1.加彩 2.缴码
@@ -170,16 +170,18 @@ const data = {
 const queryData = {
   type: OPT_TYPE.CREDIT,
   tableCode: null,
-  coinCode: null
+  coinCode: null,
+  startDate: getCurrentDay(),
+  endDate: getTomorrowDay()
 }
 export default {
   name: 'Credit',
   components: { CreditPage },
   data() {
     return {
-      q: { type: 2 },
+      q: deepClone(queryData),
       d: deepClone(data),
-      searchTime: [],
+      searchTime: [getCurrentDay(), getTomorrowDay()],
       coinList: deepClone(coinList), // 币种列表
       doSearch: true,
       showMark: false,
@@ -213,6 +215,7 @@ export default {
   },
   methods: {
     resetQueryData() {
+      this.searchTime = [getCurrentDay(), getTomorrowDay()];
       this.q = deepClone(queryData)
     },
     reset() {

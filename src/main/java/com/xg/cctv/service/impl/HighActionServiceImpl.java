@@ -149,11 +149,13 @@ public class HighActionServiceImpl extends ServiceImpl<HighActionMapper, HighAct
         }
 
         if (params.get("startDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
+            queryWrapper.ge(true , "create_time" , params.get("startDate"));
+            // queryWrapper.apply("UNIX_TIMESTAMP(create_time) >= UNIX_TIMESTAMP('{0}')" , params.get("startDate"));
         }
 
         if (params.get("endDate") != null){
-            queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
+            queryWrapper.le(true , "create_time" , params.get("endDate"));
+            // queryWrapper.apply("UNIX_TIMESTAMP(create_time) <= UNIX_TIMESTAMP('{0}')" , params.get("endDate"));
         }
 
         if (params.get("tableCode") != null){

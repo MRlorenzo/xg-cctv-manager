@@ -165,7 +165,7 @@ import MultipleImages from '@/components/Upload/MultipleImages'
 import { saveDailyLog, exportDailyLogExcel, updateDailyLog, deleteFormDailyLogById } from '@/api/daily-log'
 import { downloadExcelByKey, deepClone } from '@/utils'
 import { getDepartments } from '@/api/department'
-import { getCurrentTime, getCurrentDay } from './common/common'
+import { getCurrentTime, getCurrentDay, getTomorrowDay} from './common/common'
 
 const data = {
   date: '',
@@ -184,7 +184,9 @@ const queryData = {
   tableCode: null,
   subject: null,
   departmentName: null,
-  monitor: null
+  monitor: null,
+  startDate: getCurrentDay(),
+  endDate: getTomorrowDay()
 }
 export default {
   name: 'DailyLog',
@@ -194,7 +196,7 @@ export default {
       q: deepClone(queryData),
       d: deepClone(data),
       departmentList: [],
-      searchTime: [],
+      searchTime: [getCurrentDay(), getTomorrowDay()],
       doSearch: true,
       showMark: false,
       dialogType: 'edit', // 'edit' or 'new'
@@ -234,6 +236,7 @@ export default {
   },
   methods: {
     resetQueryData() {
+      this.searchTime = [getCurrentDay(), getTomorrowDay()];
       this.q = deepClone(queryData)
     },
     reset() {
